@@ -52,9 +52,9 @@ class ResPartner(models.Model):
         this represent the catalog no. 6 of SUNAT (https://goo.gl/rGedAU) and
         (*) types included are supported in the core https://goo.gl/VInziW
         """
-        for partner in self.filtered(lambda r: r.vat):
-            vat_code = {'R': '6', 'D': '1'}
-            vat_type, vat_number = partner.explode_vat()
-            partner.l10n_pe_edi_vat_type = vat_type
-            partner.l10n_pe_edi_vat_code = vat_code.get(vat_type)
-            partner.l10n_pe_vat_number = vat_number
+        # for partner in self.filtered(lambda r: r.vat):
+        #     vat_code = {'R': '6', 'D': '1'}
+        #     vat_type, vat_number = partner.explode_vat()
+        #     partner.l10n_pe_edi_vat_type = vat_type
+        #     partner.l10n_pe_edi_vat_code = vat_code.get(vat_type)
+        #     partner.l10n_pe_vat_number = vat_number

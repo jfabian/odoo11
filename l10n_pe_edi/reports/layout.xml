@@ -22,7 +22,7 @@
 
     <template id="l10n_pe_edi.electronic_invoice_report_document">
         <t t-call="l10n_pe_edi.layout_unite">
-            <t t-set="xml_signed" t-value="o.l10n_pe_edi_ublpe"/>
+            <!-- <t t-set="xml_signed" t-value="o.l10n_pe_edi_ublpe"/> -->
             <t t-if="xml_signed">
                 <t t-set="xml" t-value="o.l10n_pe_edi_get_xml_etree()"/>
                 <t t-set="free_transaction" t-value="o.l10n_pe_edi_xpath(xml,'//sac:AdditionalInformation/sac:AdditionalProperty/cbc:ID[text()=\'1002\']/following-sibling::cbc:Value')"/>

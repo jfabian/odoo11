@@ -1,40 +1,40 @@
 # coding: utf-8
 # Copyright 2017 Vauxoo (https://www.vauxoo.com) <info@vauxoo.com>
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
-from __future__ import division
+# from __future__ import division
 
-import base64
+# import base64
 import logging
-import re
-import socket
-import tempfile
-import zipfile
-from collections import defaultdict
-from datetime import datetime, timedelta
-from itertools import groupby
-from os.path import join, splitext
+# import re
+# import socket
+# import tempfile
+# import zipfile
+# from collections import defaultdict
+# from datetime import datetime, timedelta
+# from itertools import groupby
+# from os.path import join, splitext
 
-from lxml import etree
-from lxml.objectify import fromstring
+# from lxml import etree
+# from lxml.objectify import fromstring
 
 from odoo import _, api, fields, models, tools
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools import file_open, osutil
 
-from .sunat_errors_dict import l10n_pe_edi_get_error_by_code
+# from .sunat_errors_dict import l10n_pe_edi_get_error_by_code
 
 _logger = logging.getLogger(__name__)
 
-try:
-    from signxml import XMLSigner
-    from num2words import num2words
-    from pdf417gen import encode, render_image
-    from pysimplesoap.client import SoapClient, SoapFault
-    from httplib2 import ServerNotFoundError
-    from httplib import ResponseNotReady
+# try:
+#     from signxml import XMLSigner
+#     from num2words import num2words
+#     from pdf417gen import encode, render_image
+#     from pysimplesoap.client import SoapClient, SoapFault
+#     from httplib2 import ServerNotFoundError
+#     from httplib import ResponseNotReady
 
-except ImportError as err:
-    _logger.debug(err)
+# except ImportError as err:
+#     _logger.debug(err)
 UBLPE_TEMPLATE = 'l10n_pe_edi.UBLPE-%s-%s'
 UBLPE_XSD = 'l10n_pe_edi/data/%s/maindoc/UBLPE-%s-%s.xsd'
 
@@ -83,27 +83,27 @@ def create_list_html(array):
     :return: an empty string if not array, an html list otherwise
     """
 
-    if not array:
-        return ""
+    # if not array:
+    #     return ""
 
-    msg = ""
-    for item in array:
-        msg += "<li>" + item + "</li>"
-    return "<ul>" + msg + "</ul>"
+    # msg = ""
+    # for item in array:
+    #     msg += "<li>" + item + "</li>"
+    # return "<ul>" + msg + "</ul>"
 
 
 def check_with_xsd(tree_or_str, xsd_path):
     """Taken from Vauxoo/odoo:saas-14 (https://goo.gl/UcyvXC) until it gets
     ported to branch 10.0
     """
-    if not isinstance(tree_or_str, etree._Element):
-        tree_or_str = etree.fromstring(tree_or_str)
-    xml_schema_doc = etree.parse(file_open(xsd_path))
-    xsd_schema = etree.XMLSchema(xml_schema_doc)
-    try:
-        xsd_schema.assertValid(tree_or_str)
-    except etree.DocumentInvalid, xml_errors:
-        raise UserError('\n'.join([e.message for e in xml_errors.error_log]))
+    # if not isinstance(tree_or_str, etree._Element):
+    #     tree_or_str = etree.fromstring(tree_or_str)
+    # xml_schema_doc = etree.parse(file_open(xsd_path))
+    # xsd_schema = etree.XMLSchema(xml_schema_doc)
+    # try:
+    #     xsd_schema.assertValid(tree_or_str)
+    # except etree.DocumentInvalid, xml_errors:
+    #     raise UserError('\n'.join([e.message for e in xml_errors.error_log]))
 
 
 class AccountInvoice(models.Model):
@@ -228,17 +228,17 @@ class AccountInvoice(models.Model):
         :param code: returns the value for the expected code, the valid code
         :return: a string having the legend
         """
-        value = False
-        if code == '1000':
-            value = str(self.amount_total)
-            part_int, part_dec = value.split('.')
-            value = num2words(float(part_int), lang='es')
-            currency_name = self.with_context({
-                'lang': 'es'
-            }).currency_id.print_on_check
-            value += ' CON %s/100 %s' % (part_dec, currency_name)
-            value = value.upper()
-        return value
+    #     value = False
+    #     if code == '1000':
+    #         value = str(self.amount_total)
+    #         part_int, part_dec = value.split('.')
+    #         value = num2words(float(part_int), lang='es')
+    #         currency_name = self.with_context({
+    #             'lang': 'es'
+    #         }).currency_id.print_on_check
+    #         value += ' CON %s/100 %s' % (part_dec, currency_name)
+    #         value = value.upper()
+    #     return value
 
     l10n_pe_edi_ublpe = fields.Binary(
         string="ublpe content", copy=False, readonly=True,
@@ -262,44 +262,46 @@ class AccountInvoice(models.Model):
 
     @api.model
     def l10n_pe_edi_retrieve_attachments(self):
-        """Retrieve all the ublpe attachments generated for this invoice.
+        # """Retrieve all the ublpe attachments generated for this invoice.
 
-        :return: An ir.attachment recordset
-        """
-        self.ensure_one()
-        if not self.l10n_pe_edi_ublpe_name:
-            return []
-        domain = [
-            ('res_id', '=', self.id),
-            ('res_model', '=', self._name),
-            ('name', '=', self.l10n_pe_edi_ublpe_name)]
-        return self.env['ir.attachment'].search(domain)
+        # :return: An ir.attachment recordset
+        # """
+        # self.ensure_one()
+        # if not self.l10n_pe_edi_ublpe_name:
+        #     return []
+        # domain = [
+        #     ('res_id', '=', self.id),
+        #     ('res_model', '=', self._name),
+        #     ('name', '=', self.l10n_pe_edi_ublpe_name)]
+        # return self.env['ir.attachment'].search(domain)
+        return True
 
     @api.model
     def l10n_pe_edi_retrieve_last_attachment(self):
-        if not self.l10n_pe_edi_is_required():
-            return None
-        attachment_ids = self.l10n_pe_edi_retrieve_attachments()
-        return attachment_ids[0] if attachment_ids else None
+        # if not self.l10n_pe_edi_is_required():
+        #     return None
+        # attachment_ids = self.l10n_pe_edi_retrieve_attachments()
+        # return attachment_ids[0] if attachment_ids else None
+        return True
 
     @api.multi
     @api.depends('l10n_pe_edi_ublpe_name')
     def _compute_ublpe_values(self):
         """Fill the invoice fields from the ublpe values"""
 
-        for invoice in self:
-            if not invoice.l10n_pe_edi_is_required():
-                return
+        # for invoice in self:
+        #     if not invoice.l10n_pe_edi_is_required():
+        #         return
 
-            attachment_id = invoice.l10n_pe_edi_retrieve_last_attachment()
-            if not attachment_id:
-                continue
-            # At this moment, the attachment contains the file size in its
-            # 'datas' field because to save some memory, the attachment will
-            # store its data on the physical disk. To avoid this problem, we
-            # read the 'datas directly on the disk'
-            datas = attachment_id._file_read(attachment_id.store_fname)
-            invoice.l10n_pe_edi_ublpe = datas
+        #     attachment_id = invoice.l10n_pe_edi_retrieve_last_attachment()
+        #     if not attachment_id:
+        #         continue
+        #     # At this moment, the attachment contains the file size in its
+        #     # 'datas' field because to save some memory, the attachment will
+        #     # store its data on the physical disk. To avoid this problem, we
+        #     # read the 'datas directly on the disk'
+        #     datas = attachment_id._file_read(attachment_id.store_fname)
+        #     invoice.l10n_pe_edi_ublpe = datas
 
             # TODO: if already signed, extract uuid
             # TODO: get the rest of fields to be computed
@@ -310,9 +312,9 @@ class AccountInvoice(models.Model):
         By default is 2.0
         :return: version of document, if not exists 2.0 will be
         returned"""
-        version = self.env['ir.config_parameter'].sudo().get_param(
-            'l10n_pe_edi_ublpe_version', '2.0')
-        return version
+        # version = self.env['ir.config_parameter'].sudo().get_param(
+        #     'l10n_pe_edi_ublpe_version', '2.0')
+        # return version
 
     @api.model
     def l10n_pe_edi_get_xml_etree(self, ublpe=None, file_fmt="%(name)s.xml",
@@ -325,23 +327,23 @@ class AccountInvoice(models.Model):
         :param file_name: name of file to be read
         :return: An objectified tree if valid, False in counter case
         """
-        self.ensure_one()
-        if not self.l10n_pe_edi_is_required():
-            return
-        file_name = file_fmt % {
-            'name': splitext(file_name or self.l10n_pe_edi_ublpe_name)[0]}
-        ublpe = ublpe or self.l10n_pe_edi_ublpe
-        with tempfile.TemporaryFile() as zip_file:
-            zip_decoded = base64.b64decode(ublpe)
-            zip_file.write(zip_decoded)
-            try:
-                temp_zip = zipfile.ZipFile(zip_file, 'r')
-                file_name = [name for name in temp_zip.namelist()
-                             if name.lower() == file_name.lower()]
-                ublpe = temp_zip.read(file_name[0])
-            except (zipfile.BadZipfile, KeyError):
-                return False
-        return fromstring(ublpe)
+        # self.ensure_one()
+        # if not self.l10n_pe_edi_is_required():
+        #     return
+        # file_name = file_fmt % {
+        #     'name': splitext(file_name or self.l10n_pe_edi_ublpe_name)[0]}
+        # ublpe = ublpe or self.l10n_pe_edi_ublpe
+        # with tempfile.TemporaryFile() as zip_file:
+        #     zip_decoded = base64.b64decode(ublpe)
+        #     zip_file.write(zip_decoded)
+        #     try:
+        #         temp_zip = zipfile.ZipFile(zip_file, 'r')
+        #         file_name = [name for name in temp_zip.namelist()
+        #                      if name.lower() == file_name.lower()]
+        #         ublpe = temp_zip.read(file_name[0])
+        #     except (zipfile.BadZipfile, KeyError):
+        #         return False
+        # return fromstring(ublpe)
 
     @api.multi
     def _l10n_pe_edi_create_ublpe_values(self):
@@ -349,88 +351,91 @@ class AccountInvoice(models.Model):
         Those taxes summary adopt the certain values. please refer to pdf page
         40 in https://goo.gl/eh2ZyT (invoice manual)
         """
-        self.ensure_one()
-        if not self.l10n_pe_edi_is_required():
-            return
-        precision = self.env['decimal.precision'].precision_get('Account')
-        values = {
-            'record': self,
-            'company': self.company_id,
-            'date': self.date_invoice,
-            'free_sale': not self.amount_untaxed,
-        }
-        values['taxes'] = [{
-            'currency': self.currency_id.name,
-            'amount': tools.float_round(self.l10n_pe_edi_total_igv, precision),
-            'edi_id': '1000',
-            'name': 'IGV',
-            'code': 'VAT',
-        }, {
-            'currency': self.currency_id.name,
-            'amount': tools.float_round(self.l10n_pe_edi_total_isc, precision),
-            'edi_id': '2000',
-            'name': 'ISC',
-            'code': 'EXC',
-        }, {
-            'currency': self.currency_id.name,
-            'amount': tools.float_round(self.l10n_pe_edi_total_otros,
-                                        precision),
-            'edi_id': '9999',
-            'name': 'OTROS',
-            'code': 'OTH',
-        }]
-        return values
+        # self.ensure_one()
+        # if not self.l10n_pe_edi_is_required():
+        #     return
+        # precision = self.env['decimal.precision'].precision_get('Account')
+        # values = {
+        #     'record': self,
+        #     'company': self.company_id,
+        #     'date': self.date_invoice,
+        #     'free_sale': not self.amount_untaxed,
+        # }
+        # values['taxes'] = [{
+        #     'currency': self.currency_id.name,
+        #     'amount': tools.float_round(self.l10n_pe_edi_total_igv, precision),
+        #     'edi_id': '1000',
+        #     'name': 'IGV',
+        #     'code': 'VAT',
+        # }, {
+        #     'currency': self.currency_id.name,
+        #     'amount': tools.float_round(self.l10n_pe_edi_total_isc, precision),
+        #     'edi_id': '2000',
+        #     'name': 'ISC',
+        #     'code': 'EXC',
+        # }, {
+        #     'currency': self.currency_id.name,
+        #     'amount': tools.float_round(self.l10n_pe_edi_total_otros,
+        #                                 precision),
+        #     'edi_id': '9999',
+        #     'name': 'OTROS',
+        #     'code': 'OTH',
+        # }]
+        # return values
 
     @api.multi
     def invoice_print(self):
-        self.ensure_one()
-        if not self.l10n_pe_edi_is_required():
-            return super(AccountInvoice, self).invoice_print()
-        self.sent = True
-        return self.env['report'].get_action(
-            self, 'l10n_pe_edi.l10n_pe_edi_report_invoice')
+        # self.ensure_one()
+        # if not self.l10n_pe_edi_is_required():
+        return super(AccountInvoice, self).invoice_print()
+        # self.sent = True
+        # return self.env['report'].get_action(
+        #     self, 'l10n_pe_edi.l10n_pe_edi_report_invoice')
 
     @api.multi
     def _l10n_pe_edi_create_ublpe(self):
-        self.ensure_one()
-        qweb = self.env['ir.qweb']
+        # self.ensure_one()
+        # qweb = self.env['ir.qweb']
 
-        values = self._l10n_pe_edi_create_ublpe_values()
-        doc_type = self.l10n_pe_document_type
+        # values = self._l10n_pe_edi_create_ublpe_values()
+        # doc_type = self.l10n_pe_document_type
+        # print "#####doc_type: ",doc_type
 
-        if self.l10n_pe_edi_error_message:
-            raise UserError(self.l10n_pe_edi_error_message)
+        # if self.l10n_pe_edi_error_message:
+        #     raise UserError(self.l10n_pe_edi_error_message)
 
-        # -----------------------
-        # Create the EDI document
-        # -----------------------
-        version = self.l10n_pe_edi_get_pse_version()
-        xml_template_name, xsd_filename, doc_name = \
-            get_xsd_template_names(doc_type, version)
+        # # -----------------------
+        # # Create the EDI document
+        # # -----------------------
+        # version = self.l10n_pe_edi_get_pse_version()
+        # xml_template_name, xsd_filename, doc_name = \
+        #     get_xsd_template_names(doc_type, version)
 
-        # Compute ublpe
-        ublpe = qweb.render(xml_template_name, values=values)
+        # # Compute ublpe
+        # ublpe = qweb.render(xml_template_name, values=values)
 
-        # Replace back colons in namespaces
-        ublpe = ublpe.replace('__', ':')
+        # # Replace back colons in namespaces
+        # ublpe = ublpe.replace('__', ':')
 
-        # Include xml namespace to indicate Invoice as root element of xml doc
-        replace_dict = {'dn': doc_name}
-        ublpe = ublpe.replace(
-            '<%(dn)s' % replace_dict,
-            '<%(dn)s xmlns="urn:oasis:names:specification:ubl:schema:xsd'
-            ':%(dn)s-2"' % replace_dict)
+        # # Include xml namespace to indicate Invoice as root element of xml doc
+        # replace_dict = {'dn': doc_name}
+        # ublpe = ublpe.replace(
+        #     '<%(dn)s' % replace_dict,
+        #     '<%(dn)s xmlns="urn:oasis:names:specification:ubl:schema:xsd'
+        #     ':%(dn)s-2"' % replace_dict)
 
-        tree = fromstring(ublpe)
+        # tree = fromstring(ublpe)
+        # print "#########tree: ",tree
 
-        # Check with xsd
-        try:
-            check_with_xsd(tree, xsd_filename)
-        except UserError as e:
-            return {'error': _('The ublpe generated is not valid') +
-                    create_list_html(e.name.split('\n'))}
-        return {'ublpe': etree.tostring(tree, xml_declaration=True,
-                                        encoding='ISO-8859-1')}
+        # # Check with xsd
+        # try:
+        #     check_with_xsd(tree, xsd_filename)
+        # except UserError as e:
+        #     return {'error': _('The ublpe generated is not valid') +
+        #             create_list_html(e.name.split('\n'))}
+        # return {'ublpe': etree.tostring(tree, xml_declaration=True,
+        #                                 encoding='ISO-8859-1')}
+        return True
 
     @api.multi
     def _l10n_pe_edi_call_service(self, service_type):
@@ -438,30 +443,31 @@ class AccountInvoice(models.Model):
         method antes service pass as parameter.
         : param service_type: sign or cancel
         """
-        comp_x_records = groupby(self, lambda r: r.company_id)
-        for company_id, records in comp_x_records:
-            pse_name = company_id.l10n_pe_edi_pse
-            if not pse_name:
-                continue
+        # comp_x_records = groupby(self, lambda r: r.company_id)
+        # for company_id, records in comp_x_records:
+        #     pse_name = company_id.l10n_pe_edi_pse
+        #     if not pse_name:
+        #         continue
 
-            # Get the informations about the PSE
-            pse_info_func = '_l10n_pe_edi_%s_info' % pse_name
-            service_func = '_l10n_pe_edi_%s_%s' % (pse_name, service_type)
-            pse_info = getattr(self, pse_info_func)(company_id, service_type)
+        #     # Get the informations about the PSE
+        #     pse_info_func = '_l10n_pe_edi_%s_info' % pse_name
+        #     service_func = '_l10n_pe_edi_%s_%s' % (pse_name, service_type)
+        #     pse_info = getattr(self, pse_info_func)(company_id, service_type)
 
-            # Call the service with invoices
-            for record in records:
-                getattr(record, service_func)(pse_info)
+        #     # Call the service with invoices
+        #     for record in records:
+        #         getattr(record, service_func)(pse_info)
 
     @api.multi
     def _l10n_pe_edi_local_info(self, company_id, service_type):
-        return {
-            'url': False,
-            'username': False,
-            'password': False,
-            'certificate': (company_id.l10n_pe_edi_certificate_ids.sudo().
-                            get_valid_certificate())
-        }
+        # return {
+        #     'url': False,
+        #     'username': False,
+        #     'password': False,
+        #     'certificate': (company_id.l10n_pe_edi_certificate_ids.sudo().
+        #                     get_valid_certificate())
+        # }
+        return True
 
     l10n_pe_cancel_reason = fields.Char(
         string="Cancel Reason", copy=False, readonly=True,
@@ -472,20 +478,21 @@ class AccountInvoice(models.Model):
     def l10n_pe_edi_xpath(xml, xpath):
         """Given a XML and a XPATH this method will return a value
         """
-        value = xml.xpath(xpath, namespaces=L10N_PE_EDI_NS)
-        return value
+        # value = xml.xpath(xpath, namespaces=L10N_PE_EDI_NS)
+        # return value
 
     @api.multi
     def _l10n_pe_edi_local_sign(self, pse_info):
-        for inv in self:
-            attachment = inv.l10n_pe_edi_retrieve_last_attachment()
-            encoded_file = attachment.datas
-            root = self.l10n_pe_edi_get_xml_etree(ublpe=encoded_file)
-            xml_signed = inv._l10n_pe_edi_sign_xml(root)
-            if xml_signed is not None:
-                xml_signed = etree.tostring(xml_signed, xml_declaration=True,
-                                            encoding='ISO-8859-1')
-            inv._l10n_pe_edi_post_sign_process(xml_signed)
+        # for inv in self:
+        #     attachment = inv.l10n_pe_edi_retrieve_last_attachment()
+        #     encoded_file = attachment.datas
+        #     root = self.l10n_pe_edi_get_xml_etree(ublpe=encoded_file)
+        #     xml_signed = inv._l10n_pe_edi_sign_xml(root)
+        #     if xml_signed is not None:
+        #         xml_signed = etree.tostring(xml_signed, xml_declaration=True,
+        #                                     encoding='ISO-8859-1')
+        #     inv._l10n_pe_edi_post_sign_process(xml_signed)
+        return True
 
     def l10n_pe_edi_create_zipfile(self, filename, xml_signed):
         """Creating a zip file as attachment in the chatter.
@@ -497,26 +504,26 @@ class AccountInvoice(models.Model):
         must contain a dummy/ folder, but in the samples we got that this
         is deprecated, so is not included in this method.
         """
-        attachment = False
-        attachment_name = "%s.zip" % filename
-        ctx = self.env.context.copy()
-        ctx.pop('default_type', False)
-        with osutil.tempdir() as temdir, tempfile.TemporaryFile() as t_zip:
-            xml_file = join(temdir, "%s.xml" % filename)
-            with open(xml_file, "w") as res_file:
-                res_file.write(xml_signed)
-            osutil.zip_dir(temdir, t_zip, include_dir=False)
-            t_zip.seek(0)
-            encoded = base64.b64encode(t_zip.read())
-            attachment = self.env['ir.attachment'].with_context(ctx).create({
-                'datas': encoded,
-                'res_model': self._name,
-                'mimetype': 'application/zip',
-                'name': attachment_name,
-                'datas_fname': attachment_name,
-                'l10n_pe_edi_sunat_file': True,
-            })
-        return attachment
+        # attachment = False
+        # attachment_name = "%s.zip" % filename
+        # ctx = self.env.context.copy()
+        # ctx.pop('default_type', False)
+        # with osutil.tempdir() as temdir, tempfile.TemporaryFile() as t_zip:
+        #     xml_file = join(temdir, "%s.xml" % filename)
+        #     with open(xml_file, "w") as res_file:
+        #         res_file.write(xml_signed)
+        #     osutil.zip_dir(temdir, t_zip, include_dir=False)
+        #     t_zip.seek(0)
+        #     encoded = base64.b64encode(t_zip.read())
+        #     attachment = self.env['ir.attachment'].with_context(ctx).create({
+        #         'datas': encoded,
+        #         'res_model': self._name,
+        #         'mimetype': 'application/zip',
+        #         'name': attachment_name,
+        #         'datas_fname': attachment_name,
+        #         'l10n_pe_edi_sunat_file': True,
+        #     })
+        # return attachment
 
     @api.multi
     def _l10n_pe_edi_post_sign_process(self, xml_signed, code=None, msg=None):
@@ -525,103 +532,108 @@ class AccountInvoice(models.Model):
         :param code: an eventual error code
         :param msg: an eventual error msg
         """
-        self.ensure_one()
-        if xml_signed:
-            body_msg = _('The sign service has been called with success')
-            # Update the pse status
-            self.l10n_pe_edi_pse_status = 'signed'
-            self.l10n_pe_edi_ublpe = xml_signed
+        # self.ensure_one()
+        # if xml_signed:
+        #     body_msg = _('The sign service has been called with success')
+        #     # Update the pse status
+        #     self.l10n_pe_edi_pse_status = 'signed'
+        #     self.l10n_pe_edi_ublpe = xml_signed
 
-            attachment = self.l10n_pe_edi_retrieve_last_attachment()
-            filename = splitext(attachment.datas_fname)[0]
-            with osutil.tempdir() as temdir, tempfile.TemporaryFile() as t_zip:
-                xml_file = join(temdir, "%s.xml" % filename)
-                with open(xml_file, "w") as res_file:
-                    res_file.write(xml_signed)
-                osutil.zip_dir(temdir, t_zip, include_dir=False)
-                t_zip.seek(0)
-                encoded = base64.b64encode(t_zip.read())
-                attachment.write({'datas': encoded})
-            self.l10n_pe_edi_ublpe_name = attachment.datas_fname
+        #     attachment = self.l10n_pe_edi_retrieve_last_attachment()
+        #     filename = splitext(attachment.datas_fname)[0]
+        #     with osutil.tempdir() as temdir, tempfile.TemporaryFile() as t_zip:
+        #         xml_file = join(temdir, "%s.xml" % filename)
+        #         with open(xml_file, "w") as res_file:
+        #             res_file.write(xml_signed)
+        #         osutil.zip_dir(temdir, t_zip, include_dir=False)
+        #         t_zip.seek(0)
+        #         encoded = base64.b64encode(t_zip.read())
+        #         attachment.write({'datas': encoded})
+        #     self.l10n_pe_edi_ublpe_name = attachment.datas_fname
 
-            post_msg = [_("The content of the attachment has been updated")]
-        else:
-            body_msg = _("The sign service requested failed")
-            post_msg = []
-        if code:
-            post_msg.extend([_("Code: ") + str(code)])
-        if msg:
-            post_msg.extend([_("Message: ") + msg])
+        #     post_msg = [_("The content of the attachment has been updated")]
+        # else:
+        #     body_msg = _("The sign service requested failed")
+        #     post_msg = []
+        # if code:
+        #     post_msg.extend([_("Code: ") + str(code)])
+        # if msg:
+        #     post_msg.extend([_("Message: ") + msg])
 
-        self.message_post(
-            body=body_msg + create_list_html(post_msg),
-            subtype="account.mt_invoice_validated")
+        # self.message_post(
+        #     body=body_msg + create_list_html(post_msg),
+        #     subtype="account.mt_invoice_validated")
 
     def _l10n_pe_edi_sign(self):
         """Call the sign service with records that can be signed.
         """
-        records = self.search([
-            ('l10n_pe_edi_pse_status', 'not in', ['signed', 'to_cancel',
-                                                  'cancelled', 'retry']),
-            ('id', 'in', self.ids)])
-        records._l10n_pe_edi_call_service('sign')
+        # records = self.search([
+        #     ('l10n_pe_edi_pse_status', 'not in', ['signed', 'to_cancel',
+        #                                           'cancelled', 'retry']),
+        #     ('id', 'in', self.ids)])
+        # print "#### records: ",records #### records:  account.invoice(113782,)
+        # records._l10n_pe_edi_call_service('sign')
 
     @api.multi
     def _l10n_pe_edi_retry(self):
         """Generate the UBLPE zip file attachment
         """
 
-        for invoice in self:
-            # Render the xml template
-            ublpe_values = invoice._l10n_pe_edi_create_ublpe()
-            error = ublpe_values.pop('error', None)
-            ublpe = ublpe_values.pop('ublpe', None)
+        # for invoice in self:
+        #     print "####invoice_2: ",invoice
+        #     # Render the xml template
+        #     ublpe_values = invoice._l10n_pe_edi_create_ublpe()
+        #     error = ublpe_values.pop('error', None)
+        #     ublpe = ublpe_values.pop('ublpe', None)
 
-            if error:
-                invoice.l10n_pe_edi_pse_status = 'retry'
-                invoice.message_post(body=error,
-                                     subtype="account.mt_invoice_validated")
-                continue
+        #     if error:
+        #         print "#### error: ",error
+        #         invoice.l10n_pe_edi_pse_status = 'retry'
+        #         invoice.message_post(body=error,
+        #                              subtype="account.mt_invoice_validated")
+        #         continue
 
-            # XML template has been successfully rendered
-            invoice.l10n_pe_edi_pse_status = 'to_sign'
-            document_number = invoice.number
+        #     # XML template has been successfully rendered
+        #     invoice.l10n_pe_edi_pse_status = 'to_sign'
+        #     document_number = invoice.number
 
-            # Create ZIP file with the signed XML
-            filename = ('%s-%s-%s' % (
-                invoice.company_id.partner_id.l10n_pe_vat_number,
-                invoice.l10n_pe_document_type,
-                document_number)).replace('/', '')
+        #     # Create ZIP file with the signed XML
+        #     filename = ('%s-%s-%s' % (
+        #         invoice.company_id.partner_id.l10n_pe_vat_number,
+        #         invoice.l10n_pe_document_type,
+        #         document_number)).replace('/', '')
 
-            ctx = self.env.context.copy()
-            ctx.pop('default_type', False)
+        #     ctx = self.env.context.copy()
+        #     ctx.pop('default_type', False)
 
-            attachment_id = invoice.l10n_pe_edi_create_zipfile(filename, ublpe)
-            attachment_id.write({'res_id': invoice.id})
-            invoice.l10n_pe_edi_ublpe_name = attachment_id.datas_fname
-            # Post in chatter the attachment expected
-            invoice.message_post(
-                body=_("UBLPE document generated (it may not be signed)"),
-                attachment_ids=attachment_id.ids,
-                subtype="account.mt_invoice_validated")
-            invoice._l10n_pe_edi_sign()
+        #     attachment_id = invoice.l10n_pe_edi_create_zipfile(filename, ublpe)
+        #     attachment_id.write({'res_id': invoice.id})
+        #     invoice.l10n_pe_edi_ublpe_name = attachment_id.datas_fname
+        #     # Post in chatter the attachment expected
+        #     invoice.message_post(
+        #         body=_("UBLPE document generated (it may not be signed)"),
+        #         attachment_ids=attachment_id.ids,
+        #         subtype="account.mt_invoice_validated")
+        #     print "###########333"
+        #     invoice._l10n_pe_edi_sign()
 
     def _l10n_pe_edi_sign_xml(self, root, company=None):
-        company = company or self.company_id
-        certificate = (company.l10n_pe_edi_certificate_ids.sudo().
-                       get_valid_certificate())
-        pem_key = certificate.get_pem_key(certificate.content,
-                                          certificate.password)
-        pem_cert = certificate.get_pem_cert(certificate.content,
-                                            certificate.password)
-        xml_signed = XMLSigner(
-            digest_algorithm='sha1', signature_algorithm='rsa-sha1',
-            c14n_algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"
-        ).sign(root, key=pem_key, cert=pem_cert)
-        self.l10n_pe_edi_xpath(
-            xml_signed, '//ext:UBLExtensions/ext:UBLExtension/ext:'
-            'ExtensionContent/ds:Signature')[0].attrib['Id'] = 'SignVX'
-        return xml_signed
+        # company = company or self.company_id
+        # certificate = (company.l10n_pe_edi_certificate_ids.sudo().
+        #                get_valid_certificate())
+        # pem_key = certificate.get_pem_key(certificate.content,
+        #                                   certificate.password)
+        # pem_cert = certificate.get_pem_cert(certificate.content,
+        #                                     certificate.password)
+        # xml_signed = XMLSigner(
+        #     digest_algorithm='sha1', signature_algorithm='rsa-sha1',
+        #     c14n_algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"
+        # ).sign(root, key=pem_key, cert=pem_cert)
+        # self.l10n_pe_edi_xpath(
+        #     xml_signed, '//ext:UBLExtensions/ext:UBLExtension/ext:'
+        #     'ExtensionContent/ds:Signature')[0].attrib['Id'] = 'SignVX'
+        # return xml_signed
+        return True
 
     @api.multi
     def l10n_pe_edi_is_required(self):
@@ -634,96 +646,99 @@ class AccountInvoice(models.Model):
         """Generate ublpe documents attachments for peruvian companies when
         validated
         """
-        for invoices in self.filtered(lambda r: r.l10n_pe_edi_is_required() and
-                                      (r.number or r.move_name)):
-            if invoices.journal_id.code not in L10N_PE_EDI_JOURNAL_CODES:
-                message = _('The code in the journal is not valid for SUNAT '
-                            'standards, please use %s instead') % ','.join(
-                                L10N_PE_EDI_JOURNAL_CODES)
-                invoices.message_post(body=message, message_type='comment')
-                continue
+        # for invoices in self.filtered(lambda r: r.l10n_pe_edi_is_required() and
+        #                               (r.number or r.move_name)):
+        #     print "####invoices: ",invoices ####invoices:  account.invoice(113780,)
+        #     if invoices.journal_id.code not in L10N_PE_EDI_JOURNAL_CODES:
+        #         message = _('The code in the journal is not valid for SUNAT '
+        #                     'standards, please use %s instead') % ','.join(
+        #                         L10N_PE_EDI_JOURNAL_CODES)
+        #         invoices.message_post(body=message, message_type='comment')
+        #         continue
 
-            invoices.l10n_pe_edi_ublpe_name = ('%s-%s-%s.xml' % (
-                invoices.company_id.partner_id.l10n_pe_vat_number,
-                invoices.l10n_pe_document_type,
-                invoices.move_id.name,)).replace('/', '')
-            invoices.date_invoice = \
-                fields.Date.from_string(
-                    self.env['l10n_pe_edi.certificate'].
-                    get_pe_current_datetime().strftime("%Y-%m-%d"))
-            invoices._l10n_pe_edi_retry()
+        #     invoices.l10n_pe_edi_ublpe_name = ('%s-%s-%s.xml' % (
+        #         invoices.company_id.partner_id.l10n_pe_vat_number,
+        #         invoices.l10n_pe_document_type,
+        #         invoices.move_id.name,)).replace('/', '')
+        #     invoices.date_invoice = \
+        #         fields.Date.from_string(
+        #             self.env['l10n_pe_edi.certificate'].
+        #             get_pe_current_datetime().strftime("%Y-%m-%d"))
+        #     invoices._l10n_pe_edi_retry()
         return super(AccountInvoice, self).invoice_validate()
 
     @api.multi
     def action_invoice_cancel(self):
         """Cancel the ublpe attachments for peruvian companies when cancelled
         """
-        not_allow = self.env['account.invoice']
-        if (not self.env.user.has_group(
-           'l10n_pe_edi.res_group_super_user_manager')):
-            today = self.env[
-                'l10n_pe_edi.certificate'].get_pe_current_datetime()
-            limit_date_str = fields.datetime.strftime(
-                (today - timedelta(days=7)), tools.DEFAULT_SERVER_DATE_FORMAT)
+        # not_allow = self.env['account.invoice']
+        # if (not self.env.user.has_group(
+        #    'l10n_pe_edi.res_group_super_user_manager')):
+        #     today = self.env[
+        #         'l10n_pe_edi.certificate'].get_pe_current_datetime()
+        #     limit_date_str = fields.datetime.strftime(
+        #         (today - timedelta(days=7)), tools.DEFAULT_SERVER_DATE_FORMAT)
 
-            not_allow = self.filtered(
-                lambda r: r.l10n_pe_edi_is_required() and not
-                (not r.date_invoice or
-                    r.date_invoice >= limit_date_str or
-                    r.l10n_pe_edi_pse_status == 'with_error'))
-            for invoice in not_allow:
-                invoice.message_post(
-                    subject=_('Error cancelling your document'),
-                    body=_("This document can't be cancelled, it's out of the "
-                           "limit time and has no error. Create a credit a"
-                           " note instead"), message_type='comment')
-        (self - not_allow)._l10n_pe_edi_cancel()
-        not_allow |= self.filtered(lambda r:
-                                   r.l10n_pe_document_type == '01' and
-                                   not r.l10n_pe_edi_cdr_date and
-                                   r.l10n_pe_edi_pse_status == 'signed')
-        return super(AccountInvoice, self - not_allow).action_invoice_cancel()
+        #     not_allow = self.filtered(
+        #         lambda r: r.l10n_pe_edi_is_required() and not
+        #         (not r.date_invoice or
+        #             r.date_invoice >= limit_date_str or
+        #             r.l10n_pe_edi_pse_status == 'with_error'))
+        #     for invoice in not_allow:
+        #         invoice.message_post(
+        #             subject=_('Error cancelling your document'),
+        #             body=_("This document can't be cancelled, it's out of the "
+        #                    "limit time and has no error. Create a credit a"
+        #                    " note instead"), message_type='comment')
+        # (self - not_allow)._l10n_pe_edi_cancel()
+        # not_allow |= self.filtered(lambda r:
+        #                            r.l10n_pe_document_type == '01' and
+        #                            not r.l10n_pe_edi_cdr_date and
+        #                            r.l10n_pe_edi_pse_status == 'signed')
+        # return super(AccountInvoice, self - not_allow).action_invoice_cancel()
+        return super(AccountInvoice, self).action_invoice_cancel()
 
     @api.multi
     def l10n_pe_edi_update_pse_status(self):
         """Synchronize both systems: Odoo & PSE if the invoices need to be
         signed or cancelled.
         """
-        for record in self:
-            if record.l10n_pe_edi_pse_status == 'to_sign':
-                record._l10n_pe_edi_sign()
-            elif record.l10n_pe_edi_pse_status == 'retry':
-                record._l10n_pe_edi_retry()
-            elif record.l10n_pe_edi_pse_status in ['signed', 'with_error']:
-                record.action_send_to_sunat()
+        # for record in self:
+        #     if record.l10n_pe_edi_pse_status == 'to_sign':
+        #         record._l10n_pe_edi_sign()
+        #         print "###########################2"
+        #     elif record.l10n_pe_edi_pse_status == 'retry':
+        #         record._l10n_pe_edi_retry()
+        #     elif record.l10n_pe_edi_pse_status in ['signed', 'with_error']:
+        #         record.action_send_to_sunat()
 
     @api.multi
     def _l10n_pe_edi_cancel(self):
         """Call the cancel service with records that can be signed
         """
-        invoices = self.search([
-            ('l10n_pe_edi_pse_status', 'in',
-             ['to_sign', 'signed', 'retry', 'valid', 'in_process']),
-            ('id', 'in', self.ids), ('move_name', '!=', False)])
-        for invoice in invoices:
-            if not invoice.l10n_pe_edi_is_required():
-                continue
-            if (invoice.l10n_pe_edi_pse_status == 'signed' and
-               invoice.state in ['open', 'paid'] and
-               invoice.l10n_pe_document_type == '01'):
-                invoice.l10n_pe_edi_update_pse_status()
-                if not invoice.l10n_pe_edi_cdr_date:
-                    continue
+        # invoices = self.search([
+        #     ('l10n_pe_edi_pse_status', 'in',
+        #      ['to_sign', 'signed', 'retry', 'valid', 'in_process']),
+        #     ('id', 'in', self.ids), ('move_name', '!=', False)])
+        # for invoice in invoices:
+        #     if not invoice.l10n_pe_edi_is_required():
+        #         continue
+        #     if (invoice.l10n_pe_edi_pse_status == 'signed' and
+        #        invoice.state in ['open', 'paid'] and
+        #        invoice.l10n_pe_document_type == '01'):
+        #         invoice.l10n_pe_edi_update_pse_status()
+        #         if not invoice.l10n_pe_edi_cdr_date:
+        #             continue
 
-            invoice.update({
-                'l10n_pe_edi_pse_status': 'to_cancel',
-                'l10n_pe_edi_ticket_number': False,
-                'l10n_pe_edi_summary_id': False,
-            })
-        cron_voided = self.env.ref('l10n_pe_edi.ir_cron_send_voided_documents')
-        cron_voided.sudo().nextcall = fields.datetime.strptime(
-            fields.Datetime.now(), tools.DEFAULT_SERVER_DATETIME_FORMAT) + (
-                timedelta(minutes=15))
+        #     invoice.update({
+        #         'l10n_pe_edi_pse_status': 'to_cancel',
+        #         'l10n_pe_edi_ticket_number': False,
+        #         'l10n_pe_edi_summary_id': False,
+        #     })
+        # cron_voided = self.env.ref('l10n_pe_edi.ir_cron_send_voided_documents')
+        # cron_voided.sudo().nextcall = fields.datetime.strptime(
+        #     fields.Datetime.now(), tools.DEFAULT_SERVER_DATETIME_FORMAT) + (
+        #         timedelta(minutes=15))
 
     def l10n_pe_edi_call_sunat_service(self, client, name, params):
         """Call a SUNAT webservice with the parameters that the service method
@@ -736,38 +751,38 @@ class AccountInvoice(models.Model):
         :params name: service method name to be called
         :params params: parameters required to call the service method.
         """
-        try:
-            service = getattr(client, name)
-            service(**params)
-            return fromstring(client.xml_response)
-        except SoapFault as ex:
-            return {
-                'error': {
-                    'subject': _('Error received from SUNAT'),
-                    'message': _('Code: %s<br/>Message: %s') %
-                    (ex.faultcode, ex.faultstring),
-                }
-            }
-        except AttributeError:
-            _logger.error("Service '%s' does not exist", name)
-            return {
-                'error': {
-                    'subject': _('Service not implemented'),
-                    'message': _(
-                        "The service '%s' you are trying to consume is not "
-                        "implemented yet or it does not exists.") % name
-                }
-            }
+        # try:
+        #     service = getattr(client, name)
+        #     service(**params)
+        #     return fromstring(client.xml_response)
+        # except SoapFault as ex:
+        #     return {
+        #         'error': {
+        #             'subject': _('Error received from SUNAT'),
+        #             'message': _('Code: %s<br/>Message: %s') %
+        #             (ex.faultcode, ex.faultstring),
+        #         }
+        #     }
+        # except AttributeError:
+        #     _logger.error("Service '%s' does not exist", name)
+        #     return {
+        #         'error': {
+        #             'subject': _('Service not implemented'),
+        #             'message': _(
+        #                 "The service '%s' you are trying to consume is not "
+        #                 "implemented yet or it does not exists.") % name
+        #         }
+        #     }
 
-        except BaseException:
-            return {
-                'error': {
-                    'subject': _('General error cached'),
-                    'message': _(
-                        "We got a problem while processing your request "
-                        "please, stand by and try again.")
-                }
-            }
+        # except BaseException:
+        #     return {
+        #         'error': {
+        #             'subject': _('General error cached'),
+        #             'message': _(
+        #                 "We got a problem while processing your request "
+        #                 "please, stand by and try again.")
+        #         }
+        #     }
 
     def l10n_pe_edi_sunat_send_bill(self, client, vals):
         """It represents the method sendBill in SUNAT services.
@@ -776,7 +791,7 @@ class AccountInvoice(models.Model):
         :return: The value returned is a acceptance/rejection proof, that is a
         zip file with a xml inside of it.
         """
-        return self.l10n_pe_edi_call_sunat_service(client, 'sendBill', vals)
+        # return self.l10n_pe_edi_call_sunat_service(client, 'sendBill', vals)
 
     def l10n_pe_edi_sunat_send_summary(self, client, vals):
         """It represents the method sendSummary in SUNAT services. Used for:
@@ -787,7 +802,7 @@ class AccountInvoice(models.Model):
         :return: The value returned is a ticket number generated by SUNAT that
         represent a service for document processing.
         """
-        return self.l10n_pe_edi_call_sunat_service(client, 'sendSummary', vals)
+        # return self.l10n_pe_edi_call_sunat_service(client, 'sendSummary', vals)
 
     def l10n_pe_edi_sunat_send_pack(self, client, vals):
         """It represents the method sendPack in SUNAT services. Used for:
@@ -796,22 +811,22 @@ class AccountInvoice(models.Model):
         :param vals: parameters values
         :return: The value returned is a ticket number generated by SUNAT.
         """
-        return self.l10n_pe_edi_call_sunat_service(client, 'sendPack', vals)
+        # return self.l10n_pe_edi_call_sunat_service(client, 'sendPack', vals)
 
     def l10n_pe_edi_sunat_get_status(self, client, vals):
         """It represents the method getStatus in SUNAT services.
         :param client: WSDL client
         :param vals: parameters values
         """
-        return self.l10n_pe_edi_call_sunat_service(client, 'getStatus', vals)
+        # return self.l10n_pe_edi_call_sunat_service(client, 'getStatus', vals)
 
     def l10n_pe_edi_sunat_get_status_cdr(self, client, vals):
         """It represents the method getStatusCdr in SUNAT services.
         :param client: WSDL client
         :param vals: parameters values
         """
-        return self.l10n_pe_edi_call_sunat_service(
-            client, 'getStatusCdr', vals)
+        # return self.l10n_pe_edi_call_sunat_service(
+        #     client, 'getStatusCdr', vals)
 
     @api.multi
     def l10n_pe_edi_action_get_status_cdr_sunat(self):
@@ -820,83 +835,83 @@ class AccountInvoice(models.Model):
         (debit and credit), document types 01, 07 and 08, respectively that
         begins with 'F' (based on code 0010, see https://goo.gl/iJej7x)
         """
-        for invoice in self:
-            response = invoice._l10n_pe_edi_prepare_and_send(
-                service_name='get_status_cdr', company=invoice.company_id)
+        # for invoice in self:
+        #     response = invoice._l10n_pe_edi_prepare_and_send(
+        #         service_name='get_status_cdr', company=invoice.company_id)
 
-            if 'error' in response:
-                res_error = response['error']
-                invoice.message_post(subject=res_error['subject'],
-                                     body=res_error['message'],
-                                     message_type='comment')
-                continue
+        #     if 'error' in response:
+        #         res_error = response['error']
+        #         invoice.message_post(subject=res_error['subject'],
+        #                              body=res_error['message'],
+        #                              message_type='comment')
+        #         continue
 
-            cdr_code = response.xpath('//statusCdr/statusCode')
-            cdr_code = cdr_code[0].text if cdr_code else ''
-            msg = l10n_pe_edi_get_error_by_code(cdr_code)
-            # Save that response here, for the record, not the CDR
-            cdr_response = ''
-            try:
-                cdr_response = response.xpath('//content')[0]
-            except IndexError:
-                invoice.message_post(body=_(
-                    "There is no //content label in the response, please "
-                    "check in SUNAT if this document has an expected state,"
-                    " later, report an issue to the developer team."))
-            if cdr_response:
-                item = invoice.l10n_pe_edi_get_xml_etree(
-                    cdr_response[0].text, file_fmt="R-%(name)s.xml")
-                cdr_response_code = invoice.l10n_pe_edi_xpath(
-                    item,
-                    '//cac:DocumentResponse/cac:Response/cbc:ResponseCode')[0]
-                if cdr_response_code.text != '0':
-                    file_name = 'R-%s' % (
-                        splitext(invoice.l10n_pe_edi_ublpe_name)[0])
-                    msg = l10n_pe_edi_get_error_by_code(cdr_response_code.text)
-                    invoice._l10n_pe_edi_sunat_save_cdr(
-                        filename=file_name, content=cdr_response)
-                    status = 'with_error'
-            try:
-                cdr_code = int(cdr_code)
-            except ValueError:
-                msg = _('SUNAT response is: %s' %
-                        cdr_code)
-                continue
-            finally:
-                invoice.message_post(subject=_('CDR Response'), body=msg,
-                                     message_type='comment')
+        #     cdr_code = response.xpath('//statusCdr/statusCode')
+        #     cdr_code = cdr_code[0].text if cdr_code else ''
+        #     msg = l10n_pe_edi_get_error_by_code(cdr_code)
+        #     # Save that response here, for the record, not the CDR
+        #     cdr_response = ''
+        #     try:
+        #         cdr_response = response.xpath('//content')[0]
+        #     except IndexError:
+        #         invoice.message_post(body=_(
+        #             "There is no //content label in the response, please "
+        #             "check in SUNAT if this document has an expected state,"
+        #             " later, report an issue to the developer team."))
+        #     if cdr_response:
+        #         item = invoice.l10n_pe_edi_get_xml_etree(
+        #             cdr_response[0].text, file_fmt="R-%(name)s.xml")
+        #         cdr_response_code = invoice.l10n_pe_edi_xpath(
+        #             item,
+        #             '//cac:DocumentResponse/cac:Response/cbc:ResponseCode')[0]
+        #         if cdr_response_code.text != '0':
+        #             file_name = 'R-%s' % (
+        #                 splitext(invoice.l10n_pe_edi_ublpe_name)[0])
+        #             msg = l10n_pe_edi_get_error_by_code(cdr_response_code.text)
+        #             invoice._l10n_pe_edi_sunat_save_cdr(
+        #                 filename=file_name, content=cdr_response)
+        #             status = 'with_error'
+        #     try:
+        #         cdr_code = int(cdr_code)
+        #     except ValueError:
+        #         msg = _('SUNAT response is: %s' %
+        #                 cdr_code)
+        #         continue
+        #     finally:
+        #         invoice.message_post(subject=_('CDR Response'), body=msg,
+        #                              message_type='comment')
 
-            if cdr_code == 2 or cdr_code >= 5:
-                status = 'with_error'
-            elif cdr_code == 3:
-                status = 'cancelled'
-            elif cdr_code in (1, 4):
-                status = 'to_cancel' if invoice.state == 'cancel' else 'valid'
-            invoice.l10n_pe_edi_pse_status = status
+        #     if cdr_code == 2 or cdr_code >= 5:
+        #         status = 'with_error'
+        #     elif cdr_code == 3:
+        #         status = 'cancelled'
+        #     elif cdr_code in (1, 4):
+        #         status = 'to_cancel' if invoice.state == 'cancel' else 'valid'
+        #     invoice.l10n_pe_edi_pse_status = status
 
-            cdr_content = response.xpath('//statusCdr/content')
-            cdr_content = cdr_content[0].text if cdr_content else False
+        #     cdr_content = response.xpath('//statusCdr/content')
+        #     cdr_content = cdr_content[0].text if cdr_content else False
 
-            if not cdr_content:
-                continue
+        #     if not cdr_content:
+        #         continue
 
-            # Save SUNAT CDR into a new attachment
-            attachment = invoice.l10n_pe_edi_retrieve_last_attachment()
-            cdr_name = 'CDR-%s' % attachment.name
-            cdr_attachment = invoice._l10n_pe_edi_sunat_save_cdr(
-                filename=cdr_name, content=cdr_content)
-            invoice.message_post(
-                body=_("A CDR have been recovered for %s") % attachment.name,
-                attachment_ids=cdr_attachment.ids, message_type='comment')
+        #     # Save SUNAT CDR into a new attachment
+        #     attachment = invoice.l10n_pe_edi_retrieve_last_attachment()
+        #     cdr_name = 'CDR-%s' % attachment.name
+        #     cdr_attachment = invoice._l10n_pe_edi_sunat_save_cdr(
+        #         filename=cdr_name, content=cdr_content)
+        #     invoice.message_post(
+        #         body=_("A CDR have been recovered for %s") % attachment.name,
+        #         attachment_ids=cdr_attachment.ids, message_type='comment')
 
-            if status != 'valid':
-                continue
+        #     if status != 'valid':
+        #         continue
 
-            # get received response and update CDR date
-            cdr = invoice.l10n_pe_edi_get_xml_etree(
-                ublpe=cdr_content, file_fmt="R-%(name)s.xml",
-                file_name=attachment.name)
-            invoice._l10n_pe_edi_update_cdr_date(cdr_name, cdr)
+        #     # get received response and update CDR date
+        #     cdr = invoice.l10n_pe_edi_get_xml_etree(
+        #         ublpe=cdr_content, file_fmt="R-%(name)s.xml",
+        #         file_name=attachment.name)
+        #     invoice._l10n_pe_edi_update_cdr_date(cdr_name, cdr)
 
     def _l10n_pe_edi_prepare_and_send(self, service_name, attachment=None,
                                       ticket_no=None, company=None):
@@ -913,121 +928,122 @@ class AccountInvoice(models.Model):
         a local issue, network failures or credentials errors a dict with the
         error will be returned to be informed to the user.
         """
-        zip_file, zip_name = None, None
-        if attachment:
-            zip_file = attachment.datas
-            zip_name = attachment.datas_fname
+        # zip_file, zip_name = None, None
+        # if attachment:
+        #     zip_file = attachment.datas
+        #     zip_name = attachment.datas_fname
 
-        company = company or self.company_id
+        # company = company or self.company_id
 
-        username = company.l10n_pe_edi_sunat_username
-        password = company.l10n_pe_edi_sunat_password
+        # username = company.l10n_pe_edi_sunat_username
+        # password = company.l10n_pe_edi_sunat_password
 
-        # Based on the method name the web service url to be used changes.
-        # DEAR FUTURE ME: This is probably not the best way to accomplish this
-        url_field = 'sunat_'
-        if service_name == 'get_status_cdr':
-            url_field = 'bill_consult_'
-        try:
-            sunat_url = getattr(company, 'l10n_pe_edi_%surl' % url_field)
-        except AttributeError:
-            sunat_url = False
+        # # Based on the method name the web service url to be used changes.
+        # # DEAR FUTURE ME: This is probably not the best way to accomplish this
+        # url_field = 'sunat_'
+        # if service_name == 'get_status_cdr':
+        #     url_field = 'bill_consult_'
+        # try:
+        #     sunat_url = getattr(company, 'l10n_pe_edi_%surl' % url_field)
+        # except AttributeError:
+        #     sunat_url = False
 
-        if not (username and password and sunat_url):
-            return {'error': {
-                'subject': _('Error with credentials'),
-                'message': _("SUNAT SOL Parameters haven't been set "
-                             "correctly, please check that all web service "
-                             "addresses and SOL credentials are set "
-                             "in Accounting > Settings")
-            }}
-        try:
-            client = SoapClient(wsdl=sunat_url, soap_ns='soapenv', ns='ser',
-                                trace=logging.INFO)
-        except (ServerNotFoundError, ResponseNotReady) as message:
-            content = _('Seems that you are having trouble with the network\
-                <br/>Please try again later')
-            _logger.error("Network connection error")
-            return {'error': {
-                'subject': _('Error connecting to server'),
-                'message': _('Message: %s<br/>%s') % (message, content)
-            }}
+        # if not (username and password and sunat_url):
+        #     return {'error': {
+        #         'subject': _('Error with credentials'),
+        #         'message': _("SUNAT SOL Parameters haven't been set "
+        #                      "correctly, please check that all web service "
+        #                      "addresses and SOL credentials are set "
+        #                      "in Accounting > Settings")
+        #     }}
+        # try:
+        #     client = SoapClient(wsdl=sunat_url, soap_ns='soapenv', ns='ser',
+        #                         trace=logging.INFO)
+        # except (ServerNotFoundError, ResponseNotReady) as message:
+        #     content = _('Seems that you are having trouble with the network\
+        #         <br/>Please try again later')
+        #     _logger.error("Network connection error")
+        #     return {'error': {
+        #         'subject': _('Error connecting to server'),
+        #         'message': _('Message: %s<br/>%s') % (message, content)
+        #     }}
 
-        except socket.error as e:
-            return {
-                'error': {
-                    'subject': _('Conection reset by peer'),
-                    'message': _(
-                        "The service you are trying to consume is not "
-                        "responding, it returned this message: %s") % (e)
-                }
-            }
+        # except socket.error as e:
+        #     return {
+        #         'error': {
+        #             'subject': _('Conection reset by peer'),
+        #             'message': _(
+        #                 "The service you are trying to consume is not "
+        #                 "responding, it returned this message: %s") % (e)
+        #         }
+        #     }
 
-        except BaseException:
-            return {
-                'error': {
-                    'subject': _('General error cached'),
-                    'message': _(
-                        "We got a problem while processing your request "
-                        "please, stand by and try again.")
-                }
-            }
+        # except BaseException:
+        #     return {
+        #         'error': {
+        #             'subject': _('General error cached'),
+        #             'message': _(
+        #                 "We got a problem while processing your request "
+        #                 "please, stand by and try again.")
+        #         }
+        #     }
 
-        client['wsse:Security'] = {
-            'wsse:UsernameToken': {
-                'wsse:Username': username,
-                'wsse:Password': password,
-            }
-        }
+        # client['wsse:Security'] = {
+        #     'wsse:UsernameToken': {
+        #         'wsse:Username': username,
+        #         'wsse:Password': password,
+        #     }
+        # }
 
-        vals = {
-            'send_bill': {'fileName': zip_name, 'contentFile': zip_file},
-            'send_summary': {'fileName': zip_name, 'contentFile': zip_file},
-            'send_pack': {'fileName': zip_name, 'contentFile': zip_file},
-            'get_status': {'ticket': ticket_no},
-            'get_status_cdr': {
-                'rucComprobante':
-                self.company_id.partner_id.l10n_pe_vat_number,
-                'tipoComprobante': self.l10n_pe_document_type,
-                'serieComprobante': self.l10n_pe_edi_serie,
-                'numeroComprobante': self.l10n_pe_edi_correlative
-            }
-        }
-        params = vals.get(service_name)
-        getattr(self, 'l10n_pe_edi_sunat_%s' % service_name)(client, params)
-        try:
-            return fromstring(client.xml_response)
-        except etree.XMLSyntaxError:
-            return {
-                'error': {
-                    'subject': _('No XML as response'),
-                    'message': _("The service you are trying to consume is"
-                                 " not responding with an xml")
-                }
-            }
+        # vals = {
+        #     'send_bill': {'fileName': zip_name, 'contentFile': zip_file},
+        #     'send_summary': {'fileName': zip_name, 'contentFile': zip_file},
+        #     'send_pack': {'fileName': zip_name, 'contentFile': zip_file},
+        #     'get_status': {'ticket': ticket_no},
+        #     'get_status_cdr': {
+        #         'rucComprobante':
+        #         self.company_id.partner_id.l10n_pe_vat_number,
+        #         'tipoComprobante': self.l10n_pe_document_type,
+        #         'serieComprobante': self.l10n_pe_edi_serie,
+        #         'numeroComprobante': self.l10n_pe_edi_correlative
+        #     }
+        # }
+        # params = vals.get(service_name)
+        # getattr(self, 'l10n_pe_edi_sunat_%s' % service_name)(client, params)
+        # try:
+        #     return fromstring(client.xml_response)
+        # except etree.XMLSyntaxError:
+        #     return {
+        #         'error': {
+        #             'subject': _('No XML as response'),
+        #             'message': _("The service you are trying to consume is"
+        #                          " not responding with an xml")
+        #         }
+        #     }
 
     def _l10n_pe_edi_sunat_save_cdr(self, filename, content, invoice_ids=None):
-        invoice_id = False
-        if invoice_ids and len(invoice_ids) == 1:
-            invoice_id = invoice_ids.id
-        ctx = self.env.context.copy()
-        ctx.pop('default_type', False)
-        attachment = self.env['ir.attachment'].with_context(ctx).create({
-            'datas': content,
-            'mimetype': 'application/zip',
-            'res_id': invoice_id,
-            'res_model': self._name if invoice_id else False,
-            'name': filename,
-            'datas_fname': filename,
-            'l10n_pe_edi_sunat_file': True,
-        })
+        # invoice_id = False
+        # if invoice_ids and len(invoice_ids) == 1:
+        #     invoice_id = invoice_ids.id
+        # ctx = self.env.context.copy()
+        # ctx.pop('default_type', False)
+        # attachment = self.env['ir.attachment'].with_context(ctx).create({
+        #     'datas': content,
+        #     'mimetype': 'application/zip',
+        #     'res_id': invoice_id,
+        #     'res_model': self._name if invoice_id else False,
+        #     'name': filename,
+        #     'datas_fname': filename,
+        #     'l10n_pe_edi_sunat_file': True,
+        # })
 
-        if invoice_ids:
-            invoice_ids.message_post(body=_("CDR Received"),
-                                     attachment_ids=attachment.ids,
-                                     subtype="account.mt_invoice_validated",
-                                     message_type='comment')
-        return attachment
+        # if invoice_ids:
+        #     invoice_ids.message_post(body=_("CDR Received"),
+        #                              attachment_ids=attachment.ids,
+        #                              subtype="account.mt_invoice_validated",
+        #                              message_type='comment')
+        # return attachment
+        return True
 
     @staticmethod
     def l10n_pe_edi_get_error(response):
@@ -1045,111 +1061,112 @@ class AccountInvoice(models.Model):
             - Any other value is considered as rejected
         - If no error is received, all values will be false.
         """
-        if 'error' in response:
-            res_error = response['error']
-            return res_error['subject'], res_error['message'], 'not_sent'
+        # if 'error' in response:
+        #     res_error = response['error']
+        #     return res_error['subject'], res_error['message'], 'not_sent'
 
-        faultcode = response.xpath('//faultcode')
-        faultcode = faultcode[0].text if faultcode else ''
-        faultstring = response.xpath('//faultstring')
-        faultstring = faultstring[0].text if faultstring else ''
-        # Sometimes the return code is within a string like
-        # soap-env:Server.200 or soap-env:Client.2072
-        match = re.search(r"soap-env:(Server|Client)\.(\d+)", faultcode)
-        if match:
-            faultcode = match.group(2)
+        # faultcode = response.xpath('//faultcode')
+        # faultcode = faultcode[0].text if faultcode else ''
+        # faultstring = response.xpath('//faultstring')
+        # faultstring = faultstring[0].text if faultstring else ''
+        # # Sometimes the return code is within a string like
+        # # soap-env:Server.200 or soap-env:Client.2072
+        # match = re.search(r"soap-env:(Server|Client)\.(\d+)", faultcode)
+        # if match:
+        #     faultcode = match.group(2)
 
-        if faultstring == '-':
-            faultstring = l10n_pe_edi_get_error_by_code(faultcode)
+        # if faultstring == '-':
+        #     faultstring = l10n_pe_edi_get_error_by_code(faultcode)
 
-        # If there is no faultcode, there is no error
-        if not faultcode:
-            return False, False, False
+        # # If there is no faultcode, there is no error
+        # if not faultcode:
+        #     return False, False, False
 
-        res = (_('Error received from SUNAT'),
-               _('Code: %s<br/>Message: %s') % (faultcode, faultstring))
+        # res = (_('Error received from SUNAT'),
+        #        _('Code: %s<br/>Message: %s') % (faultcode, faultstring))
 
-        error_type = 'rejected'
+        # error_type = 'rejected'
 
-        # check if faultcode is parseable to int, if doesn't it will be
-        # considered as not sent
-        error_code = False
-        try:
-            faultcode = int(faultcode)
-        except ValueError:
-            error_code = True
+        # # check if faultcode is parseable to int, if doesn't it will be
+        # # considered as not sent
+        # error_code = False
+        # try:
+        #     faultcode = int(faultcode)
+        # except ValueError:
+        #     error_code = True
 
-        # Error code between '0100' and '1999' is considered as not sent
-        if error_code or 100 <= faultcode <= 1999:
-            error_type = 'not_sent'
+        # # Error code between '0100' and '1999' is considered as not sent
+        # if error_code or 100 <= faultcode <= 1999:
+        #     error_type = 'not_sent'
 
-        # Error code >= 4000, SUNAT recognizes as VALID with Details
-        elif faultcode >= 4000:
-            error_type = 'warning'
+        # # Error code >= 4000, SUNAT recognizes as VALID with Details
+        # elif faultcode >= 4000:
+        #     error_type = 'warning'
 
-        # If there is a error but was sent and is not a warning, was rejected
-        return res + (error_type,)
+        # # If there is a error but was sent and is not a warning, was rejected
+        # return res + (error_type,)
 
     @api.multi
     def action_send_to_sunat(self):
         """Send to SUNAT the current document and register the response
         received from the sendBill service"""
-        for document in self:
-            attachment = document.l10n_pe_edi_retrieve_last_attachment()
-            if not attachment:
-                document.message_post(
-                    subject=_('Error sending file'), message_type='comment',
-                    body=_('There is no attachment generated'))
-                continue
+        print "#"
+    #     for document in self:
+    #         attachment = document.l10n_pe_edi_retrieve_last_attachment()
+    #         if not attachment:
+    #             document.message_post(
+    #                 subject=_('Error sending file'), message_type='comment',
+    #                 body=_('There is no attachment generated'))
+    #             continue
 
-            res = document._l10n_pe_edi_prepare_and_send(
-                service_name='send_bill', attachment=attachment)
+    #         res = document._l10n_pe_edi_prepare_and_send(
+    #             service_name='send_bill', attachment=attachment)
 
-            error_title, error_msg, error_type = (
-                self.l10n_pe_edi_get_error(res))
+    #         error_title, error_msg, error_type = (
+    #             self.l10n_pe_edi_get_error(res))
 
-            if error_msg:
-                document.message_post(subject=error_title, body=error_msg,
-                                      message_type='comment')
+    #         if error_msg:
+    #             document.message_post(subject=error_title, body=error_msg,
+    #                                   message_type='comment')
 
-            if error_type == 'not_sent':
-                continue
+    #         if error_type == 'not_sent':
+    #             continue
 
-            app_response = res.xpath('//applicationResponse')
-            cdr_encoded = app_response[0].text if app_response else ''
+    #         app_response = res.xpath('//applicationResponse')
+    #         cdr_encoded = app_response[0].text if app_response else ''
 
-            code = False
-            date = False
-            if cdr_encoded:
-                cdr = document.l10n_pe_edi_get_xml_etree(
-                    ublpe=cdr_encoded, file_fmt="R-%(name)s.xml")
-                base_path = '/ar:ApplicationResponse/cac:DocumentResponse'
-                code_path = '%s//cbc:ResponseCode' % base_path
-                code = document.l10n_pe_edi_xpath(cdr, code_path)
-                code = code[0].text if code else False
-                date = self.l10n_pe_edi_xpath(cdr, '//cbc:ResponseDate')
-                date = date[0] if date else False
+    #         code = False
+    #         date = False
+    #         if cdr_encoded:
+    #             cdr = document.l10n_pe_edi_get_xml_etree(
+    #                 ublpe=cdr_encoded, file_fmt="R-%(name)s.xml")
+    #             base_path = '/ar:ApplicationResponse/cac:DocumentResponse'
+    #             code_path = '%s//cbc:ResponseCode' % base_path
+    #             code = document.l10n_pe_edi_xpath(cdr, code_path)
+    #             code = code[0].text if code else False
+    #             date = self.l10n_pe_edi_xpath(cdr, '//cbc:ResponseDate')
+    #             date = date[0] if date else False
 
-            # If the document is valid if gets code 0 or warning, in counter
-            # case it was rejected by SUNAT
-            status = 'with_error'
-            if code == '0' or error_type == 'warning':
-                status = 'valid'
-            document.l10n_pe_edi_pse_status = status
+    #         # If the document is valid if gets code 0 or warning, in counter
+    #         # case it was rejected by SUNAT
+    #         status = 'with_error'
+    #         if code == '0' or error_type == 'warning':
+    #             status = 'valid'
+    #         document.l10n_pe_edi_pse_status = status
 
-            if status == 'with_error' and code:
-                msg = '%s: %s %s' % (
-                    _('Code:'), code, l10n_pe_edi_get_error_by_code(code))
-                document.message_post(body=msg, message_type='comment')
+    #         if status == 'with_error' and code:
+    #             msg = '%s: %s %s' % (
+    #                 _('Code:'), code, l10n_pe_edi_get_error_by_code(code))
+    #             document.message_post(body=msg, message_type='comment')
 
-            if not cdr_encoded or not date:
-                continue
-            document.l10n_pe_edi_cdr_date = date.text[:10]
+    #         if not cdr_encoded or not date:
+    #             continue
+    #         document.l10n_pe_edi_cdr_date = date.text[:10]
 
-            cdr_name = 'CDR-%s' % attachment.name
-            document._l10n_pe_edi_sunat_save_cdr(filename=cdr_name,
-                                                 content=cdr_encoded,
-                                                 invoice_ids=document)
+    #         cdr_name = 'CDR-%s' % attachment.name
+    #         document._l10n_pe_edi_sunat_save_cdr(filename=cdr_name,
+    #                                              content=cdr_encoded,
+    #                                              invoice_ids=document)
 
     l10n_pe_edi_amount_taxable = fields.Monetary(
         string="Taxable amount", copy=False, readonly=True, store=True,
@@ -1271,32 +1288,32 @@ class AccountInvoice(models.Model):
         """Raise a validation error exception when the invoice number does not
         met format set by SUNAT
         """
-        number_rgx = r"[FB]{1}[A-Z0-9]{3}-[0-9]{1,8}"
-        rgx = re.compile(number_rgx)
-        for invoice in self.filtered(lambda r: r.l10n_pe_edi_is_required() and
-                                     r.state in ['open', 'paid']):
-            number = invoice.number or invoice.move_name
-            if not number and not rgx.match(number):
-                raise ValidationError(_(
-                    "Invoice number '%s' does not meet the format:\n"
-                    " - Go to the journal sequence and set a prefix like: "
-                    "'F**1-' or 'B**1-', including the '-' sign"
-                ) % invoice.number)
+        # number_rgx = r"[FB]{1}[A-Z0-9]{3}-[0-9]{1,8}"
+        # rgx = re.compile(number_rgx)
+        # for invoice in self.filtered(lambda r: r.l10n_pe_edi_is_required() and
+        #                              r.state in ['open', 'paid']):
+        #     number = invoice.number or invoice.move_name
+        #     if not number and not rgx.match(number):
+        #         raise ValidationError(_(
+        #             "Invoice number '%s' does not meet the format:\n"
+        #             " - Go to the journal sequence and set a prefix like: "
+        #             "'F**1-' or 'B**1-', including the '-' sign"
+        #         ) % invoice.number)
 
     @api.multi
     @api.depends('number')
     def _compute_l10n_pe_edi_serie(self):
         """Serial of document, used for Voided documents xml documents
         """
-        for invoice in self.filtered(lambda r: r.l10n_pe_edi_is_required()):
-            number = invoice.number or invoice.move_name
-            if not number or '-' not in number:
-                continue
-            number_split = number.split('-')
-            invoice.update({
-                'l10n_pe_edi_serie': number_split[0],
-                'l10n_pe_edi_correlative': number_split[1]
-            })
+        # for invoice in self.filtered(lambda r: r.l10n_pe_edi_is_required()):
+        #     number = invoice.number or invoice.move_name
+        #     if not number or '-' not in number:
+        #         continue
+        #     number_split = number.split('-')
+        #     invoice.update({
+        #         'l10n_pe_edi_serie': number_split[0],
+        #         'l10n_pe_edi_correlative': number_split[1]
+        #     })
 
     @api.model
     def l10n_pe_edi_get_customer_dni(self):
@@ -1316,7 +1333,7 @@ class AccountInvoice(models.Model):
         return (partner.l10n_pe_edi_vat_code, partner.l10n_pe_vat_number)
 
     @api.multi
-    @api.depends('amount_tax', 'amount_untaxed')
+    # @api.depends('amount_tax', 'amount_untaxed')
     def _compute_l10n_pe_edi_totals(self):
         """Compute invoice totals amounts as:
             - Taxable to IGV amount
@@ -1397,33 +1414,33 @@ class AccountInvoice(models.Model):
         """Send to SUNAT the attachment and then keep the ticket number
         received if no error.
         """
-        self.ensure_one()
-        invoices = self.search([('l10n_pe_edi_summary_id', '=',
-                                 self.l10n_pe_edi_summary_id.id)])
-        attachment_x_inv = groupby(invoices,
-                                   lambda r: r.l10n_pe_edi_summary_id)
-        for attachment, records in attachment_x_inv:
-            invoice_ids = self.browse([r.id for r in records])
-            response = self._l10n_pe_edi_prepare_and_send(
-                service_name='send_summary', attachment=attachment,
-                company=attachment.company_id)
+        # self.ensure_one()
+        # invoices = self.search([('l10n_pe_edi_summary_id', '=',
+        #                          self.l10n_pe_edi_summary_id.id)])
+        # attachment_x_inv = groupby(invoices,
+        #                            lambda r: r.l10n_pe_edi_summary_id)
+        # for attachment, records in attachment_x_inv:
+        #     invoice_ids = self.browse([r.id for r in records])
+        #     response = self._l10n_pe_edi_prepare_and_send(
+        #         service_name='send_summary', attachment=attachment,
+        #         company=attachment.company_id)
 
-            error_title, error_msg, error_type = (
-                self.l10n_pe_edi_get_error(response))
-            if error_msg:
-                for invoice in invoice_ids:
-                    invoice.message_post(subject=error_title, body=error_msg,
-                                         message_type='comment')
+        #     error_title, error_msg, error_type = (
+        #         self.l10n_pe_edi_get_error(response))
+        #     if error_msg:
+        #         for invoice in invoice_ids:
+        #             invoice.message_post(subject=error_title, body=error_msg,
+        #                                  message_type='comment')
 
-            if error_type == 'not_sent':
-                continue
+        #     if error_type == 'not_sent':
+        #         continue
 
-            if error_msg and error_type != 'warning':
-                invoice_ids.write({'l10n_pe_edi_pse_status': 'with_error'})
-                continue
-            ticket_no = response.xpath('//ticket')
-            ticket_no = ticket_no[0].text if ticket_no else False
-            invoice_ids.write({'l10n_pe_edi_ticket_number': ticket_no})
+        #     if error_msg and error_type != 'warning':
+        #         invoice_ids.write({'l10n_pe_edi_pse_status': 'with_error'})
+        #         continue
+        #     ticket_no = response.xpath('//ticket')
+        #     ticket_no = ticket_no[0].text if ticket_no else False
+        #     invoice_ids.write({'l10n_pe_edi_ticket_number': ticket_no})
 
     @api.multi
     def l10n_pe_edi_action_get_status_sunat(self):
@@ -1433,162 +1450,163 @@ class AccountInvoice(models.Model):
         still processing (code=98) and no action can be taken until it
         finished.
         """
-        self.ensure_one()
-        invoices = self.search([('l10n_pe_edi_summary_id', '=',
-                                 self.l10n_pe_edi_summary_id.id)])
-        attachment_x_inv = groupby(invoices,
-                                   lambda r: r.l10n_pe_edi_summary_id)
-        for attachment, records in attachment_x_inv:
-            invoice_ids = self.browse([r.id for r in records])
-            response = self._l10n_pe_edi_prepare_and_send(
-                service_name='get_status',
-                ticket_no=invoice_ids[0].l10n_pe_edi_ticket_number,
-                company=attachment.company_id)
+        # self.ensure_one()
+        # invoices = self.search([('l10n_pe_edi_summary_id', '=',
+        #                          self.l10n_pe_edi_summary_id.id)])
+        # attachment_x_inv = groupby(invoices,
+        #                            lambda r: r.l10n_pe_edi_summary_id)
+        # for attachment, records in attachment_x_inv:
+        #     invoice_ids = self.browse([r.id for r in records])
+        #     response = self._l10n_pe_edi_prepare_and_send(
+        #         service_name='get_status',
+        #         ticket_no=invoice_ids[0].l10n_pe_edi_ticket_number,
+        #         company=attachment.company_id)
 
-            error_title, error_msg, error_type = (
-                self.l10n_pe_edi_get_error(response))
-            for invoice in error_msg and invoice_ids or []:
-                invoice.message_post(subject=error_title, body=error_msg,
-                                     message_type='comment')
+        #     error_title, error_msg, error_type = (
+        #         self.l10n_pe_edi_get_error(response))
+        #     for invoice in error_msg and invoice_ids or []:
+        #         invoice.message_post(subject=error_title, body=error_msg,
+        #                              message_type='comment')
 
-            # Local error ocurred
-            if error_type == 'not_sent':
-                continue
+        #     # Local error ocurred
+        #     if error_type == 'not_sent':
+        #         continue
 
-            status_code = response.xpath('//status/statusCode')
+        #     status_code = response.xpath('//status/statusCode')
 
-            # check if status code is parseable to int, if doesn't it will be
-            # ignored
-            status_code = self._process_statusCode(
-                status_code, invoice_ids, attachment)
-            if status_code is False:
-                continue
+        #     # check if status code is parseable to int, if doesn't it will be
+        #     # ignored
+        #     status_code = self._process_statusCode(
+        #         status_code, invoice_ids, attachment)
+        #     if status_code is False:
+        #         continue
 
-            zip_name = attachment.name
-            valid_invoices = invoice_ids.filtered(
-                lambda r: r.state in ['open', 'paid', 'cancel'] and
-                'RC' in zip_name or r.state == 'cancel' and 'RA' in zip_name)
+        #     zip_name = attachment.name
+        #     valid_invoices = invoice_ids.filtered(
+        #         lambda r: r.state in ['open', 'paid', 'cancel'] and
+        #         'RC' in zip_name or r.state == 'cancel' and 'RA' in zip_name)
 
-            # Detect if there are documents that changed their odoo state after
-            # were included in a summary and cannot be updated
-            invalid_invoices = invoice_ids - valid_invoices
+        #     # Detect if there are documents that changed their odoo state after
+        #     # were included in a summary and cannot be updated
+        #     invalid_invoices = invoice_ids - valid_invoices
 
-            # If there are cancelled boletas included in a ticket summary
-            # should be ready to be included and notified to SUNAT
-            invalid_invoices.filtered(lambda r: r.state == 'cancel').write({
-                'l10n_pe_edi_pse_status': 'to_cancel',
-                'l10n_pe_edi_ticket_number': False,
-                'l10n_pe_edi_summary_id': False,
-            })
+        #     # If there are cancelled boletas included in a ticket summary
+        #     # should be ready to be included and notified to SUNAT
+        #     invalid_invoices.filtered(lambda r: r.state == 'cancel').write({
+        #         'l10n_pe_edi_pse_status': 'to_cancel',
+        #         'l10n_pe_edi_ticket_number': False,
+        #         'l10n_pe_edi_summary_id': False,
+        #     })
 
-            # if there is not invoices, the summary was already processed as
-            # invalid one
-            if not valid_invoices:
-                continue
+        #     # if there is not invoices, the summary was already processed as
+        #     # invalid one
+        #     if not valid_invoices:
+        #         continue
 
-            # SUNAT status transition based on odoo state
-            new_status = {
-                'cancel': 'cancelled',
-                'open': 'valid',
-                'paid': 'valid',
-            }
-            for document in valid_invoices:
-                status = new_status.get(document.state)
-                if status_code != 0 or error_type == 'rejected':
-                    status = 'with_error'
-                document.l10n_pe_edi_pse_status = (
-                    status if document.l10n_pe_edi_pse_status !=
-                    'to_be_cancelled' else 'to_cancel')
+        #     # SUNAT status transition based on odoo state
+        #     new_status = {
+        #         'cancel': 'cancelled',
+        #         'open': 'valid',
+        #         'paid': 'valid',
+        #     }
+        #     for document in valid_invoices:
+        #         status = new_status.get(document.state)
+        #         if status_code != 0 or error_type == 'rejected':
+        #             status = 'with_error'
+        #         document.l10n_pe_edi_pse_status = (
+        #             status if document.l10n_pe_edi_pse_status !=
+        #             'to_be_cancelled' else 'to_cancel')
 
-            cdr_content = response.xpath('//status/content')
-            cdr_content = cdr_content[0].text if cdr_content else False
+        #     cdr_content = response.xpath('//status/content')
+        #     cdr_content = cdr_content[0].text if cdr_content else False
 
-            if not cdr_content:
-                continue
+        #     if not cdr_content:
+        #         continue
 
-            # Get CDR, and update values
-            cdr = valid_invoices[0].l10n_pe_edi_get_xml_etree(
-                ublpe=cdr_content, file_fmt="R-%(name)s.xml",
-                file_name=attachment.name)
+        #     # Get CDR, and update values
+        #     cdr = valid_invoices[0].l10n_pe_edi_get_xml_etree(
+        #         ublpe=cdr_content, file_fmt="R-%(name)s.xml",
+        #         file_name=attachment.name)
 
-            cdr_attachment = self.env['ir.attachment']
-            cdr_name = 'CDR-%s' % attachment.name
-            try:
-                # Validate is not a malformed zip file
-                with tempfile.TemporaryFile() as zip_file:
-                    zip_decoded = base64.b64decode(cdr_content)
-                    zip_file.write(zip_decoded)
-                    zipfile.ZipFile(zip_file, 'r')
+        #     cdr_attachment = self.env['ir.attachment']
+        #     cdr_name = 'CDR-%s' % attachment.name
+        #     try:
+        #         # Validate is not a malformed zip file
+        #         with tempfile.TemporaryFile() as zip_file:
+        #             zip_decoded = base64.b64decode(cdr_content)
+        #             zip_file.write(zip_decoded)
+        #             zipfile.ZipFile(zip_file, 'r')
 
-                # Save SUNAT CDR into a new attachment
-                cdr_attachment = self._l10n_pe_edi_sunat_save_cdr(
-                    filename=cdr_name, content=cdr_content)
-                message = _(
-                    "A CDR have been received for %s") % attachment.name
-            except zipfile.BadZipfile:
-                message = _("SUNAT returned a corrupted CDR file")
-                encoded = base64.b64encode(etree.tostring(response))
-                cdr_attachment = self.env['ir.attachment'].create({
-                    'datas': encoded,
-                    'res_model': self._name,
-                    'mimetype': 'application/zip',
-                    'name': cdr_name,
-                    'datas_fname': cdr_name,
-                })
-                status = 'with_error'
-                continue
-            finally:
-                for invoice in valid_invoices:
-                    invoice.message_post(message, message_type='comment',
-                                         attachment_ids=cdr_attachment.ids)
-                    if status == 'with_error':
-                        invoice.l10n_pe_edi_pse_status = status
-                        invoice.message_post('%s code: %s' % (_(
-                            "Error received"), status_code))
-            valid_invoices.filtered(
-                lambda r: r.l10n_pe_edi_pse_status != 'with_error').write({
-                    'l10n_pe_edi_ticket_number': False})
-            valid_invoices -= valid_invoices.filtered(
-                lambda r: r.l10n_pe_edi_pse_status == 'with_error')
-            if valid_invoices:
-                valid_invoices._l10n_pe_edi_update_cdr_date(cdr_name, cdr)
+        #         # Save SUNAT CDR into a new attachment
+        #         cdr_attachment = self._l10n_pe_edi_sunat_save_cdr(
+        #             filename=cdr_name, content=cdr_content)
+        #         message = _(
+        #             "A CDR have been received for %s") % attachment.name
+        #     except zipfile.BadZipfile:
+        #         message = _("SUNAT returned a corrupted CDR file")
+        #         encoded = base64.b64encode(etree.tostring(response))
+        #         cdr_attachment = self.env['ir.attachment'].create({
+        #             'datas': encoded,
+        #             'res_model': self._name,
+        #             'mimetype': 'application/zip',
+        #             'name': cdr_name,
+        #             'datas_fname': cdr_name,
+        #         })
+        #         status = 'with_error'
+        #         continue
+        #     finally:
+        #         for invoice in valid_invoices:
+        #             invoice.message_post(message, message_type='comment',
+        #                                  attachment_ids=cdr_attachment.ids)
+        #             if status == 'with_error':
+        #                 invoice.l10n_pe_edi_pse_status = status
+        #                 invoice.message_post('%s code: %s' % (_(
+        #                     "Error received"), status_code))
+        #     valid_invoices.filtered(
+        #         lambda r: r.l10n_pe_edi_pse_status != 'with_error').write({
+        #             'l10n_pe_edi_ticket_number': False})
+        #     valid_invoices -= valid_invoices.filtered(
+        #         lambda r: r.l10n_pe_edi_pse_status == 'with_error')
+        #     if valid_invoices:
+        #         valid_invoices._l10n_pe_edi_update_cdr_date(cdr_name, cdr)
 
     @api.multi
     def _process_statusCode(self, status_code, invoice_ids, attachment):
         """If there is a coincidence in the fault list then we are stopping the
         process and writing a message for that document"""
-        fault_error = ''
-        try:
-            fault_error = l10n_pe_edi_get_error_by_code(status_code[0].text)
-            temp_code = int(status_code[0].text)
-        except (ValueError, IndexError):
-            message = '%s: %s' % (_("Sunat is returning something unexpected"),
-                                  status_code[0].text)
-            self._message_post(invoice_ids, message)
-            return False
+        # fault_error = ''
+        # try:
+        #     fault_error = l10n_pe_edi_get_error_by_code(status_code[0].text)
+        #     temp_code = int(status_code[0].text)
+        # except (ValueError, IndexError):
+        #     message = '%s: %s' % (_("Sunat is returning something unexpected"),
+        #                           status_code[0].text)
+        #     self._message_post(invoice_ids, message)
+        #     return False
 
-        # If document is still processing by SUNAT, do nothing but set
-        # state and log in chatter
-        if temp_code == 98:
-            message = '%s %s' % (
-                _('This document is still being processing by '
-                  'SUNAT in the document %s'), attachment.name)
-            self._message_post(invoice_ids, message, 'in_process')
-            return False
-        # Any error from the list shall be registered as a message
-        if fault_error != 'Error code not recognized':
-            message = '%s: %s' % (
-                _("SUNAT is sending us this message"), fault_error)
-            self._message_post(invoice_ids, message, 'with_error')
-            return False
-        return temp_code
+        # # If document is still processing by SUNAT, do nothing but set
+        # # state and log in chatter
+        # if temp_code == 98:
+        #     message = '%s %s' % (
+        #         _('This document is still being processing by '
+        #           'SUNAT in the document %s'), attachment.name)
+        #     self._message_post(invoice_ids, message, 'in_process')
+        #     return False
+        # # Any error from the list shall be registered as a message
+        # if fault_error != 'Error code not recognized':
+        #     message = '%s: %s' % (
+        #         _("SUNAT is sending us this message"), fault_error)
+        #     self._message_post(invoice_ids, message, 'with_error')
+        #     return False
+        # return temp_code
 
     @api.multi
     def _message_post(self, invoice_ids, message, status=False):
-        for invoice in invoice_ids:
-            invoice.message_post(body=message, message_type='comment')
-            if status:
-                invoice.l10n_pe_edi_pse_status = status
+        # for invoice in invoice_ids:
+        #     invoice.message_post(body=message, message_type='comment')
+        #     if status:
+        #         invoice.l10n_pe_edi_pse_status = status
+        return True
 
     @api.multi
     def _l10n_pe_edi_update_cdr_date(self, cdr_name, cdr_xml):
@@ -1596,16 +1614,16 @@ class AccountInvoice(models.Model):
         :param cdr_name: CDR name to be processed
         :param cdr_xml: CDR content in xml tree form
         """
-        date = self.l10n_pe_edi_xpath(cdr_xml, '//cbc:ResponseDate')
-        try:
-            date = date[0].text[:10] if date else False
-            fields.Datetime.from_string(date)
-            self.update({'l10n_pe_edi_cdr_date': date})
-        except (ValueError, TypeError, IndexError):
-            for invoice in self:
-                invoice.message_post(
-                    body=_("Wrong CDR Date format received in %s: '%s'") %
-                    (cdr_name, date), message_type='comment')
+        # date = self.l10n_pe_edi_xpath(cdr_xml, '//cbc:ResponseDate')
+        # try:
+        #     date = date[0].text[:10] if date else False
+        #     fields.Datetime.from_string(date)
+        #     self.update({'l10n_pe_edi_cdr_date': date})
+        # except (ValueError, TypeError, IndexError):
+        #     for invoice in self:
+        #         invoice.message_post(
+        #             body=_("Wrong CDR Date format received in %s: '%s'") %
+        #             (cdr_name, date), message_type='comment')
 
     @api.multi
     def l10n_pe_edi_search_ra(self, vals):
@@ -1614,18 +1632,18 @@ class AccountInvoice(models.Model):
         valid and cancelled tickets (wherever were notified or not) based on
         their issue date that are not cancelled.
         """
-        invoices = self.search([
-            ('type', 'in', ['out_refund', 'out_invoice']),
-            ('date_invoice', '=', vals.get('reference_date')),
-            ('state', '=', 'cancel'),
-            ('l10n_pe_edi_summary_id', '=', False),
-            ('l10n_pe_document_type', '=', '01')])
+        # invoices = self.search([
+        #     ('type', 'in', ['out_refund', 'out_invoice']),
+        #     ('date_invoice', '=', vals.get('reference_date')),
+        #     ('state', '=', 'cancel'),
+        #     ('l10n_pe_edi_summary_id', '=', False),
+        #     ('l10n_pe_document_type', '=', '01')])
 
-        invoices = invoices.filtered(
-            lambda r: not r.l10n_pe_edi_ticket_number and
-            (r.l10n_pe_document_type == '01' and
-             r.l10n_pe_edi_pse_status == 'to_cancel'))
-        return invoices
+        # invoices = invoices.filtered(
+        #     lambda r: not r.l10n_pe_edi_ticket_number and
+        #     (r.l10n_pe_document_type == '01' and
+        #      r.l10n_pe_edi_pse_status == 'to_cancel'))
+        # return invoices
 
     @api.multi
     def l10n_pe_edi_get_ra_values(self):
@@ -1633,19 +1651,20 @@ class AccountInvoice(models.Model):
         be used when rendering the xml document
         :return: values in a dict will be returned
         """
-        return {
-            'company': self.mapped('company_id'),
-            'reference_date': self.env.context.get('reference_date'),
-            'issue_date': self.env.context.get('issue_date'),
-            'number': self.env.context.get('number'),
-            'records': self
-        }
+        # return {
+        #     'company': self.mapped('company_id'),
+        #     'reference_date': self.env.context.get('reference_date'),
+        #     'issue_date': self.env.context.get('issue_date'),
+        #     'number': self.env.context.get('number'),
+        #     'records': self
+        # }
 
     @api.multi
     def l10n_pe_edi_generate_summary_ra(self):
-        vals = self.l10n_pe_edi_get_ra_values()
-        invoices = self.l10n_pe_edi_search_ra(vals)
-        return invoices.l10n_pe_edi_generate_summary('ra')
+        # vals = self.l10n_pe_edi_get_ra_values()
+        # invoices = self.l10n_pe_edi_search_ra(vals)
+        # return invoices.l10n_pe_edi_generate_summary('ra')
+        return True
 
     @api.multi
     def l10n_pe_edi_search_rc(self, vals):
@@ -1654,25 +1673,25 @@ class AccountInvoice(models.Model):
         :vals: values that contains at least the reference date for invoices
         :return: A record set of tickets
         """
-        company = self.env.user.company_id
-        # TODO: improve the way this search works
-        all_tickets = self.search([
-            ('type', 'in', ['out_refund', 'out_invoice']),
-            ('date_invoice', '=', vals.get('reference_date')),
-            ('company_id', '=', company.id),
-            ('l10n_pe_document_type', 'in', ['03', '07', '08']),
-            ('l10n_pe_edi_pse_status', 'not in', ['valid', 'cancelled',
-                                                  'in_process']),
-            ('amount_total', '>=', 0.0),
-            ('l10n_pe_edi_amount_taxable', '>=', 0.0),
-            ('l10n_pe_edi_ticket_number', '=', False),
-        ])
-        tickets = all_tickets.filtered(
-            lambda r: r.l10n_pe_document_type == '03' or (
-                r.l10n_pe_document_type in ['07', '08'] and
-                r.refund_invoice_id.l10n_pe_document_type == '03'))
-        tickets_related_filtered = self.l10n_pe_edi_related_documents(tickets)
-        return tickets_related_filtered
+        # company = self.env.user.company_id
+        # # TODO: improve the way this search works
+        # all_tickets = self.search([
+        #     ('type', 'in', ['out_refund', 'out_invoice']),
+        #     ('date_invoice', '=', vals.get('reference_date')),
+        #     ('company_id', '=', company.id),
+        #     ('l10n_pe_document_type', 'in', ['03', '07', '08']),
+        #     ('l10n_pe_edi_pse_status', 'not in', ['valid', 'cancelled',
+        #                                           'in_process']),
+        #     ('amount_total', '>=', 0.0),
+        #     ('l10n_pe_edi_amount_taxable', '>=', 0.0),
+        #     ('l10n_pe_edi_ticket_number', '=', False),
+        # ])
+        # tickets = all_tickets.filtered(
+        #     lambda r: r.l10n_pe_document_type == '03' or (
+        #         r.l10n_pe_document_type in ['07', '08'] and
+        #         r.refund_invoice_id.l10n_pe_document_type == '03'))
+        # tickets_related_filtered = self.l10n_pe_edi_related_documents(tickets)
+        # return tickets_related_filtered
 
     @api.multi
     def l10n_pe_edi_get_rc_values(self):
@@ -1682,64 +1701,65 @@ class AccountInvoice(models.Model):
         :return: values in a dict will be returned
         """
 
-        res = []
-        for record in self:
-            vat_info = record.l10n_pe_edi_get_customer_dni()
-            additional_info = record.l10n_pe_edi_get_additional_values()
-            reference = (
-                record.refund_invoice_id.number if
-                record.l10n_pe_document_type in ['07', '08'] else False)
-            res.append({
-                'serie': record.l10n_pe_edi_serie,
-                'doc_type': record.l10n_pe_document_type,
-                'total_taxable': record.l10n_pe_edi_amount_taxable,
-                'total_exonerated': record.l10n_pe_edi_amount_exonerated,
-                'total_unaffected': record.l10n_pe_edi_amount_unaffected,
-                'amount_total': record.amount_total,
-                'currency': record.currency_id.name,
-                'number': record.number or record.move_name,
-                'vat_additional': vat_info[0],
-                'vat_code': vat_info[1],
-                'status': additional_info['status'],
-                'typeCode': additional_info['typeCode'],
-                'reference': reference,
+        # res = []
+        # for record in self:
+        #     vat_info = record.l10n_pe_edi_get_customer_dni()
+        #     additional_info = record.l10n_pe_edi_get_additional_values()
+        #     reference = (
+        #         record.refund_invoice_id.number if
+        #         record.l10n_pe_document_type in ['07', '08'] else False)
+        #     res.append({
+        #         'serie': record.l10n_pe_edi_serie,
+        #         'doc_type': record.l10n_pe_document_type,
+        #         'total_taxable': record.l10n_pe_edi_amount_taxable,
+        #         'total_exonerated': record.l10n_pe_edi_amount_exonerated,
+        #         'total_unaffected': record.l10n_pe_edi_amount_unaffected,
+        #         'amount_total': record.amount_total,
+        #         'currency': record.currency_id.name,
+        #         'number': record.number or record.move_name,
+        #         'vat_additional': vat_info[0],
+        #         'vat_code': vat_info[1],
+        #         'status': additional_info['status'],
+        #         'typeCode': additional_info['typeCode'],
+        #         'reference': reference,
 
-                # DEAR ME: There are no other charges that applies at
-                # this time the following dict entry is set to 0 on purpose
-                # to be filled when needed
-                'other_charges': 0,
+        #         # DEAR ME: There are no other charges that applies at
+        #         # this time the following dict entry is set to 0 on purpose
+        #         # to be filled when needed
+        #         'other_charges': 0,
 
-                'taxes': [{
-                    'edi_id': '1000',
-                    'name': 'IGV',
-                    'code': 'VAT',
-                    'amount_tax': record.l10n_pe_edi_total_igv,
-                }, {
-                    'edi_id': '2000',
-                    'name': 'ISC',
-                    'code': 'EXC',
-                    'amount_tax': record.l10n_pe_edi_total_isc,
-                }, {
-                    'edi_id': '9999',
-                    'name': 'OTROS',
-                    'code': 'OTH',
-                    'amount_tax': record.l10n_pe_edi_total_otros,
-                }],
+        #         'taxes': [{
+        #             'edi_id': '1000',
+        #             'name': 'IGV',
+        #             'code': 'VAT',
+        #             'amount_tax': record.l10n_pe_edi_total_igv,
+        #         }, {
+        #             'edi_id': '2000',
+        #             'name': 'ISC',
+        #             'code': 'EXC',
+        #             'amount_tax': record.l10n_pe_edi_total_isc,
+        #         }, {
+        #             'edi_id': '9999',
+        #             'name': 'OTROS',
+        #             'code': 'OTH',
+        #             'amount_tax': record.l10n_pe_edi_total_otros,
+        #         }],
 
-            })
-        return {
-            'company': self.env.user.company_id,
-            'reference_date': self.env.context.get('reference_date'),
-            'issue_date': self.env.context.get('issue_date'),
-            'number': self.env.context.get('number'),
-            'records': res
-        }
+        #     })
+        # return {
+        #     'company': self.env.user.company_id,
+        #     'reference_date': self.env.context.get('reference_date'),
+        #     'issue_date': self.env.context.get('issue_date'),
+        #     'number': self.env.context.get('number'),
+        #     'records': res
+        # }
 
     @api.multi
     def l10n_pe_edi_generate_summary_rc(self):
-        vals = self.l10n_pe_edi_get_rc_values()
-        invoices = self.l10n_pe_edi_search_rc(vals)
-        return invoices.l10n_pe_edi_generate_summary('rc')
+        # vals = self.l10n_pe_edi_get_rc_values()
+        # invoices = self.l10n_pe_edi_search_rc(vals)
+        # return invoices.l10n_pe_edi_generate_summary('rc')
+        return True
 
     def l10n_pe_edi_generate_summary(self, summary_type):
         """Generate a summary document with the given invoice
@@ -1747,141 +1767,144 @@ class AccountInvoice(models.Model):
         :return: id of attachment created, in counter case a dictionary with
         error.
         """
-        if not self:
-            return {'error': _('There are no documents to be processed')}
+        # if not self:
+        #     return {'error': _('There are no documents to be processed')}
 
-        if not summary_type:
-            return {'error': _('Summary type to be generated is not set')}
+        # if not summary_type:
+        #     return {'error': _('Summary type to be generated is not set')}
 
-        values_func = 'l10n_pe_edi_get_%s_values' % summary_type
-        attachment_ids = []
-        comp_x_records = groupby(self, lambda r: r.company_id)
-        summary_message = {'rc': 'Daily Summary', 'ra': 'Voided Summary'}
-        for company_id, records in comp_x_records:
-            invoice_ids = self.browse([r.id for r in records])
-            values = getattr(invoice_ids, values_func)()
-            version = self.l10n_pe_edi_get_pse_version()
-            vals = get_xsd_template_names(summary_type.upper(), version)
+        # values_func = 'l10n_pe_edi_get_%s_values' % summary_type
+        # attachment_ids = []
+        # comp_x_records = groupby(self, lambda r: r.company_id)
+        # summary_message = {'rc': 'Daily Summary', 'ra': 'Voided Summary'}
+        # for company_id, records in comp_x_records:
+        #     invoice_ids = self.browse([r.id for r in records])
+        #     values = getattr(invoice_ids, values_func)()
+        #     version = self.l10n_pe_edi_get_pse_version()
+        #     vals = get_xsd_template_names(summary_type.upper(), version)
 
-            # Compute ublpe
-            ublpe = self.env['ir.qweb'].render(vals[0],
-                                               values=values)
+        #     # Compute ublpe
+        #     ublpe = self.env['ir.qweb'].render(vals[0],
+        #                                        values=values)
 
-            # Replace back colons in namespaces to have a valid UBLPE document
-            ublpe = ublpe.replace('__', ':')
+        #     # Replace back colons in namespaces to have a valid UBLPE document
+        #     ublpe = ublpe.replace('__', ':')
 
-            # Include xml namespace to indicate xml's root element
-            replace_dict = {'dn': vals[2]}
-            ublpe = ublpe.replace(
-                '<%(dn)s' % replace_dict,
-                '<%(dn)s xmlns="urn:sunat:names:specification:ubl:peru:schema'
-                ':xsd:%(dn)s-1"' % replace_dict)
+        #     # Include xml namespace to indicate xml's root element
+        #     replace_dict = {'dn': vals[2]}
+        #     ublpe = ublpe.replace(
+        #         '<%(dn)s' % replace_dict,
+        #         '<%(dn)s xmlns="urn:sunat:names:specification:ubl:peru:schema'
+        #         ':xsd:%(dn)s-1"' % replace_dict)
 
-            tree = fromstring(ublpe)
+        #     tree = fromstring(ublpe)
 
-            xml_signed = self._l10n_pe_edi_sign_xml(tree, company_id)
+        #     xml_signed = self._l10n_pe_edi_sign_xml(tree, company_id)
 
-            # Create ZIP file
-            filename = ('%s-%s' % (company_id.partner_id.l10n_pe_vat_number,
-                        values.get('number')))
+        #     # Create ZIP file
+        #     filename = ('%s-%s' % (company_id.partner_id.l10n_pe_vat_number,
+        #                 values.get('number')))
 
-            xml_str = etree.tostring(xml_signed, xml_declaration=True,
-                                     encoding='ISO-8859-1')
-            attachment = self.l10n_pe_edi_create_zipfile(filename, xml_str)
-            invoice_ids.write({
-                'l10n_pe_edi_summary_id': attachment.id,
-                'l10n_pe_edi_ticket_number': False,
-            })
+        #     xml_str = etree.tostring(xml_signed, xml_declaration=True,
+        #                              encoding='ISO-8859-1')
+        #     attachment = self.l10n_pe_edi_create_zipfile(filename, xml_str)
+        #     invoice_ids.write({
+        #         'l10n_pe_edi_summary_id': attachment.id,
+        #         'l10n_pe_edi_ticket_number': False,
+        #     })
 
-            self.filtered(
-                lambda r: r.l10n_pe_edi_pse_status != 'to_be_cancelled').write(
-                    {'l10n_pe_edi_pse_status': 'in_process', })
+        #     self.filtered(
+        #         lambda r: r.l10n_pe_edi_pse_status != 'to_be_cancelled').write(
+        #             {'l10n_pe_edi_pse_status': 'in_process', })
 
-            message = _("This invoice has been included in the %s: <a href=# "
-                        "data-oe-model=ir.attachment data-oe-id=%d>%s</a>") % (
-                            summary_message[summary_type],
-                            attachment.id, attachment.datas_fname)
-            for invoice in invoice_ids:
-                invoice.message_post(message_type='comment', body=message)
-                if invoice.l10n_pe_edi_pse_status == 'to_be_cancelled':
-                    invoice.message_post(body=_('This document should run agai'
-                                                'n the summary generation'),
-                                         message_type='comment')
-            attachment_ids.append(attachment.id)
-        return {'attachment_ids': attachment_ids}
+        #     message = _("This invoice has been included in the %s: <a href=# "
+        #                 "data-oe-model=ir.attachment data-oe-id=%d>%s</a>") % (
+        #                     summary_message[summary_type],
+        #                     attachment.id, attachment.datas_fname)
+        #     for invoice in invoice_ids:
+        #         invoice.message_post(message_type='comment', body=message)
+        #         if invoice.l10n_pe_edi_pse_status == 'to_be_cancelled':
+        #             invoice.message_post(body=_('This document should run agai'
+        #                                         'n the summary generation'),
+        #                                  message_type='comment')
+        #     attachment_ids.append(attachment.id)
+        # return {'attachment_ids': attachment_ids}
 
     def l10n_pe_edi_search_lt(self):
-        reference_date = self.env.context.get('reference_date')
-        company = self.env.user.company_id
-        # TODO: improve the way this search works, because we don't how this
-        # search will behave under big lots of documents
-        invoices = self.search([
-            ('type', 'in', ['out_refund', 'out_invoice']),
-            ('date_invoice', '=', reference_date),
-            ('company_id', '=', company.id),
-            ('l10n_pe_document_type', 'in', ['01', '07', '08']),
-            ('l10n_pe_edi_pse_status', '=', 'signed'),
-            ('state', 'in', ['open', 'paid']),
-            ('l10n_pe_edi_summary_id', '=', False),
-        ])
-        invoices = invoices.filtered(
-            lambda r: r.l10n_pe_document_type == '01' or (
-                r.l10n_pe_document_type in ['07', '08'] and
-                r.refund_invoice_id.l10n_pe_document_type == '01'))
-        return invoices
+        # reference_date = self.env.context.get('reference_date')
+        # company = self.env.user.company_id
+        # # TODO: improve the way this search works, because we don't how this
+        # # search will behave under big lots of documents
+        # invoices = self.search([
+        #     ('type', 'in', ['out_refund', 'out_invoice']),
+        #     ('date_invoice', '=', reference_date),
+        #     ('company_id', '=', company.id),
+        #     ('l10n_pe_document_type', 'in', ['01', '07', '08']),
+        #     ('l10n_pe_edi_pse_status', '=', 'signed'),
+        #     ('state', 'in', ['open', 'paid']),
+        #     ('l10n_pe_edi_summary_id', '=', False),
+        # ])
+        # invoices = invoices.filtered(
+        #     lambda r: r.l10n_pe_document_type == '01' or (
+        #         r.l10n_pe_document_type in ['07', '08'] and
+        #         r.refund_invoice_id.l10n_pe_document_type == '01'))
+        # return invoices
+        return True
 
     def l10n_pe_edi_create_zipfile_multi(self, filename, xml_files):
-        with osutil.tempdir() as temdir, tempfile.TemporaryFile() as t_zip:
-            for xml_fname, content in xml_files.items():
-                xml_file = join(temdir, xml_fname)
-                with open(xml_file, "w") as res_file:
-                    res_file.write(content)
-            osutil.zip_dir(temdir, t_zip, include_dir=False)
-            t_zip.seek(0)
-            encoded = base64.b64encode(t_zip.read())
-        attachment = self.env['ir.attachment'].create({
-            'datas': encoded,
-            'res_model': self._name,
-            'mimetype': 'application/zip',
-            'name': filename,
-            'datas_fname': filename,
-        })
-        return attachment
+        # with osutil.tempdir() as temdir, tempfile.TemporaryFile() as t_zip:
+        #     for xml_fname, content in xml_files.items():
+        #         xml_file = join(temdir, xml_fname)
+        #         with open(xml_file, "w") as res_file:
+        #             res_file.write(content)
+        #     osutil.zip_dir(temdir, t_zip, include_dir=False)
+        #     t_zip.seek(0)
+        #     encoded = base64.b64encode(t_zip.read())
+        # attachment = self.env['ir.attachment'].create({
+        #     'datas': encoded,
+        #     'res_model': self._name,
+        #     'mimetype': 'application/zip',
+        #     'name': filename,
+        #     'datas_fname': filename,
+        # })
+        # return attachment
+        return True
 
     def l10n_pe_edi_generate_summary_lt(self):
-        invoices = self.l10n_pe_edi_search_lt()
-        if not invoices:
-            return {'error': _('There are no documents to be processed')}
+        # invoices = self.l10n_pe_edi_search_lt()
+        # if not invoices:
+        #     return {'error': _('There are no documents to be processed')}
 
-        comp_x_records = groupby(invoices, lambda r: r.company_id)
-        attachments = self.env['ir.attachment'].browse()
-        for company_id, records in comp_x_records:
-            xml_x_company = {}
-            invoice_ids = self.browse([r.id for r in records])
-            for invoice in invoice_ids:
-                attachment = invoice.l10n_pe_edi_retrieve_last_attachment()
-                encoded_file = attachment.datas
-                xml_doc = invoice.l10n_pe_edi_get_xml_etree(ublpe=encoded_file)
-                xml_filename = "%s.xml" % splitext(attachment.datas_fname)[0]
-                xml_x_company.update({xml_filename: etree.tostring(xml_doc)})
+        # comp_x_records = groupby(invoices, lambda r: r.company_id)
+        # attachments = self.env['ir.attachment'].browse()
+        # for company_id, records in comp_x_records:
+        #     xml_x_company = {}
+        #     invoice_ids = self.browse([r.id for r in records])
+        #     for invoice in invoice_ids:
+        #         attachment = invoice.l10n_pe_edi_retrieve_last_attachment()
+        #         encoded_file = attachment.datas
+        #         xml_doc = invoice.l10n_pe_edi_get_xml_etree(ublpe=encoded_file)
+        #         xml_filename = "%s.xml" % splitext(attachment.datas_fname)[0]
+        #         xml_x_company.update({xml_filename: etree.tostring(xml_doc)})
 
-            attachment_name = ('%s-%s.zip' % (
-                company_id.partner_id.l10n_pe_vat_number,
-                self.env.context.get('number')))
-            attachment = self.l10n_pe_edi_create_zipfile_multi(
-                attachment_name, xml_x_company)
+        #     attachment_name = ('%s-%s.zip' % (
+        #         company_id.partner_id.l10n_pe_vat_number,
+        #         self.env.context.get('number')))
+        #     attachment = self.l10n_pe_edi_create_zipfile_multi(
+        #         attachment_name, xml_x_company)
 
-            message = _("This invoice has been included in")
-            invoice_ids.write({
-                'l10n_pe_edi_summary_id': attachment.id,
-                'l10n_pe_edi_pse_status': 'in_process',
-            })
-            for invoice in invoice_ids:
-                invoice.message_post(body=message, message_type='comment',
-                                     attachment_ids=attachment.ids,)
+        #     message = _("This invoice has been included in")
+        #     invoice_ids.write({
+        #         'l10n_pe_edi_summary_id': attachment.id,
+        #         'l10n_pe_edi_pse_status': 'in_process',
+        #     })
+        #     for invoice in invoice_ids:
+        #         invoice.message_post(body=message, message_type='comment',
+        #                              attachment_ids=attachment.ids,)
 
-                attachments |= attachment
-        return {'attachment_ids': attachments.ids}
+        #         attachments |= attachment
+        # return {'attachment_ids': attachments.ids}
+        return True
 
     @api.multi
     def l10n_pe_edi_cron_send_voided_documents(self, days):
@@ -1901,47 +1924,47 @@ class AccountInvoice(models.Model):
             day 2.
         """
 
-        if days > 7:
-            _logger.info("Because of SUNAT standards we are taking 7 instead"
-                         " of %s", days)
-            days = 7
-        today = self.env['l10n_pe_edi.certificate'].get_pe_current_datetime()
-        limit_date = today - timedelta(days=days)
-        limit_date_str = fields.datetime.strftime(
-            limit_date, tools.DEFAULT_SERVER_DATE_FORMAT)
-        today_str = fields.datetime.strftime(
-            today, tools.DEFAULT_SERVER_DATE_FORMAT)
-        invoices = self.search([
-            ('type', 'in', ['out_refund', 'out_invoice']),
-            ('state', '=', 'cancel'),
-            ('l10n_pe_edi_summary_id', '=', False),
-            ('l10n_pe_cancel_reason', '!=', False),
-            ('l10n_pe_document_type', '=', '01'),
-            ('l10n_pe_edi_ticket_number', '=', False),
-            ('date_invoice', '>=', limit_date_str),
-            ('date_invoice', '<', today_str),
-        ])
-        invoices = invoices.filtered(lambda r: (
-            r.l10n_pe_edi_pse_status == 'to_cancel' and
-            r.l10n_pe_edi_cdr_date >= limit_date_str))
-        vals = {'reference_date': '',
-                'summary_type': '',
-                'number': '',
-                'issue_date': ''}
-        group_by_date = groupby(invoices,
-                                lambda r: r.date_invoice)
-        for date, records in group_by_date:
-            invoices_ids = self.browse([r.id for r in records])
-            wizard = self.env['l10n_pe_edi.summary.wizard'].create({
-                'reference_date': date, 'summary_type': 'ra'})
-            vals.update({'reference_date': date,
-                         'summary_type': wizard.summary_type,
-                         'number': wizard.number,
-                         'issue_date': wizard.issue_date})
+        # if days > 7:
+        #     _logger.info("Because of SUNAT standards we are taking 7 instead"
+        #                  " of %s", days)
+        #     days = 7
+        # today = self.env['l10n_pe_edi.certificate'].get_pe_current_datetime()
+        # limit_date = today - timedelta(days=days)
+        # limit_date_str = fields.datetime.strftime(
+        #     limit_date, tools.DEFAULT_SERVER_DATE_FORMAT)
+        # today_str = fields.datetime.strftime(
+        #     today, tools.DEFAULT_SERVER_DATE_FORMAT)
+        # invoices = self.search([
+        #     ('type', 'in', ['out_refund', 'out_invoice']),
+        #     ('state', '=', 'cancel'),
+        #     ('l10n_pe_edi_summary_id', '=', False),
+        #     ('l10n_pe_cancel_reason', '!=', False),
+        #     ('l10n_pe_document_type', '=', '01'),
+        #     ('l10n_pe_edi_ticket_number', '=', False),
+        #     ('date_invoice', '>=', limit_date_str),
+        #     ('date_invoice', '<', today_str),
+        # ])
+        # invoices = invoices.filtered(lambda r: (
+        #     r.l10n_pe_edi_pse_status == 'to_cancel' and
+        #     r.l10n_pe_edi_cdr_date >= limit_date_str))
+        # vals = {'reference_date': '',
+        #         'summary_type': '',
+        #         'number': '',
+        #         'issue_date': ''}
+        # group_by_date = groupby(invoices,
+        #                         lambda r: r.date_invoice)
+        # for date, records in group_by_date:
+        #     invoices_ids = self.browse([r.id for r in records])
+        #     wizard = self.env['l10n_pe_edi.summary.wizard'].create({
+        #         'reference_date': date, 'summary_type': 'ra'})
+        #     vals.update({'reference_date': date,
+        #                  'summary_type': wizard.summary_type,
+        #                  'number': wizard.number,
+        #                  'issue_date': wizard.issue_date})
 
-            invoices_ids.with_context(vals).l10n_pe_edi_generate_summary('ra')
-            if invoices_ids:
-                invoices_ids[0].l10n_pe_edi_action_send_summary_sunat()
+        #     invoices_ids.with_context(vals).l10n_pe_edi_generate_summary('ra')
+        #     if invoices_ids:
+        #         invoices_ids[0].l10n_pe_edi_action_send_summary_sunat()
 
     @api.multi
     def l10n_pe_edi_cron_send_valid_documents(self, days=7, doc_type='all'):
@@ -1954,80 +1977,80 @@ class AccountInvoice(models.Model):
             origin document is valid.
         """
 
-        today = self.env['l10n_pe_edi.certificate'].get_pe_current_datetime()
-        limit_date = today - timedelta(days=days)
-        limit_date_str = fields.datetime.strftime(
-            limit_date, tools.DEFAULT_SERVER_DATE_FORMAT)
-        document_types = {
-            'all': ['01', '03', '07', '08'],
-            'tickets': ['03', '07', '08'],
-            'invoices': ['01', '07', '08'],
-            'second_wave': ['03', '07', '08']}
+        # today = self.env['l10n_pe_edi.certificate'].get_pe_current_datetime()
+        # limit_date = today - timedelta(days=days)
+        # limit_date_str = fields.datetime.strftime(
+        #     limit_date, tools.DEFAULT_SERVER_DATE_FORMAT)
+        # document_types = {
+        #     'all': ['01', '03', '07', '08'],
+        #     'tickets': ['03', '07', '08'],
+        #     'invoices': ['01', '07', '08'],
+        #     'second_wave': ['03', '07', '08']}
 
-        document_type = document_types[doc_type]
-        all_documents = self.search([
-            ('type', 'in', ['out_refund', 'out_invoice']),
-            ('date_invoice', '>=', limit_date_str),
-            ('l10n_pe_edi_pse_status', 'in',
-             ['signed', 'to_be_cancelled', 'to_cancel', 'in_process']),
-            ('l10n_pe_edi_ticket_number', '=', False),
-            ('l10n_pe_document_type', 'in', document_type)])
+        # document_type = document_types[doc_type]
+        # all_documents = self.search([
+        #     ('type', 'in', ['out_refund', 'out_invoice']),
+        #     ('date_invoice', '>=', limit_date_str),
+        #     ('l10n_pe_edi_pse_status', 'in',
+        #      ['signed', 'to_be_cancelled', 'to_cancel', 'in_process']),
+        #     ('l10n_pe_edi_ticket_number', '=', False),
+        #     ('l10n_pe_document_type', 'in', document_type)])
 
-        vals = {'reference_date': '',
-                'summary_type': '',
-                'number': '',
-                'issue_date': ''}
+        # vals = {'reference_date': '',
+        #         'summary_type': '',
+        #         'number': '',
+        #         'issue_date': ''}
 
-        all_invoices = all_documents.filtered(
-            lambda r: r.l10n_pe_document_type == '01' or (
-                r.l10n_pe_document_type in ['07', '08'] and
-                r.refund_invoice_id.l10n_pe_document_type == '01'))
+        # all_invoices = all_documents.filtered(
+        #     lambda r: r.l10n_pe_document_type == '01' or (
+        #         r.l10n_pe_document_type in ['07', '08'] and
+        #         r.refund_invoice_id.l10n_pe_document_type == '01'))
 
-        invoices = self.l10n_pe_edi_related_documents(all_invoices)
-        invoices.action_send_to_sunat()
+        # invoices = self.l10n_pe_edi_related_documents(all_invoices)
+        # invoices.action_send_to_sunat()
 
-        # DEAR DEV: please note that this is just not the right answer, we need
-        # a better way to deal with the error at the moment to send an invoice
-        invoices.filtered(
-            lambda r: r.l10n_pe_edi_pse_status == 'signed'
-        ).l10n_pe_edi_action_get_status_cdr_sunat()
+        # # DEAR DEV: please note that this is just not the right answer, we need
+        # # a better way to deal with the error at the moment to send an invoice
+        # invoices.filtered(
+        #     lambda r: r.l10n_pe_edi_pse_status == 'signed'
+        # ).l10n_pe_edi_action_get_status_cdr_sunat()
 
-        all_tickets = all_documents.filtered(
-            lambda r: (r.l10n_pe_document_type == '03' or
-                       (r.l10n_pe_document_type in ['07', '08'] and
-                        r.refund_invoice_id.l10n_pe_document_type == '03')) and
-            (r.l10n_pe_edi_pse_status in ['signed', 'in_process',
-                                          'to_cancel']) and
-            (r.amount_total >= 0.0 and
-             r.l10n_pe_edi_amount_taxable >= 0.0))
-        tickets = self.l10n_pe_edi_related_documents(all_tickets)
+        # all_tickets = all_documents.filtered(
+        #     lambda r: (r.l10n_pe_document_type == '03' or
+        #                (r.l10n_pe_document_type in ['07', '08'] and
+        #                 r.refund_invoice_id.l10n_pe_document_type == '03')) and
+        #     (r.l10n_pe_edi_pse_status in ['signed', 'in_process',
+        #                                   'to_cancel']) and
+        #     (r.amount_total >= 0.0 and
+        #      r.l10n_pe_edi_amount_taxable >= 0.0))
+        # tickets = self.l10n_pe_edi_related_documents(all_tickets)
 
-        # Send documents that were meant to be sent
-        tickets -= self._process_previous_summaries(tickets)
-        if doc_type == 'second_wave':
-            tickets = tickets.filtered(
-                lambda r: (r.state == 'cancel' and
-                           r.l10n_pe_document_type == '03') or
-                r.l10n_pe_document_type in ['07', '08'])
-        if not tickets:
-            return False
+        # # Send documents that were meant to be sent
+        # tickets -= self._process_previous_summaries(tickets)
+        # if doc_type == 'second_wave':
+        #     tickets = tickets.filtered(
+        #         lambda r: (r.state == 'cancel' and
+        #                    r.l10n_pe_document_type == '03') or
+        #         r.l10n_pe_document_type in ['07', '08'])
+        # if not tickets:
+        #     return False
 
-        group_by_date = groupby(
-            tickets, lambda r:
-            [r.date_invoice, r.l10n_pe_edi_summary_id])
+        # group_by_date = groupby(
+        #     tickets, lambda r:
+        #     [r.date_invoice, r.l10n_pe_edi_summary_id])
 
-        for values, records in group_by_date:
-            tickets_ids = self.browse([r.id for r in records])
-            wizard = self.env['l10n_pe_edi.summary.wizard'].create({
-                'reference_date': values[0], 'summary_type': 'rc'})
+        # for values, records in group_by_date:
+        #     tickets_ids = self.browse([r.id for r in records])
+        #     wizard = self.env['l10n_pe_edi.summary.wizard'].create({
+        #         'reference_date': values[0], 'summary_type': 'rc'})
 
-            vals.update({'reference_date': values[0],
-                         'summary_type': wizard.summary_type,
-                         'number': wizard.number,
-                         'issue_date': wizard.issue_date})
-            tickets_ids.with_context(vals).l10n_pe_edi_generate_summary('rc')
-            if tickets_ids:
-                tickets_ids[0].l10n_pe_edi_action_send_summary_sunat()
+        #     vals.update({'reference_date': values[0],
+        #                  'summary_type': wizard.summary_type,
+        #                  'number': wizard.number,
+        #                  'issue_date': wizard.issue_date})
+        #     tickets_ids.with_context(vals).l10n_pe_edi_generate_summary('rc')
+        #     if tickets_ids:
+        #         tickets_ids[0].l10n_pe_edi_action_send_summary_sunat()
 
     @api.multi
     def l10n_pe_edi_cron_get_status_documents(self):
@@ -2036,28 +2059,28 @@ class AccountInvoice(models.Model):
         Summary and a ticket number related to them.
         """
 
-        invoices = self.search([
-            ('type', 'in', ['out_refund', 'out_invoice']),
-            ('state', 'in', ['open', 'paid', 'cancel']),
-            ('l10n_pe_edi_ticket_number', '!=', False),
-            ('l10n_pe_edi_pse_status', 'in',
-             ['in_process', 'to_be_cancelled']),
-            ('l10n_pe_edi_summary_id', '!=', False),
-        ])
+        # invoices = self.search([
+        #     ('type', 'in', ['out_refund', 'out_invoice']),
+        #     ('state', 'in', ['open', 'paid', 'cancel']),
+        #     ('l10n_pe_edi_ticket_number', '!=', False),
+        #     ('l10n_pe_edi_pse_status', 'in',
+        #      ['in_process', 'to_be_cancelled']),
+        #     ('l10n_pe_edi_summary_id', '!=', False),
+        # ])
 
-        group_by_ticket = groupby(invoices,
-                                  lambda r: r.l10n_pe_edi_ticket_number)
+        # group_by_ticket = groupby(invoices,
+        #                           lambda r: r.l10n_pe_edi_ticket_number)
 
-        for ticket_number, records in group_by_ticket:
-            invoice_ids = self.browse([r.id for r in records])
+        # for ticket_number, records in group_by_ticket:
+        #     invoice_ids = self.browse([r.id for r in records])
 
-            # if for some reason there is no invoices for the ticket number
-            # we need to avoid IndexError here.
-            if not invoice_ids:
-                continue
+        #     # if for some reason there is no invoices for the ticket number
+        #     # we need to avoid IndexError here.
+        #     if not invoice_ids:
+        #         continue
 
-            _logger.info("Getting status for ticket %s", ticket_number)
-            invoice_ids[0].l10n_pe_edi_action_get_status_sunat()
+        #     _logger.info("Getting status for ticket %s", ticket_number)
+        #     invoice_ids[0].l10n_pe_edi_action_get_status_sunat()
 
     def action_invoice_draft(self):
         """The document will be letting pass to draft when the following use
@@ -2066,183 +2089,192 @@ class AccountInvoice(models.Model):
             - Boletas in process to be notified are associated with a summary
             - Invoices/Boletas cancelled already have a ticket number
         """
-        not_allow = self.env['account.invoice']
-        if (not self.env.user.has_group(
-           'l10n_pe_edi.res_group_super_user_manager')):
+        # not_allow = self.env['account.invoice']
+        # if (not self.env.user.has_group(
+        #    'l10n_pe_edi.res_group_super_user_manager')):
 
-            not_allow = self.filtered(
-                lambda r: r.l10n_pe_edi_is_required() and
-                (r.l10n_pe_edi_cdr_date or r.l10n_pe_edi_summary_id or
-                    r.l10n_pe_edi_ticket_number or
-                 r.l10n_pe_edi_pse_status in ['with_error', 'to_cancel']))
+        #     not_allow = self.filtered(
+        #         lambda r: r.l10n_pe_edi_is_required() and
+        #         (r.l10n_pe_edi_cdr_date or r.l10n_pe_edi_summary_id or
+        #             r.l10n_pe_edi_ticket_number or
+        #          r.l10n_pe_edi_pse_status in ['with_error', 'to_cancel']))
 
-            for invoice in not_allow:
-                invoice.message_post(
-                    subject=_('An error occurred while setting to draft.'),
-                    message_type='comment',
-                    body=_('This invoice have been notified at least once, '
-                           'SUNAT does not supports re-validation or re-cancel'
-                           'lation after it have been validated/cancelled'))
-        return super(AccountInvoice, self - not_allow).action_invoice_draft()
+        #     for invoice in not_allow:
+        #         invoice.message_post(
+        #             subject=_('An error occurred while setting to draft.'),
+        #             message_type='comment',
+        #             body=_('This invoice have been notified at least once, '
+        #                    'SUNAT does not supports re-validation or re-cancel'
+        #                    'lation after it have been validated/cancelled'))
+        # return super(AccountInvoice, self - not_allow).action_invoice_draft()
+        return super(AccountInvoice, self).action_invoice_draft()
 
     @api.multi
     def l10n_pe_edi_action_regenerate(self):
-        self.ensure_one()
-        old_summary = self.l10n_pe_edi_summary_id
-        # Search invoices related
-        invoices = self.search([
-            ('l10n_pe_edi_summary_id', '=', old_summary.id)])
+        # self.ensure_one()
+        # old_summary = self.l10n_pe_edi_summary_id
+        # # Search invoices related
+        # invoices = self.search([
+        #     ('l10n_pe_edi_summary_id', '=', old_summary.id)])
 
-        summary_name, _file_ext = splitext(old_summary.name)
-        try:
-            company_vat, doc_type, issue_date, _file_index = (
-                summary_name.split('-'))
-        except ValueError:
-            for invoice in invoices:
-                invoice.message_post(body=_("Summary document %s cannot be "
-                                            "regenerated") % old_summary.name,
-                                     message_type='comment')
-            return
+        # summary_name, _file_ext = splitext(old_summary.name)
+        # try:
+        #     company_vat, doc_type, issue_date, _file_index = (
+        #         summary_name.split('-'))
+        # except ValueError:
+        #     for invoice in invoices:
+        #         invoice.message_post(body=_("Summary document %s cannot be "
+        #                                     "regenerated") % old_summary.name,
+        #                              message_type='comment')
+        #     return
 
-        summary_type = doc_type.lower()
+        # summary_type = doc_type.lower()
 
-        # Search for new correlative
-        summary_like_name = "%s-%s-%s%%.zip" % (company_vat, doc_type,
-                                                issue_date)
-        attachment_name = self.env['ir.attachment'].search(
-            [('name', '=ilike', summary_like_name)], order="id desc", limit=1
-        ).mapped('name')
-        correlative = 1
-        try:
-            correlative = int(splitext(attachment_name[0])[0].split('-')[-1])
-        except (IndexError, ValueError):
-            for invoice in invoices:
-                invoice.message_post(body=_("Summary document %s cannot be "
-                                            "regenerated") % old_summary.name,
-                                     message_type='comment')
-            return
+        # # Search for new correlative
+        # summary_like_name = "%s-%s-%s%%.zip" % (company_vat, doc_type,
+        #                                         issue_date)
+        # attachment_name = self.env['ir.attachment'].search(
+        #     [('name', '=ilike', summary_like_name)], order="id desc", limit=1
+        # ).mapped('name')
+        # correlative = 1
+        # try:
+        #     correlative = int(splitext(attachment_name[0])[0].split('-')[-1])
+        # except (IndexError, ValueError):
+        #     for invoice in invoices:
+        #         invoice.message_post(body=_("Summary document %s cannot be "
+        #                                     "regenerated") % old_summary.name,
+        #                              message_type='comment')
+        #     return
 
-        # Get data for regenerate
-        vals = {
-            'issue_date': datetime.strptime(issue_date, '%Y%m%d').strftime(
-                '%Y-%m-%d'),
-            'reference_date': invoices[0].date_invoice,
-            'summary_type': doc_type.lower(),
-            'number': '%s-%s-%s' % (doc_type, issue_date, str(correlative + 1))
-        }
+        # # Get data for regenerate
+        # vals = {
+        #     'issue_date': datetime.strptime(issue_date, '%Y%m%d').strftime(
+        #         '%Y-%m-%d'),
+        #     'reference_date': invoices[0].date_invoice,
+        #     'summary_type': doc_type.lower(),
+        #     'number': '%s-%s-%s' % (doc_type, issue_date, str(correlative + 1))
+        # }
 
-        # Regenerate summary
-        res = invoices.with_context(vals).l10n_pe_edi_generate_summary(
-            summary_type)
+        # # Regenerate summary
+        # res = invoices.with_context(vals).l10n_pe_edi_generate_summary(
+        #     summary_type)
 
-        attachment_ids = res.get('attachment_ids')
-        new_summary = self.env['ir.attachment'].browse(attachment_ids)
-        for invoice in invoices:
-            invoice.message_post(subject="Document regenerated",
-                                 body="Document %s have been regenerated into "
-                                 "%s" % (old_summary.name, new_summary.name),
-                                 attachment_ids=attachment_ids,
-                                 message_type='comment')
+        # attachment_ids = res.get('attachment_ids')
+        # new_summary = self.env['ir.attachment'].browse(attachment_ids)
+        # for invoice in invoices:
+        #     invoice.message_post(subject="Document regenerated",
+        #                          body="Document %s have been regenerated into "
+        #                          "%s" % (old_summary.name, new_summary.name),
+        #                          attachment_ids=attachment_ids,
+        #                          message_type='comment')
+        return True
 
     def l10n_pe_edi_get_barcode(self):
         """Creating a barcode image for the printed representation
         Currently supports PDF417
         More information about SUNAT and barcodes in https://goo.gl/68DBjV
         """
-        document = self.l10n_pe_edi_get_xml_etree()
-        if document is False:
-            return
-        codes = ''
-        values = [
-            self.company_id.partner_id.l10n_pe_vat_number,
-            self.l10n_pe_document_type,
-            self.l10n_pe_edi_serie,
-            self.l10n_pe_edi_correlative,
-            str(self.l10n_pe_edi_total_igv),
-            str(self.amount_total),
-            self.date_invoice,
-            self.l10n_pe_edi_xpath(document, ('//cac:AccountingCustomerParty/'
-                                   'cbc:AdditionalAccountID'))[0].text,
-            self.partner_id.l10n_pe_vat_number or '',
-            self.l10n_pe_edi_xpath(document, '//ds:DigestValue')[0].text,
-            self.l10n_pe_edi_xpath(document, '//ds:SignatureValue')[0].text,
-            '']
-        codes = '|'.join(values)
-        with osutil.tempdir() as tempdir:
-            codes = encode(codes, columns=8)
-            image_data = render_image(codes, scale=5)
-            image_file_path = join(tempdir, "%s.png" % self.number)
-            image_data.save(image_file_path)
-            with open(image_file_path, "rb") as image_data:
-                _bytes = image_data.read()
-                encoded = base64.b64encode(_bytes)
-        return encoded
+        # document = self.l10n_pe_edi_get_xml_etree()
+        # if document is False:
+        #     return
+        # codes = ''
+        # values = [
+        #     self.company_id.partner_id.l10n_pe_vat_number,
+        #     self.l10n_pe_document_type,
+        #     self.l10n_pe_edi_serie,
+        #     self.l10n_pe_edi_correlative,
+        #     str(self.l10n_pe_edi_total_igv),
+        #     str(self.amount_total),
+        #     self.date_invoice,
+        #     self.l10n_pe_edi_xpath(document, ('//cac:AccountingCustomerParty/'
+        #                            'cbc:AdditionalAccountID'))[0].text,
+        #     self.partner_id.l10n_pe_vat_number or '',
+        #     self.l10n_pe_edi_xpath(document, '//ds:DigestValue')[0].text,
+        #     self.l10n_pe_edi_xpath(document, '//ds:SignatureValue')[0].text,
+        #     '']
+        # codes = '|'.join(values)
+        # with osutil.tempdir() as tempdir:
+        #     codes = encode(codes, columns=8)
+        #     image_data = render_image(codes, scale=5)
+        #     image_file_path = join(tempdir, "%s.png" % self.number)
+        #     image_data.save(image_file_path)
+        #     with open(image_file_path, "rb") as image_data:
+        #         _bytes = image_data.read()
+        #         encoded = base64.b64encode(_bytes)
+        # return encoded
 
     @api.multi
     def l10n_pe_edi_get_additional_values(self):
-        self.ensure_one()
-        values = {'status': False, 'typeCode': False}
+        # self.ensure_one()
+        # values = {'status': False, 'typeCode': False}
 
-        if not self.l10n_pe_edi_cdr_date:
-            values = {'status': 1, 'typeCode': '03'}
-            if self.state == 'cancel':
-                self.l10n_pe_edi_pse_status = 'to_be_cancelled'
+        # if not self.l10n_pe_edi_cdr_date:
+        #     values = {'status': 1, 'typeCode': '03'}
+        #     if self.state == 'cancel':
+        #         self.l10n_pe_edi_pse_status = 'to_be_cancelled'
 
-        else:
-            if (self.l10n_pe_edi_pse_status
-                in ['in_process', 'to_cancel', 'with_error'] and
-                self.state == 'cancel'):
-                values = {'status': 3, 'typeCode': '03'}
-        return values
+        # else:
+        #     if (self.l10n_pe_edi_pse_status
+        #         in ['in_process', 'to_cancel', 'with_error'] and
+        #         self.state == 'cancel'):
+        #         values = {'status': 3, 'typeCode': '03'}
+        # return values
+        return True
 
     @api.multi
     def l10n_pe_edi_related_documents(self, documents):
         """This method will return the documents that it's related document is
         valid or if they aren't l10n_pe_document_type 07 or 08
         """
-        debit_credit_notes = documents.filtered(
-            lambda r: r.l10n_pe_document_type in ['07', '08'])
-        for debit_credit_note in debit_credit_notes:
-            invoice_origin = debit_credit_note.refund_invoice_id
-            if (invoice_origin and
-               invoice_origin.l10n_pe_edi_pse_status != 'valid'):
-                documents -= debit_credit_note
-        return documents
+        # debit_credit_notes = documents.filtered(
+        #     lambda r: r.l10n_pe_document_type in ['07', '08'])
+        # for debit_credit_note in debit_credit_notes:
+        #     invoice_origin = debit_credit_note.refund_invoice_id
+        #     if (invoice_origin and
+        #        invoice_origin.l10n_pe_edi_pse_status != 'valid'):
+        #         documents -= debit_credit_note
+        # return documents
 
     @api.multi
     def action_invoice_open(self):
-        invoices_not_to_open = self.filtered(
-            lambda r: r.l10n_pe_edi_is_required and (
-                r.amount_total < 0 or (
-                    r.l10n_pe_edi_amount_free == 0.0 and
-                    not sum(r.invoice_line_ids.mapped('price_unit')))))
-        for invoice in invoices_not_to_open:
-            message = _(
-                "SUNAT does not support 0.0 as sum of all price_units, "
-                "one or more products should have a list price higher that 0")
-            if invoice.amount_total < 0:
-                message = "SUNAT does not support negative as totals"
-            invoice.message_post(
-                body=_("The current document can't be validated because: %s "
-                       % message))
+        # print "#### estoy aqui"
+        # invoices_not_to_open = self.filtered(
+        #     lambda r: r.l10n_pe_edi_is_required and (
+        #         r.amount_total < 0 or (
+        #             r.l10n_pe_edi_amount_free == 0.0 and
+        #             not sum(r.invoice_line_ids.mapped('price_unit')))))
+        # print "####invoices_not_to_open: ",invoices_not_to_open ####invoices_not_to_open:  account.invoice()
+        # for invoice in invoices_not_to_open:
+        #     message = _(
+        #         "SUNAT does not support 0.0 as sum of all price_units, "
+        #         "one or more products should have a list price higher that 0")
+        #     if invoice.amount_total < 0:
+        #         message = "SUNAT does not support negative as totals"
+        #     invoice.message_post(
+        #         body=_("The current document can't be validated because: %s "
+        #                % message))
+        #     print "####invoice: ",invoice
+        # return super(AccountInvoice,
+        #              self - invoices_not_to_open).action_invoice_open()
         return super(AccountInvoice,
-                     self - invoices_not_to_open).action_invoice_open()
+                     self).action_invoice_open()
 
     @api.multi
     def _process_previous_summaries(self, documents):
-        """All the summaries that were having problems and aren't processed
-        with errors will be send again in the next execution.
-        """
-        documents = documents.filtered(
-            lambda r: r.l10n_pe_edi_summary_id and
-            r.l10n_pe_edi_pse_status in
-            ['to_be_cancelled', 'in_process', 'to_cancel'] and
-            r.l10n_pe_edi_summary_id and not r.l10n_pe_edi_cdr_date)
-        group_by_date = groupby(documents, lambda r: r.l10n_pe_edi_summary_id)
+        # """All the summaries that were having problems and aren't processed
+        # with errors will be send again in the next execution.
+        # """
+        # documents = documents.filtered(
+        #     lambda r: r.l10n_pe_edi_summary_id and
+        #     r.l10n_pe_edi_pse_status in
+        #     ['to_be_cancelled', 'in_process', 'to_cancel'] and
+        #     r.l10n_pe_edi_summary_id and not r.l10n_pe_edi_cdr_date)
+        # group_by_date = groupby(documents, lambda r: r.l10n_pe_edi_summary_id)
 
-        for _attachment, records in group_by_date:
-            tickets_ids = self.browse([r.id for r in records])
-            if tickets_ids:
-                tickets_ids[0].l10n_pe_edi_action_send_summary_sunat()
-            documents -= tickets_ids
-        return documents
+        # for _attachment, records in group_by_date:
+        #     tickets_ids = self.browse([r.id for r in records])
+        #     if tickets_ids:
+        #         tickets_ids[0].l10n_pe_edi_action_send_summary_sunat()
+        #     documents -= tickets_ids
+        # return documents
+        return True

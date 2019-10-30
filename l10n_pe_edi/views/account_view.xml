@@ -7,10 +7,10 @@
         <field name="priority">1</field>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='refund_sequence']" position="after">
-                <field name="charge_sequence" attrs="{'invisible': [('type', 'not in', ['sale','purchase'])]}" groups="base.group_no_one"/>
+                <!-- <field name="charge_sequence" attrs="{'invisible': [('type', 'not in', ['sale','purchase'])]}" groups="base.group_no_one"/> -->
             </xpath>
             <xpath expr="//field[@name='refund_sequence_id']" position="after">
-                <field name="charge_sequence_id" attrs="{'invisible': ['|',('type', 'not in', ['sale','purchase']), ('charge_sequence', '!=', True)], 'required': [('type', 'in', ['sale']), ('charge_sequence', '=', True)]}"/>
+                <!-- <field name="charge_sequence_id" attrs="{'invisible': ['|',('type', 'not in', ['sale','purchase']), ('charge_sequence', '!=', True)], 'required': [('type', 'in', ['sale']), ('charge_sequence', '=', True)]}"/> -->
             </xpath>
         </field>
     </record>
@@ -21,7 +21,7 @@
         <field name="priority">1</field>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='state']" position="after">
-                <field name="l10n_pe_edi_pse_status"/>
+                <!-- <field name="l10n_pe_edi_pse_status"/> -->
             </xpath>
         </field>
     </record>
@@ -32,14 +32,14 @@
         <field name="priority">17</field>
         <field name="arch" type="xml">
             <xpath expr="//button[@name='action_invoice_cancel']" position="attributes">
-                <attribute name="states"></attribute>
-                <attribute name="attrs">{'invisible':['|',('l10n_pe_document_type', '!=', False),('state','not in',('draft','proforma2','open')),'|',('state', '!=', 'draft'),('l10n_pe_document_type', '=', False)]}</attribute>
+                <!-- <attribute name="states"></attribute>
+                <attribute name="attrs">{'invisible':['|',('l10n_pe_document_type', '!=', False),('state','not in',('draft','proforma2','open')),'|',('state', '!=', 'draft'),('l10n_pe_document_type', '=', False)]}</attribute> -->
             </xpath>
             <xpath expr="//button[@name='%(account.action_account_invoice_refund)d']" position="attributes">
-                <attribute name="attrs">{'invisible': ['|', '|', ('type', '=', 'out_refund'), ('state', 'not in', ('open','proforma2','paid')), ('refund_invoice_id', '!=', False)]}</attribute>
+                <!-- <attribute name="attrs">{'invisible': ['|', '|', ('type', '=', 'out_refund'), ('state', 'not in', ('open','proforma2','paid')), ('refund_invoice_id', '!=', False)]}</attribute> -->
             </xpath>
             <xpath expr="//button[@name='%(account.action_account_invoice_refund)d']" position="after">
-                <field name="refund_invoice_id" invisible="1"/>
+                <!-- <field name="refund_invoice_id" invisible="1"/>
                 <button name="%(account.action_account_invoice_refund)d"
                     type='action' string='Charge Invoice'
                     groups="account.group_account_invoice"
@@ -48,10 +48,10 @@
                 <field name="l10n_pe_document_type" invisible="1"/>
                 <button name="%(action_invoice_cancel_wizard)d"
                     type='action' string='Cancel SUNAT'
-                    attrs="{'invisible': ['|','|',('state', 'not in', ('open','paid')),('l10n_pe_document_type', '=', False)]}"/>
+                    attrs="{'invisible': ['|','|',('state', 'not in', ('open','paid')),('l10n_pe_document_type', '=', False)]}"/> -->
             </xpath>
             <xpath expr="//sheet/group//group[last()]" position="inside">
-                <field name="l10n_pe_edi_summary_id" invisible="1"/>
+                <!-- <field name="l10n_pe_edi_summary_id" invisible="1"/>
                 <label for="l10n_pe_edi_pse_status" states="open,paid,cancel"/>
                 <div class="o_row">
                     <field name="l10n_pe_edi_pse_status" states="open,paid,cancel"/>
@@ -79,19 +79,19 @@
                         groups="l10n_pe_edi.group_account_invoice_pe"
                         string="Regenerate" attrs="{'invisible':['|', ('l10n_pe_edi_summary_id', '=', False), ('l10n_pe_edi_pse_status', 'in', ['valid', 'cancelled'])]}"
                         confirm="Maybe the validation is still in progress. Are you sure that you want to regenerate?"/>
-                </div>
+                </div> -->
             </xpath>
             <xpath expr="//header" position="after">
-                <div class="alert alert-danger" role="alert" style="margin-bottom:0px;" attrs="{'invisible': [('l10n_pe_edi_error_message', '=', False)]}">
+                <!-- <div class="alert alert-danger" role="alert" style="margin-bottom:0px;" attrs="{'invisible': [('l10n_pe_edi_error_message', '=', False)]}">
                     <field name="l10n_pe_edi_error_message"/>
-                </div>
+                </div> -->
             </xpath>
         </field>
     </record>
     <record id="customer_invoice_and_refunds" model="ir.filters">
         <field name="name">Customer Invoice and Refunds</field>
         <field name="model_id">account.invoice</field>
-        <field name="domain">[('state', '!=', 'draft'), ('state', '!=', 'cancel'), '|', ('type', '=', 'out_invoice'), ('type', '=', 'out_refund')]</field>
+        <!-- <field name="domain">[('state', '!=', 'draft'), ('state', '!=', 'cancel'), '|', ('type', '=', 'out_invoice'), ('type', '=', 'out_refund')]</field> -->
         <field name="user_id" eval="False"/>
     </record>
 </odoo>

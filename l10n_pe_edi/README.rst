@@ -51,4 +51,3 @@ Once we have the ``cert.pem`` and ``key.pem`` we can create a PFX certificate. N
 If you want to see the information within the PFX file then you can run this command.
 
 ``$ openssl pkcs12 -in cert.pfx``
-

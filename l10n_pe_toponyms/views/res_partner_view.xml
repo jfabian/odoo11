@@ -7,6 +7,7 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="priority" eval="110"/>
         <field name="arch" type="xml">
+<!--
             <xpath expr="//div[@class='o_address_format']/field[@name='country_id']" position="before">
                 <field name="l10n_pe_province_id" placeholder="Province..." class="o_address_country" options='{"no_open": True, "no_create": True}'
                     attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
@@ -30,6 +31,7 @@
             <xpath expr="//div[@name='div_address']/field[@name='city']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
+-->
         </field>
     </record>
 
@@ -39,6 +41,7 @@
         <field name="inherit_id" ref="base.view_partner_address_form"/>
         <field name="priority" eval="110"/>
         <field name="arch" type="xml">
+<!--
             <xpath expr="//div[@class='o_address_format']/field[@name='city']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
@@ -49,6 +52,7 @@
                 <field name="l10n_pe_province_id" placeholder="Province..." class="o_address_country"  options='{"no_open": True, "no_create": True}'/>
                 <field name="state_id" class="o_address_country" placeholder="Departament..." options='{"no_open": True}' />
             </xpath>
+-->
         </field>
     </record>
 
