@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="base.res_partner_1" model="res.partner">
+        <field name="country_id" ref="base.pe"/>
+        <field name="vat">PED10000001</field>
+    </record>
+    <record id="base.res_partner_2" model="res.partner">
+        <field name="country_id" ref="base.pe"/>
+        <field name="vat">PER20462509236</field>
+    </record>
+</odoo>

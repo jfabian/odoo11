@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="base.main_company" model="res.company">
+        <field name="l10n_pe_edi_sunat_url">https://e-factura.sunat.gob.pe/ol-ti-itcpfegem/billService?wsdl</field>
+        <field name="l10n_pe_edi_bill_consult_url">https://www.sunat.gob.pe/ol-it-wsconscpegem/billConsultService?wsdl</field>
+    </record>
+</odoo>

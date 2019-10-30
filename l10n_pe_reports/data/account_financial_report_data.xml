@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem name="Electronic Peruvian Statements" id="pe_statements" parent="account.menu_finance_reports" sequence="100"/>
+
+    <record id="action_sales_report" model="ir.actions.client">
+        <field name="name">Sales Report</field>
+        <field name="tag">account_report_generic</field>
+        <field name="context" eval="{'url': '/account_reports/output_format/l10n_pe_sales_report/1', 'model': 'l10n_pe.account.sales.report'}" />
+    </record>
+    <menuitem name="PLE Sales Report" id="menu_sales_report" parent="pe_statements" sequence="30" action="l10n_pe_reports.action_sales_report"/>
+
+    <record id="action_purchases_report" model="ir.actions.client">
+        <field name="name">Purchases Report</field>
+        <field name="tag">account_report_generic</field>
+        <field name="context" eval="{'url': '/account_reports/output_format/l10n_pe_purchases_report/1', 'model': 'l10n_pe.account.purchases.report'}" />
+    </record>
+    <menuitem name="PLE Purchases Report" id="menu_purchases_report" parent="pe_statements" sequence="30" action="l10n_pe_reports.action_purchases_report"/>
+
+    <template id="l10n_pe_account_reports_backend" inherit_id="web.assets_backend" active="True">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/l10n_pe_reports/static/src/js/account_reports_backend.js"></script>
+        </xpath>
+    </template>
+</odoo>

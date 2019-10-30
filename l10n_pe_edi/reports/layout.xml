@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="l10n_pe_edi.assets_common" inherit_id="report.assets_common">
+        <xpath expr="." position="inside">
+            <link href="/l10n_pe_edi/static/src/css/l10n_pe_edi_style.css" rel="stylesheet"/>
+        </xpath>
+    </template>
+
+    <template id="l10n_pe_edi.layout_pdf" inherit_id="report.assets_pdf">
+        <xpath expr="." position="inside">
+            <link href="/l10n_pe_edi/static/src/css/l10n_pe_edi_style.css" rel="stylesheet"/>
+        </xpath>
+    </template>
+
+    <template id="l10n_pe_edi.l10n_pe_edi_report_invoice">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="l10n_pe_edi.electronic_invoice_report_document" t-lang="'es_PE'"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="l10n_pe_edi.electronic_invoice_report_document">
+        <t t-call="l10n_pe_edi.layout_unite">
+            <t t-set="xml_signed" t-value="o.l10n_pe_edi_ublpe"/>
+            <t t-if="xml_signed">
+                <t t-set="xml" t-value="o.l10n_pe_edi_get_xml_etree()"/>
+                <t t-set="free_transaction" t-value="o.l10n_pe_edi_xpath(xml,'//sac:AdditionalInformation/sac:AdditionalProperty/cbc:ID[text()=\'1002\']/following-sibling::cbc:Value')"/>
+                <t t-set="summary_code" t-value="o.l10n_pe_edi_xpath(xml,'//ds:DigestValue')"/>
+                <t t-set="creation_date" t-value="o.l10n_pe_edi_xpath(xml,'./cbc:IssueDate')"/>
+            </t>
+            <t t-if="o.l10n_pe_document_type == '01'">
+                <t t-set="doc_title">ELECTRONIC INVOICE</t>
+                <t t-set="caption">Printed representation of Electronic Invoice</t>
+            </t>
+            <t t-if="o.l10n_pe_document_type == '03'">
+                <t t-set="doc_title">ELECTRONIC TICKET</t>
+                <t t-set="caption">Printed representation of Electronic Sale Ticket</t>
+            </t>
+            <t t-if="o.l10n_pe_document_type == '07'">
+                <t t-set="doc_title">ELECTRONIC CREDIT NOTE</t>
+                <t t-set="caption">Printed representation of Electronic Credit Note</t>
+            </t>
+            <t t-if="o.l10n_pe_document_type == '08'">
+                <t t-set="doc_title">ELECTRONIC DEBIT NOTE</t>
+                <t t-set="caption">Printed representation of Electronic Debit Note</t>
+            </t>
+        </t>
+    </template>
+</odoo>

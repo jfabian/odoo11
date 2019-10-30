@@ -1,0 +1,44 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* l10n_pe_vat_sunat_validation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-08-25 00:02+0000\n"
+"PO-Revision-Date: 2017-08-25 00:02+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_pe_vat_sunat_validation
+#: code:addons/l10n_pe_vat_sunat_validation/models/res_partner.py:51
+#, python-format
+msgid "Client not found"
+msgstr "Cliente no encontrado"
+
+#. module: l10n_pe_vat_sunat_validation
+#: code:addons/l10n_pe_vat_sunat_validation/models/res_partner.py:52
+#, python-format
+msgid "It is posible that it persist because:\n"
+"\n"
+"* A connection problem with the SUNAT server\n"
+"* The data is incorrect\n"
+"\n"
+"Please verify the data and try again, otherwise proceed to fill the data manually"
+msgstr "Es posible que persista debido a:\n"
+"\n"
+"* Un problema de conexión con los servidores \n"
+"* Datos incorrectos\n"
+"\n"
+"Por favor, verifique los datos e intente nuevamente, en caso contrario llene los datos manualmente"
+
+#. module: l10n_pe_vat_sunat_validation
+#: model:ir.model,name:l10n_pe_vat_sunat_validation.model_res_partner
+msgid "Partner"
+msgstr ""
+

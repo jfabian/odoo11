@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="demo_certificate" model="l10n_pe_edi.certificate">
+        <field name="content" type="base64" file="l10n_pe_edi/demo/pse_credentials/certificate.pfx"/>
+        <field name="date_start">2017-02-25 00:00:00</field>
+        <field name="date_end">2117-02-25 23:59:59</field>
+        <field name="password">12345678a</field>
+    </record>
+
+    <record id="base.main_partner" model="res.partner">
+        <field name="country_id" ref="base.pe"/>
+        <field name="vat">PER20565520572</field>
+        <field name="zip">150122</field>
+        <field name="street2">down the street</field>
+        <field name="l10n_pe_province_id" ref="l10n_pe_toponyms.PE1501"/>
+        <field name="l10n_pe_district_id" ref="l10n_pe_toponyms.PE150122"/>
+        <field name="state_id" ref="l10n_pe_toponyms.PE15"/>
+    </record>
+    <record id="base.res_partner_2" model="res.partner">
+        <field name="country_id" ref="base.pe"/>
+        <field name="vat">PER20462509236</field>
+        <field name="zip">150101</field>
+        <field name="street2">down the street</field>
+        <field name="l10n_pe_province_id" ref="l10n_pe_toponyms.PE1501"/>
+        <field name="l10n_pe_district_id" ref="l10n_pe_toponyms.PE150101"/>
+        <field name="state_id" ref="l10n_pe_toponyms.PE15"/>
+    </record>
+    <record id="base.res_partner_12" model="res.partner">
+        <field name="country_id" ref="base.pe"/>
+        <field name="vat">PED10000000</field>
+    </record>
+
+    <record id="base.main_company" model="res.company">
+        <field name="l10n_pe_edi_pse">local</field>
+        <field name="l10n_pe_edi_pse_test_env">True</field>
+        <field name="l10n_pe_edi_certificate_ids" eval="[(6, 0, [ref('demo_certificate')])]"/>
+        <field name="l10n_pe_edi_sunat_username">MODDATOS</field>
+        <field name="l10n_pe_edi_sunat_password">MODDATOS</field>
+        <field name="l10n_pe_edi_sunat_url">https://e-beta.sunat.gob.pe/ol-ti-itcpfegem-beta/billService?wsdl</field>
+        <field name="l10n_pe_edi_bill_consult_url">https://e-beta.sunat.gob.pe/ol-ti-itcpfegem-beta/billService?wsdl</field>
+        <field name="l10n_pe_edi_sunat_auth_no">03400500400</field>
+    </record>
+    <record id="base.user_root" model="res.users">
+        <field name="groups_id" eval="[(4,ref('l10n_pe_edi.group_account_invoice_pe'))]"/>
+    </record>
+</odoo>

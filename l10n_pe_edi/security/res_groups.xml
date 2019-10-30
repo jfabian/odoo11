@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_account_invoice_pe" model="res.groups">
+        <field name="name">Send/Receive SUNAT Documents</field>
+        <field name="comment">
+            - This group is to isolate features for users that doesn't have
+            the right privileges to interact with SUNAT or to features of
+            administrators of odoo-peru
+        </field>
+    </record>
+    <record id="res_group_sunat_attachment" model="res.groups">
+        <field name="name">SUNAT Documents</field>
+        <field name="comment">
+            - See all SUNAT documents as Invoices/Boletas and their electronic
+            notes, CDR received as response and Daily Ticket and Voided Documents
+            summaries generated and sent.
+        </field>
+    </record>
+    <record id="res_group_super_user_manager" model="res.groups">
+        <field name="name">Odoo-peru super-user-manager</field>
+        <field name="comment">
+            - If a user is given this group, then it can cancel documents out of the date.
+            This group covers the necessity of covering the seven day of cancellation that usually happens during the update of a behavior in SUNAT
+        </field>
+    </record>
+</odoo>

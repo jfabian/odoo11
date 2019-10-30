@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="debit_note_sequence" model="ir.sequence">
+        <field name="name">Debit Note</field>
+        <field name="padding">4</field>
+        <field name="prefix">DEB/%(year)s/</field>
+    </record>
+    <record id="credit_note_sequence" model="ir.sequence">
+        <field name="name">Credit Note</field>
+        <field name="padding">4</field>
+        <field name="prefix">CRE/%(year)s/</field>
+    </record>
+    <record id="journal_ebol" model="account.journal">
+        <field name="update_posted" eval="True"/>
+    </record>
+    <record id="journal_efac" model="account.journal">
+        <field name="update_posted" eval="True"/>
+    </record>
+</odoo>

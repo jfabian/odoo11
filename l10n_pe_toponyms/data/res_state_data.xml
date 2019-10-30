@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--Departamentos-->
+    <record model="res.country.state" id="PE01">
+        <field name="name">AMAZONAS</field>
+        <field name="code">P01</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record model="res.country.state" id="PE02">
+        <field name="name">ANCASH</field>
+        <field name="code">P02</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record model="res.country.state" id="PE03">
+        <field name="name">APURIMAC</field>
+        <field name="code">P03</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record model="res.country.state" id="PE04">
+        <field name="name">AREQUIPA</field>
+        <field name="code">P04</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record model="res.country.state" id="PE05">
+        <field name="name">AYACUCHO</field>
+        <field name="code">P05</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record model="res.country.state" id="PE06">
+        <field name="name">CAJAMARCA</field>
+        <field name="code">P06</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record model="res.country.state" id="PE07">
+        <field name="name">CALLAO</field>
+        <field name="code">P07</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record model="res.country.state" id="PE08">
+        <field name="name">CUSCO</field>
+        <field name="code">P08</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record model="res.country.state" id="PE09">
+        <field name="name">HUANCAVELICA</field>
+        <field name="code">P09</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record model="res.country.state" id="PE10">
+        <field name="name">HUANUCO</field>
+        <field name="code">P10</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record model="res.country.state" id="PE11">
+        <field name="name">ICA</field>
+        <field name="code">P11</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record model="res.country.state" id="PE12">
+        <field name="name">JUNIN</field>
+        <field name="code">P12</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record model="res.country.state" id="PE13">
+        <field name="name">LA LIBERTAD</field>
+        <field name="code">P13</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record model="res.country.state" id="PE14">
+        <field name="name">LAMBAYEQUE</field>
+        <field name="code">P14</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record model="res.country.state" id="PE15">
+        <field name="name">LIMA</field>
+        <field name="code">P15</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record model="res.country.state" id="PE16">
+        <field name="name">LORETO</field>
+        <field name="code">P16</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record model="res.country.state" id="PE17">
+        <field name="name">MADRE DE DIOS</field>
+        <field name="code">P17</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record model="res.country.state" id="PE18">
+        <field name="name">MOQUEGUA</field>
+        <field name="code">P18</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record model="res.country.state" id="PE19">
+        <field name="name">PASCO</field>
+        <field name="code">P19</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record model="res.country.state" id="PE20">
+        <field name="name">PIURA</field>
+        <field name="code">P20</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record model="res.country.state" id="PE21">
+        <field name="name">PUNO</field>
+        <field name="code">P21</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record model="res.country.state" id="PE22">
+        <field name="name">SAN MARTIN</field>
+        <field name="code">P22</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record model="res.country.state" id="PE23">
+        <field name="name">TACNA</field>
+        <field name="code">P23</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record model="res.country.state" id="PE24">
+        <field name="name">TUMBES</field>
+        <field name="code">P24</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record model="res.country.state" id="PE25">
+        <field name="name">UCAYALI</field>
+        <field name="code">P25</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+</odoo>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_invoice_refund_reason" model="ir.ui.view">
+        <field name="name">account.invoice.refund.form</field>
+        <field name="model">account.invoice.refund</field>
+        <field name="inherit_id" ref="account.view_account_invoice_refund"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='description']" position="before">
+                <field name="l10n_pe_edi_is_required" invisible="1"/>
+                <field name="l10n_pe_refund_reason" widget="radio" attrs="{'invisible': ['|', ('l10n_pe_edi_is_required', '=', False), ('filter_refund', '=', 'charge')]}"/>
+                <field name="l10n_pe_charge_reason" widget="radio" attrs="{'invisible': ['|', ('l10n_pe_edi_is_required', '=', False), ('filter_refund', '!=', 'charge')]}"/>
+            </xpath>
+            <xpath expr="//group//group[2]" position="inside">
+                <div attrs="{'invisible':['|',('filter_refund','!=','charge')]}" class="oe_grey" colspan="4">
+                    This option will create a debit note in draft state for the same amount of the invoice
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='filter_refund']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='filter_refund']" position="before">
+                <field name="filter_refund2" widget="radio"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

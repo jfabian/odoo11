@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="l10n_pe_edi_view_summary_documents_wizard" model="ir.ui.view">
+        <field name="name">Summary Document</field>
+        <field name="model">l10n_pe_edi.summary.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group string="Information for Summary Document">
+                    <group>
+                        <field name="summary_type"/>
+                        <field name="reference_date"/>
+                    </group>
+                    <group>
+                        <field name="number"/>
+                        <field name="issue_date"/>
+                    </group>
+                </group>
+                <footer>
+                    <button string="Cancel" special="cancel"/>
+                    <button string="Generate document" name="generate_document" type="object" class="oe_highlight"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+     <record id="action_generate_summary" model="ir.actions.act_window">
+         <field name="name">Generate Summary Document</field>
+         <field name="type">ir.actions.act_window</field>
+         <field name="res_model">l10n_pe_edi.summary.wizard</field>
+         <field name="view_type">form</field>
+         <field name="view_mode">form</field>
+         <field name="target">new</field>
+     </record>
+
+    <menuitem action="action_generate_summary"
+        id="menu_summary_documents" parent="account.menu_finance_reports"
+        sequence="7"/>
+</odoo>

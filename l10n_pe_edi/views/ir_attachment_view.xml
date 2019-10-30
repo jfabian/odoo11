@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_attachment_form_sunat_file" model="ir.ui.view">
+        <field name="name">ir.attachment.form.inherit</field>
+        <field name="model">ir.attachment</field>
+        <field name="inherit_id" ref="base.view_attachment_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group/group[2]" position="inside">
+                <field name="l10n_pe_edi_sunat_file"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_sunat_attachment" model="ir.actions.act_window">
+        <field name="name">SUNAT Documents</field>
+        <field name="res_model">ir.attachment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('l10n_pe_edi_sunat_file','=',True)]</field>
+        <field name="context" eval="{'default_type': 'binary', 'default_l10n_pe_edi_sunat_file': True}"/>
+    </record>
+
+    <menuitem
+        name="SUNAT Documents"
+        id="menu_sunat_documents"
+        sequence="40"
+        action="action_sunat_attachment"
+        groups="l10n_pe_edi.res_group_sunat_attachment"
+        web_icon="l10n_pe_edi,static/src/img/icon/icon.png"/>
+</odoo>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="sunatdb_config_url" model="ir.config_parameter">
+        <field name="key">sunatdb.api_url</field>
+        <field name="value">https://sunat.vauxoo.com</field>
+    </record>
+
+    <record id="sunatdb_config_token" model="ir.config_parameter">
+        <field name="key">sunatdb.api_token</field>
+        <field name="value">1234</field>
+    </record>
+</odoo>

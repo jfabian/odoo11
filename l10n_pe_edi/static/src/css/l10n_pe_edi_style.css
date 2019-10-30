@@ -1,0 +1,46 @@
+.top-dashed {
+    border-top: 1px dashed black;
+}
+
+.bottom-dashed {
+    border-bottom: 1px dashed black;
+}
+
+.align-top {
+    vertical-align: top;
+}
+
+.company-data {
+    text-transform: uppercase;
+}
+
+pre {
+    display: inline;
+}
+
+/* SO Report */
+.soticket-header > * {
+    text-align: center;
+    font-size: small;
+}
+
+.soticket-table {
+    width: 100%;
+    font-size: small;
+}
+
+.set-value-left {
+    text-align:left;
+}
+
+.set-value-right {
+    text-align:right;
+}
+
+.set-value-center {
+    text-align:center;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}

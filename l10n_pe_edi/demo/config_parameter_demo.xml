@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="l10n_pe_edi_version_ublpe" model="ir.config_parameter">
+        <field name="key">l10n_pe_edi_ublpe_version</field>
+        <field name="value">2.0</field>
+    </record>
+</odoo>

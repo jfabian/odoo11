@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Account Tax Group -->
+    <record id="tax_group_igv" model="account.tax.group">
+        <field name="name">IGV</field>
+    </record>
+
+    <record id="tax_group_isc" model="account.tax.group">
+        <field name="name">ISC</field>
+    </record>
+
+    <record id="tax_group_otros" model="account.tax.group">
+        <field name="name">OTROS</field>
+    </record>
+</odoo>

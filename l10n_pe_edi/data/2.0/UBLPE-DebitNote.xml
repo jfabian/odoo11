@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="UBLPE-DebitNote-20">
+        <DebitNote xmlns__cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns__cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns__ccts="urn:un:unece:uncefact:documentation:2" xmlns__ds="http://www.w3.org/2000/09/xmldsig#" xmlns__ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns__qdt="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDatatypes-2" xmlns__sac="urn:sunat:names:specification:ubl:peru:schema:xsd:SunatAggregateComponents-1" xmlns__udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns__xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <ext__UBLExtensions>
+                <ext__UBLExtension>
+                  <ext__ExtensionContent>
+                    <ds__Signature Id="placeholder" xmlns__ds="http://www.w3.org/2000/09/xmldsig#"></ds__Signature>
+                  </ext__ExtensionContent>
+                </ext__UBLExtension>
+                <ext__UBLExtension>
+                    <ext__ExtensionContent>
+                        <sac__AdditionalInformation>
+                            <sac__AdditionalMonetaryTotal>
+                                <cbc__ID>1001</cbc__ID>
+                                <cbc__PayableAmount t-att-currencyID="record.currency_id.name"><t t-esc="record.l10n_pe_edi_amount_taxable"/></cbc__PayableAmount>
+                            </sac__AdditionalMonetaryTotal>
+                            <sac__AdditionalMonetaryTotal>
+                                <cbc__ID>1002</cbc__ID>
+                                <cbc__PayableAmount t-att-currencyID="record.currency_id.name"><t t-esc="record.l10n_pe_edi_amount_unaffected"/></cbc__PayableAmount>
+                            </sac__AdditionalMonetaryTotal>
+                            <sac__AdditionalMonetaryTotal>
+                                <cbc__ID>1003</cbc__ID>
+                                <cbc__PayableAmount t-att-currencyID="record.currency_id.name"><t t-esc="record.l10n_pe_edi_amount_exonerated"/></cbc__PayableAmount>
+                            </sac__AdditionalMonetaryTotal>
+                            <sac__AdditionalMonetaryTotal t-if="record.l10n_pe_edi_total_discounts">
+                                <cbc__ID>2005</cbc__ID>
+                                <cbc__PayableAmount t-att-currencyID="record.currency_id.name"><t t-esc="record.l10n_pe_edi_total_discounts"/></cbc__PayableAmount>
+                            </sac__AdditionalMonetaryTotal>
+                        </sac__AdditionalInformation>
+                    </ext__ExtensionContent>
+                </ext__UBLExtension>
+            </ext__UBLExtensions>
+            <cbc__UBLVersionID>2.0</cbc__UBLVersionID>
+            <cbc__CustomizationID>1.0</cbc__CustomizationID>
+            <cbc__ID><t t-esc="record.move_id.name"/></cbc__ID>
+            <cbc__IssueDate><t t-esc="date"/></cbc__IssueDate>
+            <cbc__DocumentCurrencyCode><t t-esc="record.currency_id.name"/></cbc__DocumentCurrencyCode>
+            <cac__DiscrepancyResponse>
+                <cbc__ReferenceID><t t-esc="record.origin"/></cbc__ReferenceID>
+                <cbc__ResponseCode><t t-esc="record.l10n_pe_charge_reason"/></cbc__ResponseCode>
+                <cbc__Description><t t-esc="record.name"/></cbc__Description>
+            </cac__DiscrepancyResponse>
+            <cac__BillingReference>
+                <cac__InvoiceDocumentReference>
+                    <cbc__ID><t t-esc="record.refund_invoice_id.number"/></cbc__ID>
+                    <cbc__DocumentTypeCode><t t-esc="record.refund_invoice_id.l10n_pe_document_type"/></cbc__DocumentTypeCode>
+                </cac__InvoiceDocumentReference>
+            </cac__BillingReference>
+            <cac__Signature>
+                <cbc__ID>IDSignKG</cbc__ID>
+                <cac__SignatoryParty>
+                    <cac__PartyIdentification>
+                        <cbc__ID><t t-esc="company.partner_id.l10n_pe_vat_number"/></cbc__ID>
+                    </cac__PartyIdentification>
+                    <cac__PartyName>
+                        <cbc__Name><t t-esc="company.name.upper()"/></cbc__Name>
+                    </cac__PartyName>
+                </cac__SignatoryParty>
+                <cac__DigitalSignatureAttachment>
+                <cac__ExternalReference>
+                    <cbc__URI>#SignVX</cbc__URI>
+                </cac__ExternalReference>
+                </cac__DigitalSignatureAttachment>
+            </cac__Signature>
+            <cac__AccountingSupplierParty t-if="company.partner_id.l10n_pe_vat_number">
+                <cbc__CustomerAssignedAccountID><t t-esc="company.partner_id.l10n_pe_vat_number"/></cbc__CustomerAssignedAccountID>
+                <cbc__AdditionalAccountID><t t-esc="company.partner_id.l10n_pe_edi_vat_code"/></cbc__AdditionalAccountID>
+                <cac__Party>
+                    <cac__PostalAddress>
+                        <cbc__ID><t t-esc="company.partner_id.zip"/></cbc__ID>
+                    </cac__PostalAddress>
+                    <cac__PartyLegalEntity>
+                        <cbc__RegistrationName><t t-esc="company.name.upper()"/></cbc__RegistrationName>
+                    </cac__PartyLegalEntity>
+                </cac__Party>
+            </cac__AccountingSupplierParty>
+            <cac__AccountingCustomerParty>
+                <t t-set="customer_vat_info" t-value="record.l10n_pe_edi_get_customer_dni()"/>
+                <cbc__CustomerAssignedAccountID><t t-esc="customer_vat_info[1]"/></cbc__CustomerAssignedAccountID>
+                <cbc__AdditionalAccountID><t t-esc="customer_vat_info[0]"/></cbc__AdditionalAccountID>
+                <cac__Party>
+                    <cac__PartyLegalEntity>
+                        <cbc__RegistrationName><t t-esc="(record.partner_id.name or record.partner_id.commercial_partner_id.name or '').upper()"/></cbc__RegistrationName>
+                    </cac__PartyLegalEntity>
+                </cac__Party>
+            </cac__AccountingCustomerParty>
+            <t t-foreach="taxes" t-as="tax">
+            <cac__TaxTotal  t-if="tax['amount']">
+                <cbc__TaxAmount t-att-currencyID="tax['currency']"><t t-esc="tax['amount']"/></cbc__TaxAmount>
+                <cac__TaxSubtotal>
+                    <cbc__TaxAmount t-att-currencyID="tax['currency']"><t t-esc="tax['amount']"/></cbc__TaxAmount>
+                    <cac__TaxCategory>
+                        <cac__TaxScheme>
+                            <cbc__ID><t t-esc="tax['edi_id']"/></cbc__ID>
+                            <cbc__Name><t t-esc="tax['name']"/></cbc__Name>
+                            <cbc__TaxTypeCode><t t-esc="tax['code']"/></cbc__TaxTypeCode>
+                        </cac__TaxScheme>
+                    </cac__TaxCategory>
+                </cac__TaxSubtotal>
+            </cac__TaxTotal>
+            </t>
+            <cac__RequestedMonetaryTotal>
+                <cbc__PayableAmount t-att-currencyID="record.currency_id.name"><t t-esc="record.amount_total"/></cbc__PayableAmount>
+            </cac__RequestedMonetaryTotal>
+            <t t-set="id_value" t-value="0"/>
+            <t t-foreach="record.invoice_line_ids.filtered(lambda r: r.price_unit >= 0)" t-as="line">
+                <cac__DebitNoteLine>
+                    <t t-set="id_value" t-value="id_value + 1"/>
+                    <cbc__ID><t t-esc="id_value"/></cbc__ID>
+                    <cbc__DebitedQuantity t-att-unitCode="line.uom_id.l10n_pe_unece_code"><t t-esc='line.quantity'/></cbc__DebitedQuantity>
+                    <cbc__LineExtensionAmount t-att-currencyID="line.currency_id.name"><t t-esc='line.price_subtotal'/></cbc__LineExtensionAmount>
+                    <cac__PricingReference>
+                        <cac__AlternativeConditionPrice>
+                            <cbc__PriceAmount t-att-currencyID="line.currency_id.name"><t t-esc='line.price_unit'/></cbc__PriceAmount>
+                            <cbc__PriceTypeCode>01</cbc__PriceTypeCode>
+                        </cac__AlternativeConditionPrice>
+                        <cac__AlternativeConditionPrice t-if="line.price_unit == 0">
+                            <cbc__PriceAmount t-att-currencyID="line.currency_id.name"><t t-esc="line.l10n_pe_edi_ref_price"/></cbc__PriceAmount>
+                            <cbc__PriceTypeCode>02</cbc__PriceTypeCode>
+                        </cac__AlternativeConditionPrice>
+                    </cac__PricingReference>
+                    <t t-set="taxes" t-value="line.l10n_pe_edi_compute_taxes_values()"/>
+                    <t t-set="tax" t-value="taxes[0] if taxes else []"/>
+                    <cac__TaxTotal  t-if="tax">
+                        <cbc__TaxAmount t-att-currencyID="tax['currency']"><t t-esc="tax['amount']"/></cbc__TaxAmount>
+                        <cac__TaxSubtotal>
+                            <cbc__TaxAmount t-att-currencyID="tax['currency']"><t t-esc="tax['amount']"/></cbc__TaxAmount>
+                            <cbc__Percent t-if="'percent' in tax"><t t-esc="tax['percent']"/></cbc__Percent>
+                            <cac__TaxCategory>
+                                <cbc__TaxExemptionReasonCode t-if="'reason_code' in tax"><t t-esc="tax['reason_code']"/></cbc__TaxExemptionReasonCode>
+                                <cac__TaxScheme>
+                                    <cbc__ID><t t-esc="tax['edi_id']"/></cbc__ID>
+                                    <cbc__Name><t t-esc="tax['name']"/></cbc__Name>
+                                    <cbc__TaxTypeCode><t t-esc="tax['code']"/></cbc__TaxTypeCode>
+                                </cac__TaxScheme>
+                            </cac__TaxCategory>
+                        </cac__TaxSubtotal>
+                    </cac__TaxTotal>
+                    <cac__Item>
+                        <cbc__Description><t t-esc="line.name.replace('\n', ' ')"/></cbc__Description>
+                    </cac__Item>
+                    <cac__Price>
+                        <cbc__PriceAmount t-att-currencyID="line.currency_id.name"><t t-esc='line.price_unit'/></cbc__PriceAmount>
+                    </cac__Price>
+                </cac__DebitNoteLine>
+            </t>
+        </DebitNote>
+    </template>
+</odoo>

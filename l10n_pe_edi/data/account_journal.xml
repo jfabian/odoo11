@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Sequences -->
+    <record id="sequence_efac" model="ir.sequence">
+        <field name="name">Factura Electrónica</field>
+        <field name="padding">8</field>
+        <field name="prefix">FE01-</field>
+    </record>
+    <record id="refund_sequence_efac" model="ir.sequence">
+        <field name="name">Nota de Crédito Factura Electrónica</field>
+        <field name="padding">8</field>
+        <field name="prefix">FC01-</field>
+    </record>
+    <record id="debit_sequence_efac" model="ir.sequence">
+        <field name="name">Nota de Débito Factura Electrónica</field>
+        <field name="padding">8</field>
+        <field name="prefix">FD01-</field>
+    </record>
+
+    <record id="sequence_ebol" model="ir.sequence">
+        <field name="name">Boleta de Venta Electrónica</field>
+        <field name="padding">8</field>
+        <field name="prefix">BE01-</field>
+    </record>
+    <record id="refund_sequence_ebol" model="ir.sequence">
+        <field name="name">Nota de Crédito Boleta de Venta Electrónica</field>
+        <field name="padding">8</field>
+        <field name="prefix">BC01-</field>
+    </record>
+    <record id="debit_sequence_ebol" model="ir.sequence">
+        <field name="name">Nota de Débito Boleta de Venta Electrónica</field>
+        <field name="padding">8</field>
+        <field name="prefix">BD01-</field>
+    </record>
+
+    <!-- Journals -->
+    <record id="journal_efac" model="account.journal">
+        <field name="name">Factura Electrónica</field>
+        <field name="type">sale</field>
+        <field name="code">FAC</field>
+        <field name="sequence" type="int">4</field>
+        <field name="sequence_id" ref="sequence_efac"/>
+        <field name="refund_sequence" eval="True"/>
+        <field name="refund_sequence_id" ref="refund_sequence_efac"/>
+        <field name="charge_sequence" eval="True"/>
+        <field name="charge_sequence_id" ref="debit_sequence_efac"/>
+    </record>
+    <record id="journal_ebol" model="account.journal">
+        <field name="name">Boleta de Venta Electrónica</field>
+        <field name="type">sale</field>
+        <field name="code">BOL</field>
+        <field name="sequence" type="int">5</field>
+        <field name="sequence_id" ref="sequence_ebol"/>
+        <field name="refund_sequence" eval="True"/>
+        <field name="refund_sequence_id" ref="refund_sequence_ebol"/>
+        <field name="charge_sequence" eval="True"/>
+        <field name="charge_sequence_id" ref="debit_sequence_ebol"/>
+    </record>
+</odoo>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_settings_sunat_credentials" model="ir.ui.view">
+        <field name="name">account.config.settings.sunat</field>
+        <field name="model">account.config.settings</field>
+        <field name="inherit_id" ref="account.view_account_config_settings"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='multi_currency']" position="after">
+                <separator string="SUNAT SOL" groups="account.group_account_user"/>
+                <group name="sunat_sol" groups="account.group_account_user">
+                    <label for="id" string="Credentials"/>
+                    <div name="credentials">
+                        <div>
+                            <label for="l10n_pe_edi_sunat_username"/>
+                            <field name="l10n_pe_edi_sunat_username"/>
+                        </div>
+                        <div>
+                            <label for="l10n_pe_edi_sunat_password"/>
+                            <field name="l10n_pe_edi_sunat_password" password="True"/>
+                        </div>
+                        <div>
+                            <label for="l10n_pe_edi_sunat_url"/>
+                            <field name="l10n_pe_edi_sunat_url"/>
+                        </div>
+                        <div>
+                            <label for="l10n_pe_edi_bill_consult_url"/>
+                            <field name="l10n_pe_edi_bill_consult_url"/>
+                        </div>
+                        <div>
+                            <label for="l10n_pe_edi_sunat_auth_no"/>
+                            <field name="l10n_pe_edi_sunat_auth_no"/>
+                        </div>
+                    </div>
+                </group>
+                <separator string="PSE Information" groups="account.group_account_user"/>
+                <group name="certificates" groups="account.group_account_user">
+                    <label for="id" string="PSE Credentials"/>
+                    <div name="pse_credentials">
+                        <div>
+                            <label for="l10n_pe_edi_pse"/>
+                            <field name="l10n_pe_edi_pse"/>
+                        </div>
+                        <div>
+                            <label for="l10n_pe_edi_pse_username"/>
+                            <field name="l10n_pe_edi_pse_username"/>
+                        </div>
+                        <div>
+                            <label for="l10n_pe_edi_pse_password"/>
+                            <field name="l10n_pe_edi_pse_password" password="True"/>
+                        </div>
+                    </div>
+                    <label for="id" string="PSE Certificates"/>
+                    <div name="pse_credentials">
+                        <div class="text-muted">
+                            Configure your PFX certificates.
+                        </div>
+                        <div class="content-group">
+                            <field name="l10n_pe_edi_certificate_ids"/>
+                        </div>
+                    </div>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

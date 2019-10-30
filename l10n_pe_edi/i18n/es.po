@@ -1,0 +1,1891 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* l10n_pe_edi
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-24 03:08+0000\n"
+"PO-Revision-Date: 2018-01-24 03:08+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_pe_edi
+#: model:res.groups,comment:l10n_pe_edi.res_group_sunat_attachment
+msgid "\n"
+"            - See all SUNAT documents as Invoices/Boletas and their electronic\n"
+"            notes, CDR received as response and Daily Ticket and Voided Documents\n"
+"            summaries generated and sent.\n"
+"        "
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:res.groups,comment:l10n_pe_edi.group_account_invoice_pe
+msgid "\n"
+"            - This group is to isolate features for users that doesn't have\n"
+"            the right privileges to interact with SUNAT or to features of\n"
+"            administrators of odoo-peru\n"
+"        "
+msgstr "\n"
+"            - Este grupo es para separar funcionalidades de los \n"
+"            usuarios que no tienen los privilegios necesarios para \n"
+"            interactuar con la SUNAT o funcionalidades de \n"
+"            administradores de odoo-perú\n"
+"        "
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-CreditNote-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-DebitNote-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-Invoice-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-VoidedDocuments-20
+msgid "#SignVX"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-SummaryDocuments-20
+msgid "#SignatureKG"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-CreditNote-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-DebitNote-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-Invoice-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-SummaryDocuments-20
+msgid "01"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-CreditNote-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-DebitNote-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-Invoice-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-SummaryDocuments-20
+msgid "02"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-SummaryDocuments-20
+msgid "03"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-CreditNote-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-DebitNote-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-Invoice-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-VoidedDocuments-20
+msgid "1.0"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-SummaryDocuments-20
+msgid "1.1"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-CreditNote-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-DebitNote-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-Invoice-20
+msgid "1001"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-CreditNote-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-DebitNote-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-Invoice-20
+msgid "1002"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-CreditNote-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-DebitNote-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-Invoice-20
+msgid "1003"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-CreditNote-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-Invoice-20
+msgid "1004"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-CreditNote-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-DebitNote-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-Invoice-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-SummaryDocuments-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-VoidedDocuments-20
+msgid "2.0"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-CreditNote-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-DebitNote-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-Invoice-20
+msgid "2005"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.layout_unite
+msgid "<b>/SUNAT</b>"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.layout_unite
+msgid "<br/>\n"
+"                            REASON O SUSTENTION :"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.layout_unite
+msgid "<span>Tel:</span>"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:1521
+#, python-format
+msgid "A CDR have been received for %s"
+msgstr "Un CDR ha sido recibido para %s"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:872
+#, python-format
+msgid "A CDR have been recovered for %s"
+msgstr "Un CDR ha sido recuperado para %s"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_refund_l10n_pe_edi_is_required
+msgid "A technical field to know whether a field could be shown"
+msgstr "A campo técnico para saber si un campo debe ser mostrado"
+
+#. module: l10n_pe_edi
+#: model:ir.model,name:l10n_pe_edi.model_account_move
+msgid "Account Entry"
+msgstr "Entrada de diario"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_l10n_pe_edi_ticket_number
+msgid "After the document have been sent to SUNAT, a ticket service number will be returned in order to ask for it later"
+msgstr "Luego que el documento ha sido enviado a la SUNAT, un número de ticket de servicio será devuelto para consultar su estado posteriormente"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:1998
+#, python-format
+msgid "An error occurred while setting to draft."
+msgstr "Ha ocurrido un error al establecer el documento a estado borrador."
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_refund_reason:0
+#: selection:account.invoice.refund,l10n_pe_refund_reason:0
+msgid "Anulación de la operación"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_refund_reason:0
+#: selection:account.invoice.refund,l10n_pe_refund_reason:0
+msgid "Anulación por error en el RUC"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_charge_reason:0
+#: selection:account.invoice.refund,l10n_pe_charge_reason:0
+msgid "Aumento en el valor"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.layout_unite
+msgid "Authorized through resolution No."
+msgstr "Autorizado mediante Resolución Nro."
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_certificate_date_start
+msgid "Available date"
+msgstr "Fecha vigente"
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_document_type:0
+msgid "BOLETA DE VENTA"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_monetary_total:0
+msgid "Bonificaciones"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_refund_reason:0
+#: selection:account.invoice.refund,l10n_pe_refund_reason:0
+msgid "Bonificación"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:1009
+#, python-format
+msgid "CDR Received"
+msgstr "CDR Recibida"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:849
+#, python-format
+msgid "CDR Response"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.layout_unite
+msgid "CREATION DATE:"
+msgstr "FECHA DE CREACIÓN:"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.layout_unite
+msgid "CURRENCY TYPE:"
+msgstr "TIPO DE MONEDA:"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.layout_unite
+msgid "CUSTOMER:"
+msgstr "CLIENTE:"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.invoice_cancel_wizard_view
+#: model:ir.ui.view,arch_db:l10n_pe_edi.l10n_pe_edi_view_summary_documents_wizard
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: l10n_pe_edi
+#: model:ir.actions.act_window,name:l10n_pe_edi.action_invoice_cancel_wizard
+msgid "Cancel Invoice"
+msgstr "Cancelar Factura"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_l10n_pe_cancel_reason
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_invoice_cancel_wizard_l10n_pe_cancel_reason
+msgid "Cancel Reason"
+msgstr "Motivo de Cancelación"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.debit_button_invoice_form
+msgid "Cancel SUNAT"
+msgstr "Cancelar SUNAT"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.invoice_cancel_wizard_view
+msgid "Cancel invoice"
+msgstr "Cancelar Factura"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_invoice_cancel_wizard_l10n_pe_cancel_reason_strip
+msgid "Cancel reason should not be empty or have symbols or be less than 3 characters"
+msgstr "Motivo de cancelar no debe estar vacío, tener símbolos o contener menos de 3 caracteres"
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_edi_pse_status:0
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#. module: l10n_pe_edi
+#: selection:res.partner,l10n_pe_edi_vat_code:0
+msgid "Carnet de Extranjería"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_certificate_content
+msgid "Certificate"
+msgstr "Certificado"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_certificate_password
+msgid "Certificate Password"
+msgstr "Contraseña del Certificado"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_config_settings_l10n_pe_edi_certificate_ids
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_res_company_l10n_pe_edi_certificate_ids
+msgid "Certificates"
+msgstr "Certificados"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.debit_button_invoice_form
+msgid "Charge Invoice"
+msgstr "Nota de Débito"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_journal_charge_sequence
+msgid "Check this box if you don't want to share the same sequence for invoices and debit note made from this journal"
+msgstr "Marque esta casilla si no desea compartir la misma secuencia entre facturas y notas de débito en este journal"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:552
+#, python-format
+msgid "Code: "
+msgstr "Código: "
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:737
+#: code:addons/l10n_pe_edi/models/account_invoice.py:1053
+#, python-format
+msgid "Code: %s<br/>Message: %s"
+msgstr "Code: %s<br/>Mensaje: %s"
+
+#. module: l10n_pe_edi
+#: model:ir.model,name:l10n_pe_edi.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:942
+#, python-format
+msgid "Conection reset by peer"
+msgstr "Conexión reiniciada por peer"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.account_settings_sunat_credentials
+msgid "Configure your PFX certificates."
+msgstr "Configure sus certificados PFX."
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_refund_reason:0
+#: selection:account.invoice.refund,l10n_pe_refund_reason:0
+msgid "Corrección por error en la descripción"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_l10n_pe_edi_correlative
+msgid "Correspond to the incremental sequential value set once the invoice gets validated."
+msgstr "Corresponde al valor secuencial incremental establecido una vez la factura es validada."
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_l10n_pe_edi_serie
+msgid "Correspond to the journal prefix based on 4 alphanumeric digits beginning with a F letter."
+msgstr "Corresponde al prefijo del journal basado en los 4 dígitos alfanuméricos empezando con una letra F."
+
+#. module: l10n_pe_edi
+#: model:ir.actions.act_window,help:l10n_pe_edi.certificate_list_action
+msgid "Create the first certificate"
+msgstr "Crear el primer certificado"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_invoice_cancel_wizard_create_uid
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_certificate_create_uid
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_summary_wizard_create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_invoice_cancel_wizard_create_date
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_certificate_create_date
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_summary_wizard_create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.account_settings_sunat_credentials
+msgid "Credentials"
+msgstr "Credenciales"
+
+#. module: l10n_pe_edi
+#: model:ir.model,name:l10n_pe_edi.model_res_currency
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: l10n_pe_edi
+#: model:ir.filters,name:l10n_pe_edi.customer_invoice_and_refunds
+msgid "Customer Invoice and Refunds"
+msgstr "Notas de Crédito y facturas de cliente"
+
+#. module: l10n_pe_edi
+#: selection:res.partner,l10n_pe_edi_vat_code:0
+msgid "Cédula Diplomática de Identidad"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.layout_unite
+msgid "DESCRIPTION"
+msgstr "DESCRIPCIÓN"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.layout_unite
+msgid "DNI:"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:l10n_pe_edi.summary.wizard,summary_type:0
+msgid "Daily Ticket Summary"
+msgstr "Resumen Diario de Boletas"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_l10n_pe_edi_summary_wizard_issue_date
+msgid "Date when this communication is generated."
+msgstr "Fecha cuando esta comunicación fue generada."
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_journal_charge_sequence_id
+msgid "Debit Entry Sequence"
+msgstr "Secuencia de Asiento de Notas de Débito"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_l10n_pe_charge_reason
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_refund_l10n_pe_charge_reason
+msgid "Debit Reason"
+msgstr "Razón del débito"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_l10n_pe_charge_reason
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_refund_l10n_pe_charge_reason
+msgid "Debit note reason"
+msgstr "Razón de Nota de Débito"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_journal_charge_sequence
+msgid "Dedicated Debit Note Sequence"
+msgstr "Secuencia Dedicada de Nota de Débito"
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_refund_reason:0
+#: selection:account.invoice.refund,l10n_pe_refund_reason:0
+msgid "Descuento global"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_refund_reason:0
+#: selection:account.invoice.refund,l10n_pe_refund_reason:0
+msgid "Descuento por ítem"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_monetary_total:0
+msgid "Detracciones"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_refund_reason:0
+#: selection:account.invoice.refund,l10n_pe_refund_reason:0
+msgid "Devolución por ítem"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_refund_reason:0
+#: selection:account.invoice.refund,l10n_pe_refund_reason:0
+msgid "Devolución total"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_refund_reason:0
+#: selection:account.invoice.refund,l10n_pe_refund_reason:0
+msgid "Disminución en el valor"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_invoice_cancel_wizard_display_name
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_certificate_display_name
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_summary_wizard_display_name
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_res_currency_print_on_check
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_l10n_pe_edi_pse_status
+msgid "Document Status"
+msgstr "Estado del Documento"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_l10n_pe_edi_summary_wizard_summary_type
+msgid "Document type to generate"
+msgstr "Tipo de documento a generar"
+
+#. module: l10n_pe_edi
+#: selection:res.partner,l10n_pe_edi_vat_code:0
+#: selection:res.partner,l10n_pe_edi_vat_type:0
+msgid "Documento Nacional de Identidad"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:res.partner,l10n_pe_edi_vat_code:0
+msgid "Documento Tributario No Domiciliado Sin RUC"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_l10n_pe_edi_summary_wizard_reference_date
+msgid "Documents date to be included."
+msgstr "Fecha de documentos a ser incluidos."
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.electronic_invoice_report_document
+msgid "ELECTRONIC CREDIT NOTE"
+msgstr "NOTA DE CRÉDITO ELECTRÓNICA"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.electronic_invoice_report_document
+msgid "ELECTRONIC DEBIT NOTE"
+msgstr "NOTA DE DÉBITO ELECTRÓNICA"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.electronic_invoice_report_document
+msgid "ELECTRONIC INVOICE"
+msgstr "FACTURA ELECTRÓNICA"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.electronic_invoice_report_document
+msgid "ELECTRONIC TICKET"
+msgstr "BOLETA DE VENTA ELECTRÓNICA"
+
+#. module: l10n_pe_edi
+#: selection:account.tax,l10n_pe_tax_type_code:0
+msgid "EXC"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_config_settings_l10n_pe_edi_pse_test_env
+#: model:ir.model.fields,help:l10n_pe_edi.field_res_company_l10n_pe_edi_pse_test_env
+msgid "Enable the usage of test credentials"
+msgstr "Habilitar el uso de credenciales de prueba"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_l10n_pe_edi_error_message
+msgid "Error Message"
+msgstr "Mensaje de Error"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:672
+#, python-format
+msgid "Error cancelling your document"
+msgstr "Error al cancelar el documento"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/sunat_errors_dict.py:1951
+#, python-format
+msgid "Error code not recognized"
+msgstr "Código de error no reconocido"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:935
+#: code:addons/l10n_pe_edi/tests/test_send_zip_no_connection.py:27
+#, python-format
+msgid "Error connecting to server"
+msgstr "Error conectando al servidor"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:736
+#: code:addons/l10n_pe_edi/models/account_invoice.py:1052
+#, python-format
+msgid "Error received from SUNAT"
+msgstr "Error recibido de la SUNAT"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:1084
+#, python-format
+msgid "Error sending file"
+msgstr "Error enviando archivo"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:921
+#, python-format
+msgid "Error with credentials"
+msgstr "Error con credenciales"
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_amount_value_type:0
+msgid "Exonerado"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice.line,l10n_pe_exemption_reason:0
+msgid "Exonerado- Operación Onerosa"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice.line,l10n_pe_exemption_reason:0
+msgid "Exonerado- Transferencia Gratuita"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_l10n_pe_edi_amount_exonerated
+msgid "Exonerated Amount"
+msgstr "Monto Exonerado"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_certificate_date_end
+msgid "Expiration date"
+msgstr "Fecha de vencimiento"
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_amount_value_type:0
+#: selection:account.invoice.line,l10n_pe_exemption_reason:0
+msgid "Exportación"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_document_type:0
+msgid "FACTURA"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_invoice_cancel_wizard_l10n_pe_cancel_reason_strip
+msgid "Field to strip unwanted characters"
+msgstr "Campo para eliminar caracteres no deseados"
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_document_type:0
+msgid "GUIA DE REMISION REMITENTE"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:755
+#: code:addons/l10n_pe_edi/models/account_invoice.py:952
+#, python-format
+msgid "General error cached"
+msgstr "Error general obtenido"
+
+#. module: l10n_pe_edi
+#: model:ir.actions.act_window,name:l10n_pe_edi.action_generate_summary
+#: model:ir.ui.menu,name:l10n_pe_edi.menu_summary_documents
+msgid "Generate Summary Document"
+msgstr "Generar Documento Resumen"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.l10n_pe_edi_view_summary_documents_wizard
+msgid "Generate document"
+msgstr "Generar documento"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.debit_button_invoice_form
+msgid "Get CDR Status"
+msgstr "Obtener CDR"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.debit_button_invoice_form
+msgid "Get status"
+msgstr "Consultar estado"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_l10n_pe_edi_global_discounts
+msgid "Global discounts"
+msgstr "Descuentos globales"
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_amount_value_type:0
+msgid "Gratuitas"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_amount_value_type:0
+msgid "Gravado"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice.line,l10n_pe_exemption_reason:0
+msgid "Gravado- Bonificaciones"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice.line,l10n_pe_exemption_reason:0
+msgid "Gravado- IVAP"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice.line,l10n_pe_exemption_reason:0
+msgid "Gravado- Operación Onerosa"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice.line,l10n_pe_exemption_reason:0
+msgid "Gravado- Retiro"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice.line,l10n_pe_exemption_reason:0
+msgid "Gravado- Retiro por donación"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice.line,l10n_pe_exemption_reason:0
+msgid "Gravado- Retiro por entrega a trabajadores"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice.line,l10n_pe_exemption_reason:0
+msgid "Gravado- Retiro por premio"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice.line,l10n_pe_exemption_reason:0
+msgid "Gravado- Retiro por publicidad"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_invoice_cancel_wizard_id
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_certificate_id
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_summary_wizard_id
+msgid "ID"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-CreditNote-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-DebitNote-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-Invoice-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-SummaryDocuments-20
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-VoidedDocuments-20
+msgid "IDSignKG"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:account.tax.group,name:l10n_pe_edi.tax_group_igv
+msgid "IGV"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:account.tax.group,name:l10n_pe_edi.tax_group_isc
+#: model:ir.ui.view,arch_db:l10n_pe_edi.layout_unite
+msgid "ISC"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_l10n_pe_edi_error_message
+msgid "If there is a not valid condition before the document gets validated, it will be contained"
+msgstr "Si no se cumplen condiciones antes de que el documento se valide, será incluido en este campo"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:1214
+#, python-format
+msgid "If you want to issue an Invoice, please indicate a partner with a RUC, in counter case if you want to issue a Ticket please indicate a partner with a DNI"
+msgstr "Si desea emitir una Factura, por favor indique un Cliente con RUC, en caso contrario, si desea emitir una Boleta por favor indique un cliente con DNI"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_l10n_pe_edi_summary_id
+msgid "In case this invoice gets included in a summary document, this will contain the attachment"
+msgstr "En caso que esta factura esté incluida en un documento resumen, este campo indicará el adjunto"
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_edi_pse_status:0
+msgid "In process"
+msgstr "En proceso"
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_amount_value_type:0
+msgid "Inafecto"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice.line,l10n_pe_exemption_reason:0
+msgid "Inafecto- Operación Onerosa"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice.line,l10n_pe_exemption_reason:0
+msgid "Inafecto- Retiro"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice.line,l10n_pe_exemption_reason:0
+msgid "Inafecto- Retiro por Bonificación"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice.line,l10n_pe_exemption_reason:0
+msgid "Inafecto- Retiro por Convenio Colectivo"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice.line,l10n_pe_exemption_reason:0
+msgid "Inafecto- Retiro por Muestras Médicas"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice.line,l10n_pe_exemption_reason:0
+msgid "Inafecto- Retiro por premio"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice.line,l10n_pe_exemption_reason:0
+msgid "Inafecto- Retiro por publicidad"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.l10n_pe_edi_view_summary_documents_wizard
+msgid "Information for Summary Document"
+msgstr "Información del Documento Resumen"
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_charge_reason:0
+#: selection:account.invoice.refund,l10n_pe_charge_reason:0
+msgid "Intereses por mora"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model,name:l10n_pe_edi.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_l10n_pe_edi_date_invoice_tz
+msgid "Invoice Date"
+msgstr "Fecha de Factura EDI"
+
+#. module: l10n_pe_edi
+#: model:ir.model,name:l10n_pe_edi.model_account_invoice_line
+msgid "Invoice Line"
+msgstr "Línea de Factura"
+
+#. module: l10n_pe_edi
+#: model:ir.model,name:l10n_pe_edi.model_account_invoice_refund
+msgid "Invoice Refund"
+msgstr "Abono factura"
+
+#. module: l10n_pe_edi
+#: model:ir.actions.report.xml,name:l10n_pe_edi.pe_report_invoice
+msgid "Invoice Ticket Format"
+msgstr "Factura Formato Ticket"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/wizards/account_invoice_refund.py:132
+#, python-format
+msgid "Invoice debit note"
+msgstr "Nota de Débito"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:1264
+#, python-format
+msgid "Invoice number '%s' does not meet the format:\n"
+" - Go to the journal sequence and set a prefix like: 'F**1-' or 'B**1-', including the '-' sign"
+msgstr "Número de factura '%s' no cumple el formato:\n"
+" - Vaya a la secuencia del journal y establezca un prefijo como: 'F**1-' o 'B**1-', incluyendo el guión '-'"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_refund_l10n_pe_edi_is_required
+msgid "Is required for Peru EDI"
+msgstr "Es requerido para EDI Perú"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_config_settings_l10n_pe_edi_sunat_auth_no
+#: model:ir.model.fields,help:l10n_pe_edi.field_res_company_l10n_pe_edi_sunat_auth_no
+msgid "Is the number that authorize the company as PSE to emit electronic documents"
+msgstr "Es el número que autoriza a la compañia como PSE para emitir documentos electrónicos"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_summary_wizard_issue_date
+msgid "Issue date"
+msgstr "Fecha de emisión"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_l10n_pe_refund_reason
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_refund_l10n_pe_refund_reason
+msgid "It contains all possible values for cbc:ResponseCode"
+msgstr "Contiene todos los posibles valores para cbc:ResponseCode"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_l10n_pe_edi_total_igv
+msgid "It represent the total taxes amount for IGV taxes"
+msgstr "Representa el monto total de impuestos que afectan al IGV"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_l10n_pe_edi_total_isc
+msgid "It represent the total taxes amount for ISC related taxes"
+msgstr "Representa el monto total de impuestos que afectan al ISC"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_l10n_pe_edi_total_otros
+msgid "It represent the total taxes amount for other taxes not considered in IGV and ISC"
+msgstr "Representa el monto total de otros impuestos que no son considerados en IGV e ISC"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_l10n_pe_edi_global_discounts
+msgid "It represents global discounts computes as negative priced lines"
+msgstr "Representa descuentos globales calculados como líneas de precios negativas"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_l10n_pe_edi_total_discounts
+msgid "It represents the following computations:\n"
+"1. sum of line discounts, or\n"
+"2. sum of line discounts + overall discount"
+msgstr "Representa los siguientes cálculos:\n"
+"1. Suma de descuentos por línea, o\n"
+"2. Suma de descuentos por línea + Descuentos globales"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_l10n_pe_edi_date_invoice_tz
+msgid "It represents the invoice date converted to Timezone America/Lima"
+msgstr "Representa la fecha de factura convertida a la zona horaria America/Lima"
+
+#. module: l10n_pe_edi
+#: model:ir.model,name:l10n_pe_edi.model_account_journal
+msgid "Journal"
+msgstr "Diario"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_l10n_pe_amount_value_type
+msgid "L10n pe amount value type"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_l10n_pe_document_type
+msgid "L10n pe document type"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_l10n_pe_edi_correlative
+msgid "L10n pe edi correlative"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_l10n_pe_edi_serie
+msgid "L10n pe edi serie"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_res_partner_l10n_pe_edi_vat_code
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_res_users_l10n_pe_edi_vat_code
+msgid "L10n pe edi vat code"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_res_partner_l10n_pe_edi_vat_type
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_res_users_l10n_pe_edi_vat_type
+msgid "L10n pe edi vat type"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_line_l10n_pe_exemption_reason
+msgid "L10n pe exemption reason"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_l10n_pe_monetary_total
+msgid "L10n pe monetary total"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_line_l10n_pe_subtotal_by_unit
+msgid "L10n pe subtotal by unit"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_tax_l10n_pe_tax_type_code
+msgid "L10n pe tax type code"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_res_partner_l10n_pe_vat_number
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_res_users_l10n_pe_vat_number
+msgid "L10n pe vat number"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_invoice_cancel_wizard___last_update
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_certificate___last_update
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_summary_wizard___last_update
+msgid "Last Modified on"
+msgstr "Modificado el"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_invoice_cancel_wizard_write_uid
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_certificate_write_uid
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_summary_wizard_write_uid
+msgid "Last Updated by"
+msgstr "Actualizado por"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_invoice_cancel_wizard_write_date
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_certificate_write_date
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_summary_wizard_write_date
+msgid "Last Updated on"
+msgstr "Actualizado el"
+
+#. module: l10n_pe_edi
+#: selection:res.company,l10n_pe_edi_pse:0
+msgid "Local Service"
+msgstr "Servicio Local"
+
+#. module: l10n_pe_edi
+#: selection:l10n_pe_edi.summary.wizard,summary_type:0
+msgid "Lot of Invoices"
+msgstr "Lote de Facturas"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.debit_button_invoice_form
+msgid "Maybe the validation is still in progress. Are you sure that you want to regenerate?"
+msgstr "Tal vez haya una validación en proceso. ¿Esta seguro que desea regenerar?"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:554
+#, python-format
+msgid "Message: "
+msgstr "Mensaje: "
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:936
+#, python-format
+msgid "Message: %s<br/>%s"
+msgstr "Mensaje: %s<br/>%s"
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_document_type:0
+msgid "NOTA DE CREDITO"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_document_type:0
+msgid "NOTA DE DEBITO"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:986
+#, python-format
+msgid "No XML as response"
+msgstr "Sin XML de respuesta"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:1239
+#, python-format
+msgid "No valid certificate found"
+msgstr "No se encontraron certificados válidos"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_summary_wizard_number
+msgid "Number"
+msgstr "Número"
+
+#. module: l10n_pe_edi
+#: selection:account.tax,l10n_pe_tax_type_code:0
+msgid "OTH"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.layout_unite
+msgid "OTHERS TAXES"
+msgstr "OTROS IMPUESTOS"
+
+#. module: l10n_pe_edi
+#: model:account.tax.group,name:l10n_pe_edi.tax_group_otros
+msgid "OTROS"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_l10n_pe_monetary_total
+msgid "Otros conceptos tributarios"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.layout_unite
+msgid "P.U."
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_l10n_pe_edi_certificate_content
+msgid "PFX Certificate"
+msgstr "Certificado PFX"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.account_settings_sunat_credentials
+msgid "PSE Certificates"
+msgstr "Certificados PSE"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.account_settings_sunat_credentials
+msgid "PSE Credentials"
+msgstr "Credenciales PSE"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.account_settings_sunat_credentials
+msgid "PSE Information"
+msgstr "Información PSE"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_config_settings_l10n_pe_edi_pse
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_res_company_l10n_pe_edi_pse
+msgid "PSE Service"
+msgstr "Servicio PSE"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_config_settings_l10n_pe_edi_pse
+#: model:ir.model.fields,help:l10n_pe_edi.field_res_company_l10n_pe_edi_pse
+msgid "PSE Service the will take care of electronic documents"
+msgstr "Servicio PSE que se hará cargo de los documentos electrónicos"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_config_settings_l10n_pe_edi_pse_password
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_res_company_l10n_pe_edi_pse_password
+msgid "PSE password"
+msgstr "Contraseña del PSE"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_config_settings_l10n_pe_edi_pse_username
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_res_company_l10n_pe_edi_pse_username
+msgid "PSE username"
+msgstr "Usuario del PSE"
+
+#. module: l10n_pe_edi
+#: model:ir.model,name:l10n_pe_edi.model_res_partner
+msgid "Partner"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:res.partner,l10n_pe_edi_vat_code:0
+msgid "Pasaporte"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_l10n_pe_edi_certificate_password
+msgid "Passphrase for the PFX certificate"
+msgstr "Contraseña para el certificado PFX"
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_monetary_total:0
+msgid "Percepciones"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_move.py:29
+#, python-format
+msgid "Please define a sequence for the debit notes"
+msgstr "Por favor, defina una secuencia para las notas de débito"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/tests/test_send_zip_no_connection.py:28
+#, python-format
+msgid "Please try again later"
+msgstr "Por favor, intente de nuevo mas tarde"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.electronic_invoice_report_document
+msgid "Printed representation of Electronic Credit Note"
+msgstr "Representación impresa de la Nota de Crédito Electrónica"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.electronic_invoice_report_document
+msgid "Printed representation of Electronic Debit Note"
+msgstr "Representación impresa de la Nota de Débito Electrónica"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.electronic_invoice_report_document
+msgid "Printed representation of Electronic Invoice"
+msgstr "Representación impresa de la Factura Electrónica"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.electronic_invoice_report_document
+msgid "Printed representation of Electronic Sale Ticket"
+msgstr "Representación impresa de la Boleta de Venta Electrónica"
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_edi_pse_status:0
+msgid "Processed with errors"
+msgstr "Procesado con errores"
+
+#. module: l10n_pe_edi
+#: model:ir.model,name:l10n_pe_edi.model_product_uom
+msgid "Product Unit of Measure"
+msgstr "Unidad de Medida del Producto"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.layout_unite
+msgid "QTY"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.layout_unite
+msgid "REGISTER:"
+msgstr "CAJA:"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.layout_unite
+msgid "REVISA TU DOCUMENTO EN"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.layout_unite
+msgid "RUC:"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_l10n_pe_refund_reason
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_refund_l10n_pe_refund_reason
+msgid "Reason for the credit note"
+msgstr "Razón para la nota de crédito"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_l10n_pe_cancel_reason
+msgid "Reason given by the user to cancel this move"
+msgstr "Motivo dado por el usuario para cancelar este documento"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_invoice_cancel_wizard_l10n_pe_cancel_reason
+msgid "Reason to cancel this entry"
+msgstr "Motivo para cancelar esta entrada"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_summary_wizard_reference_date
+msgid "Reference date"
+msgstr "Fecha de Referencia"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_line_l10n_pe_edi_ref_price
+msgid "Referential Price"
+msgstr "Precio Referencial"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_l10n_pe_edi_pse_status
+msgid "Refers to the status of the invoice in SUNAT"
+msgstr "Indica el estado del documento en la SUNAT"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_refund_filter_refund2
+msgid "Refund/Charge Method"
+msgstr "Método de Reembolso/Débito"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.debit_button_invoice_form
+msgid "Regenerate"
+msgstr "Regenerar"
+
+#. module: l10n_pe_edi
+#: selection:res.partner,l10n_pe_edi_vat_code:0
+#: selection:res.partner,l10n_pe_edi_vat_type:0
+msgid "Registro Único de Contribuyentes"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_l10n_pe_edi_summary_wizard_number
+msgid "Represent de number of the document"
+msgstr "Representa el número del documento"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_l10n_pe_edi_amount_free
+msgid "Represent the total amount of lines given for free, this amount is the sum of referential prices multiplied their qty."
+msgstr "Representa el monto total de líneas gratuitas, este monto es la suma de los precios referenciales multiplicados por su cantidad."
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_l10n_pe_edi_amount_exonerated
+msgid "Represent the total amount of lines with tax equal to zero"
+msgstr "Representa el monto total de lineas con impuesto igual a cero"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_l10n_pe_edi_amount_unaffected
+msgid "Represent the total amount of unaffected lines with no tax set in the line"
+msgstr "Representa el monto total de lineas inafectas con ningún impuesto establecido en la linea"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_l10n_pe_edi_amount_taxable
+msgid "Represent the total amount that a tax is applied"
+msgstr "Representa el monto total de la cual se aplica el impuesto"
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_monetary_total:0
+msgid "Retenciones"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_edi_pse_status:0
+#: model:ir.ui.view,arch_db:l10n_pe_edi.debit_button_invoice_form
+msgid "Retry"
+msgstr "Reintentar"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_config_settings_l10n_pe_edi_sunat_password
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_res_company_l10n_pe_edi_sunat_password
+msgid "SOL Password"
+msgstr "Clave SOL"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_config_settings_l10n_pe_edi_sunat_username
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_res_company_l10n_pe_edi_sunat_username
+msgid "SOL User"
+msgstr "Usuario SOL"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.layout_unite
+msgid "SUB-TOTAL"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.layout_unite
+msgid "SUMMARY"
+msgstr "RESUMEN"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_ir_attachment_l10n_pe_edi_sunat_file
+msgid "SUNAT Document"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.actions.act_window,name:l10n_pe_edi.action_sunat_attachment
+#: model:ir.ui.menu,name:l10n_pe_edi.menu_sunat_documents
+#: model:res.groups,name:l10n_pe_edi.res_group_sunat_attachment
+msgid "SUNAT Documents"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.account_settings_sunat_credentials
+msgid "SUNAT SOL"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:922
+#, python-format
+msgid "SUNAT SOL Parameters haven't been set correctly, please check that all web service addresses and SOL credentials are set in Accounting > Settings"
+msgstr "Parámetros de SUNAT SOL no han sido establecidos correctamente, por favor asegúrese que todas las direcciones y las credenciales SOL se encuentran establecidas en Contabilidad > Configuración"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_config_settings_l10n_pe_edi_sunat_auth_no
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_res_company_l10n_pe_edi_sunat_auth_no
+msgid "SUNAT authorization number"
+msgstr "Número de Autorización de la SUNAT"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:845
+#, python-format
+msgid "SUNAT response is: %s"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:1524
+#, python-format
+msgid "SUNAT returned a corrupted CDR file"
+msgstr "SUNAT devolvió un archivo CDR no válido"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:931
+#, python-format
+msgid "Seems that you are having trouble with the network                <br/>Please try again later"
+msgstr "Parece tener problemas con la conexión                <br/>Por favor intente nuevamente mas tarde"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.debit_button_invoice_form
+msgid "Send summary"
+msgstr "Enviar resumen"
+
+#. module: l10n_pe_edi
+#: model:res.groups,name:l10n_pe_edi.group_account_invoice_pe
+msgid "Send/Receive SUNAT Documents"
+msgstr "Enviar/Recibir documentos de la SUNAT"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_certificate_serial_number
+msgid "Serial number"
+msgstr "Número de serial"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:745
+#, python-format
+msgid "Service not implemented"
+msgstr "Servicio no implementado"
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_edi_pse_status:0
+msgid "Signed"
+msgstr "Firmado"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_product_uom_l10n_pe_unece_code
+msgid "Standard nomenclature of the United Nations Economic Commission for Europe (UNECE)."
+msgstr "Nomenclatura estándar para las Comisión Económica de las Naciones Unidas para Europa (UNECE)."
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_monetary_total:0
+msgid "Sub total de venta"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_l10n_pe_edi_summary_id
+msgid "Summary Document"
+msgstr "Documento Resumen"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:2019
+#: code:addons/l10n_pe_edi/models/account_invoice.py:2037
+#, python-format
+msgid "Summary document %s cannot be regenerated"
+msgstr "Documento resumen %s no puede ser regenerado"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_summary_wizard_summary_type
+msgid "Summary type"
+msgstr "Tipo de resumen"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:1693
+#, python-format
+msgid "Summary type to be generated is not set"
+msgstr "Tipo de resumen a generar no está establecido"
+
+#. module: l10n_pe_edi
+#: model:ir.model,name:l10n_pe_edi.model_l10n_pe_edi_certificate
+msgid "Sunat Digital Sail"
+msgstr "Sello Digital SUNAT"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.layout_unite
+msgid "TAXABLE AMOUNT"
+msgstr "BASE IMPONIBLE"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.layout_unite
+msgid "TOTAL"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.layout_unite
+msgid "TOTAL DISCOUNTS"
+msgstr "TOTAL DESCUENTOS"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.layout_unite
+msgid "TOTAL EXONERATED"
+msgstr "TOTAL EXONERADO"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.layout_unite
+msgid "TOTAL FREE"
+msgstr "TOTAL GRATUITO"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.layout_unite
+msgid "TOTAL IGV"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.layout_unite
+msgid "TOTAL TO PAY"
+msgstr "TOTAL A PAGAR"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.layout_unite
+msgid "TOTAL UNAFFECT"
+msgstr "TOTAL INAFECTO"
+
+#. module: l10n_pe_edi
+#: model:ir.model,name:l10n_pe_edi.model_account_tax
+msgid "Tax"
+msgstr "Impuesto"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_l10n_pe_edi_amount_taxable
+msgid "Taxable amount"
+msgstr "Base Imponible"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_config_settings_l10n_pe_edi_pse_test_env
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_res_company_l10n_pe_edi_pse_test_env
+msgid "Test environment"
+msgstr "Entorno de Pruebas"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_l10n_pe_edi_ublpe_name
+msgid "The attachment name of the ublpe"
+msgstr "El nombre del documento UBLPE adjunto"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/certificate.py:132
+#, python-format
+msgid "The certificate content is invalid."
+msgstr "El contenido del certificado es inválido."
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/certificate.py:138
+#, python-format
+msgid "The certificate is expired since %s"
+msgstr "El certificado está vencido desde %s"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/certificate.py:143
+#, python-format
+msgid "The certificate or key are missing from the PKCS#12 file."
+msgstr "El certificado o la llave no se encuentran en el archivo PKCS#12."
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:640
+#, python-format
+msgid "The code in the journal is not valid for SUNAT standards, please use %s instead"
+msgstr "El código en el journal no es válido para los estándares SUNAT, por favor use %s en su lugar"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:547
+#, python-format
+msgid "The content of the attachment has been updated"
+msgstr "El contenido del adjunto ha sido actualizado"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_l10n_pe_edi_cdr_date
+msgid "The date of the SUNATs response"
+msgstr "Fecha de respuesta de la SUNAT"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_l10n_pe_edi_certificate_date_end
+msgid "The date on which the certificate expires"
+msgstr "La fecha en la que el certificado vence"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_l10n_pe_edi_certificate_date_start
+msgid "The date on which the certificate starts to be valid"
+msgstr "La fecha en la cual el certificado empieza a ser válido"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_config_settings_l10n_pe_edi_sunat_password
+#: model:ir.model.fields,help:l10n_pe_edi.field_res_company_l10n_pe_edi_sunat_password
+msgid "The password used to login to SUNAT SOL"
+msgstr "La contraseña usada para iniciar sesión en SUNAT SOL"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_config_settings_l10n_pe_edi_pse_password
+#: model:ir.model.fields,help:l10n_pe_edi.field_res_company_l10n_pe_edi_pse_password
+msgid "The password used to request the seal from the PSE"
+msgstr "La contraseña usada para solicitar sello desde el PSE"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_l10n_pe_edi_certificate_serial_number
+msgid "The serial number to add to electronic documents"
+msgstr "El número de serial para agregar a los documentos electrónicos"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:746
+#, python-format
+msgid "The service '%s' you are trying to consume is not implemented yet or it does not exists."
+msgstr "El servicio '%s' que está tratando de consumir no se encuentra implementado todavía o no existe."
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:987
+#, python-format
+msgid "The service you are trying to consume is not responding with an xml"
+msgstr "El servicio que está tratando de consumir no está respondiendo con un xml"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:943
+#, python-format
+msgid "The service you are trying to consume is not responding, it returned this message: %s"
+msgstr "El servicio que está tratando de consumir no está respondiendo, devolvió este mensaje: %s"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:530
+#, python-format
+msgid "The sign service has been called with success"
+msgstr "El servicio de firma ha sido llamado con éxito"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:549
+#, python-format
+msgid "The sign service requested failed"
+msgstr "La solicitud del servicio de firma falló"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:430
+#, python-format
+msgid "The ublpe generated is not valid"
+msgstr "El documento UBLPE generado no es válido"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_l10n_pe_edi_ublpe
+msgid "The ublpe xml content encoded in base64"
+msgstr "Contenido XML del documento UBLPE codificado en base64"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_config_settings_l10n_pe_edi_sunat_username
+#: model:ir.model.fields,help:l10n_pe_edi.field_res_company_l10n_pe_edi_sunat_username
+msgid "The username used to login to SUNAT SOL"
+msgstr "El usuario usado para iniciar sesión en SUNAT SOL"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_config_settings_l10n_pe_edi_pse_username
+#: model:ir.model.fields,help:l10n_pe_edi.field_res_company_l10n_pe_edi_pse_username
+msgid "The username used to request the seal from the PSE"
+msgstr "El usuario usaro para solicitar el sello desde el PSE"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:1690
+#: code:addons/l10n_pe_edi/models/account_invoice.py:1793
+#, python-format
+msgid "There are no documents to be processed"
+msgstr "No hay documentos para ser procesados"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:1085
+#, python-format
+msgid "There is no attachment generated"
+msgstr "No hay adjunto generado"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/wizards/account_invoice_refund.py:124
+#, python-format
+msgid "This %s has been created from: <a href=# data-oe-model=account.invoice data-oe-id=%d>%s</a>"
+msgstr "Esto %s ha sido creado desde <a href=# data-oe-model=account.invoice data-oe-id=%d>%s</a>"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_config_settings_l10n_pe_edi_bill_consult_url
+#: model:ir.model.fields,help:l10n_pe_edi.field_res_company_l10n_pe_edi_bill_consult_url
+msgid "This URL is used to consult invoices and its states"
+msgstr "Esta URL es utilizada para consultar facturas y su estado"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_config_settings_l10n_pe_edi_sunat_url
+#: model:ir.model.fields,help:l10n_pe_edi.field_res_company_l10n_pe_edi_sunat_url
+msgid "This URL is used to send documents like Invoices"
+msgstr "Esta URL es usada para enviar documentos como Facturas"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:673
+#, python-format
+msgid "This document can't be cancelled, it's out of the limit time and has no error. Create a credit a note instead"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:1456
+#, python-format
+msgid "This document is still being processing by SUNAT in the document %s"
+msgstr "Este documento está siendo procesado aún por la SUNAT en el documento %s"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:1746
+#, python-format
+msgid "This document should run again the summary generation"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_journal_charge_sequence_id
+msgid "This field contains the information related to the numbering of the debit note entries of this journal."
+msgstr "Este campo contiene información relacionada a la numeración de entradas de nota de débito de este diario."
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:1813
+#, python-format
+msgid "This invoice has been included in"
+msgstr "Esta factura ha sido incluida en"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:1739
+#, python-format
+msgid "This invoice has been included in the %s: <a href=# data-oe-model=ir.attachment data-oe-id=%d>%s</a>"
+msgstr "Esta factura ha sido incluida en %s: <a href=# data-oe-model=ir.attachment data-oe-id=%d>%s</a>"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:2000
+#, python-format
+msgid "This invoice have been notified at least once, SUNAT does not supports re-validation or re-cancellation after it have been validated/cancelled"
+msgstr "Esta factura ha sido notificada al menos una vez, SUNAT no soporta re-validar o re-cancelar una factura luego que ha sido validada/cancelada"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.view_account_invoice_refund_reason
+msgid "This option will create a debit note in draft state for the same amount of the invoice"
+msgstr "Esta opción creará una nota de débito en estado borrador para el mismo monto de la factura"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_l10n_pe_edi_ticket_number
+msgid "Ticket Number"
+msgstr "Número de Ticket"
+
+#. module: l10n_pe_edi
+#: model:ir.filters,name:l10n_pe_edi.filter_ticket_summary
+msgid "Ticket Summary"
+msgstr "Resumen de Boletas"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,help:l10n_pe_edi.field_account_invoice_line_l10n_pe_exemption_reason
+msgid "Tipo de Afectación al IGV"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_edi_pse_status:0
+msgid "To be cancelled"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_edi_pse_status:0
+msgid "To cancel"
+msgstr "A cancelar"
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_edi_pse_status:0
+msgid "To sign"
+msgstr "A firmar"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_l10n_pe_edi_total_igv
+msgid "Total IGV taxes"
+msgstr "Total impuestos IGV"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_l10n_pe_edi_total_isc
+msgid "Total ISC taxes"
+msgstr "Total Impuestos ISC"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_l10n_pe_edi_total_otros
+msgid "Total Others taxes"
+msgstr "Total otros impuestos"
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_monetary_total:0
+msgid "Total descuentos"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_l10n_pe_edi_total_discounts
+msgid "Total discounts"
+msgstr "Total descuentos"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_l10n_pe_edi_amount_free
+msgid "Total of free charge"
+msgstr "Total gratuitos"
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_monetary_total:0
+msgid "Total valor de venta - Operaciones gratuitas"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_monetary_total:0
+msgid "Total valor de venta - operaciones exoneradas"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_monetary_total:0
+msgid "Total valor de venta - operaciones gravadas"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_monetary_total:0
+msgid "Total valor de venta - operaciones inafectas"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-Invoice-20
+msgid "Transferencia gratuita"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:604
+#, python-format
+msgid "UBLPE document generated (it may not be signed)"
+msgstr "Documento Generado (puede no estar firmado)"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_product_uom_l10n_pe_unece_code
+msgid "UNECE Code"
+msgstr "Código UNECE"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_l10n_pe_edi_amount_unaffected
+msgid "Unaffected Amount"
+msgstr "Monto Inafecto"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:1296
+#, python-format
+msgid "Using Generic DNI because no vat found"
+msgstr "Usando DNI Generico, no se encontró RUC/DNI"
+
+#. module: l10n_pe_edi
+#: selection:account.tax,l10n_pe_tax_type_code:0
+msgid "VAT"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:1227
+#, python-format
+msgid "VAT cannot be empty, is required the customer contains a valid VAT for the following cases: 1. Boleta with a total amount greater than S/ 700. 2. Invoice"
+msgstr "El campo RUC del cliente no puede estar vacío, es necesario que el cliente contenga un RUC válido para los siguientes casos: 1. Boleta un con monto total mayor que S/ 700. 2. Factura"
+
+#. module: l10n_pe_edi
+#: selection:account.invoice,l10n_pe_edi_pse_status:0
+msgid "Valid"
+msgstr "Válida"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_l10n_pe_edi_cdr_date
+msgid "Valid CDR date time"
+msgstr "Fecha de CDR aceptado"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.certificate_form_view
+msgid "Validity"
+msgstr "Validez"
+
+#. module: l10n_pe_edi
+#: selection:l10n_pe_edi.summary.wizard,summary_type:0
+msgid "Voided Document"
+msgstr "Comunicación de Baja"
+
+#. module: l10n_pe_edi
+#: model:ir.filters,name:l10n_pe_edi.filter_voided_documents
+msgid "Voided Documents"
+msgstr "Comunicación de Baja"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:756
+#: code:addons/l10n_pe_edi/models/account_invoice.py:953
+#, python-format
+msgid "We got a problem while processing your request please, stand by and try again."
+msgstr "Obtuvimos un problema al procesar su solicitud, por favor, intente nuevamente mas tarde."
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_config_settings_l10n_pe_edi_sunat_url
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_res_company_l10n_pe_edi_sunat_url
+msgid "Webservice URL for invoice and notes"
+msgstr "URL de Servicio WEB para Facturas y Notas"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_config_settings_l10n_pe_edi_bill_consult_url
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_res_company_l10n_pe_edi_bill_consult_url
+msgid "Webservice URL to consult invoice and its notes"
+msgstr "URL de webservice para consultar facturas y sus notas"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.invoice_cancel_wizard_view
+msgid "Wizard to cancel Invoice"
+msgstr "Asistente para cancelar factura"
+
+#. module: l10n_pe_edi
+#: code:addons/l10n_pe_edi/models/account_invoice.py:1547
+#, python-format
+msgid "Wrong CDR Date format received in %s: '%s'"
+msgstr "Se ha recibido fecha de la CDR con formato erróneo en %s: '%s'"
+
+#. module: l10n_pe_edi
+#: model:ir.model,name:l10n_pe_edi.model_account_config_settings
+msgid "account.config.settings"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.certificate_form_view
+msgid "certificate Form"
+msgstr "Vista Formulario de Certificado"
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.certificate_tree_view
+msgid "certificate Tree"
+msgstr "Vista de Árbol de Certificado"
+
+#. module: l10n_pe_edi
+#: model:ir.actions.act_window,name:l10n_pe_edi.certificate_list_action
+msgid "certificates"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.ui.view,arch_db:l10n_pe_edi.UBLPE-Invoice-20
+msgid "false"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model,name:l10n_pe_edi.model_invoice_cancel_wizard
+msgid "invoice.cancel.wizard"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model,name:l10n_pe_edi.model_ir_attachment
+msgid "ir.attachment"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model,name:l10n_pe_edi.model_l10n_pe_edi_summary_wizard
+msgid "l10n_pe_edi.summary.wizard"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_l10n_pe_edi_ublpe
+msgid "ublpe content"
+msgstr "Contenido UBLPE"
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_invoice_l10n_pe_edi_ublpe_name
+msgid "ublpe name"
+msgstr "Nombre UBLPE"
+

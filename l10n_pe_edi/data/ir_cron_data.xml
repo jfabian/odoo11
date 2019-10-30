@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="ir_cron_send_voided_documents" model="ir.cron">
+        <field name="name">Send voided documents to SUNAT</field>
+        <field name="active">True</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">24</field>
+        <field name="interval_type">hours</field>
+        <field name="numbercall">-1</field>
+        <field name="nextcall" eval="(datetime.utcnow() + timedelta(days=1)).strftime('%Y-%m-%d')"/>
+        <field name="doall">True</field>
+        <field name="model">account.invoice</field>
+        <field name="function">l10n_pe_edi_cron_send_voided_documents</field>
+        <field eval="'(0,)'" name="args" />
+        <field name="priority">6</field>
+    </record>
+    <record id="ir_cron_send_valid_documents" model="ir.cron">
+        <field name="name">Send valid documents to SUNAT</field>
+        <field name="active">True</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="numbercall">-1</field>
+        <field name="nextcall" eval="(datetime.utcnow() + timedelta(days=1)).strftime('%Y-%m-%d')"/>
+        <field name="doall">True</field>
+        <field name="model">account.invoice</field>
+        <field name="function">l10n_pe_edi_cron_send_valid_documents</field>
+        <field name="priority">7</field>
+    </record>
+    <record id="ir_cron_get_status_documents" model="ir.cron">
+        <field name="name">Get status for documents from SUNAT</field>
+        <field name="active">True</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">3</field>
+        <field name="interval_type">hours</field>
+        <field name="numbercall">-1</field>
+        <field name="nextcall" eval="(datetime.utcnow() + timedelta(days=1)).strftime('%Y-%m-%d')"/>
+        <field name="doall">True</field>
+        <field name="model">account.invoice</field>
+        <field name="function">l10n_pe_edi_cron_get_status_documents</field>
+        <field name="priority">8</field>
+    </record>
+    <record id="ir_cron_related_documents" model="ir.cron">
+        <field name="name">Send related documents and cancelled tickets</field>
+        <field name="active">True</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">4</field>
+        <field name="interval_type">hours</field>
+        <field name="numbercall">-1</field>
+        <field name="nextcall" eval="(datetime.utcnow() + timedelta(days=1)).strftime('%Y-%m-%d')"/>
+        <field name="doall">True</field>
+        <field name="model">account.invoice</field>
+        <field name="function">l10n_pe_edi_cron_send_valid_documents</field>
+        <field eval="'(7, \'second_wave\')'" name="args" />
+        <field name="priority">6</field>
+    </record>
+</odoo>

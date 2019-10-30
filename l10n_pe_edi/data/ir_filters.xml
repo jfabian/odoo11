@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <record id="filter_voided_documents" model="ir.filters">
+        <field name="name">Voided Documents</field>
+        <field name="model_id">ir.attachment</field>
+        <field name="user_id" eval="False"/>
+        <field name="domain" eval="[('datas_fname', 'ilike', '-RA-%.zip')]"/>
+    </record>
+    <record id="filter_ticket_summary" model="ir.filters">
+        <field name="name">Ticket Summary</field>
+        <field name="model_id">ir.attachment</field>
+        <field name="user_id" eval="False"/>
+        <field name="domain" eval="[('datas_fname', 'ilike', '-RC-%.zip')]"/>
+    </record>
+</odoo>

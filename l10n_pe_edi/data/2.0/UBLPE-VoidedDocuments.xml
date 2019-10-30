@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="UBLPE-VoidedDocuments-20">
+        <VoidedDocuments xmlns__cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns__cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns__ds="http://www.w3.org/2000/09/xmldsig#" xmlns__ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns__sac="urn:sunat:names:specification:ubl:peru:schema:xsd:SunatAggregateComponents-1" xmlns__xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <ext__UBLExtensions>
+                <ext__UBLExtension>
+                    <ext__ExtensionContent>
+                        <ds__Signature Id="placeholder" xmlns__ds="http://www.w3.org/2000/09/xmldsig#"></ds__Signature>
+                    </ext__ExtensionContent>
+                </ext__UBLExtension>
+            </ext__UBLExtensions>
+            <cbc__UBLVersionID>2.0</cbc__UBLVersionID>
+            <cbc__CustomizationID>1.0</cbc__CustomizationID>
+            <cbc__ID><t t-esc="number"/></cbc__ID>
+            <cbc__ReferenceDate><t t-esc="reference_date"/></cbc__ReferenceDate>
+            <cbc__IssueDate><t t-esc="issue_date"/></cbc__IssueDate>
+            <cac__Signature>
+                <cbc__ID>IDSignKG</cbc__ID>
+                <cac__SignatoryParty>
+                    <cac__PartyIdentification>
+                        <cbc__ID><t t-esc="company.partner_id.l10n_pe_vat_number"/></cbc__ID>
+                    </cac__PartyIdentification>
+                    <cac__PartyName>
+                        <cbc__Name><t t-esc="company.name.upper()"/></cbc__Name>
+                    </cac__PartyName>
+                </cac__SignatoryParty>
+                <cac__DigitalSignatureAttachment>
+                    <cac__ExternalReference>
+                        <cbc__URI>#SignVX</cbc__URI>
+                    </cac__ExternalReference>
+                </cac__DigitalSignatureAttachment>
+            </cac__Signature>
+            <cac__AccountingSupplierParty>
+                <cbc__CustomerAssignedAccountID><t t-esc="company.partner_id.l10n_pe_vat_number"/></cbc__CustomerAssignedAccountID>
+                <cbc__AdditionalAccountID><t t-esc="company.partner_id.l10n_pe_edi_vat_code"/></cbc__AdditionalAccountID>
+                <cac__Party>
+                    <cac__PartyLegalEntity>
+                        <cbc__RegistrationName><t t-esc="company.name.upper()"/></cbc__RegistrationName>
+                    </cac__PartyLegalEntity>
+                </cac__Party>
+            </cac__AccountingSupplierParty>
+            <t t-set="id_value" t-value="0"/>
+            <t t-foreach="records" t-as="r">
+                <sac__VoidedDocumentsLine>
+                    <t t-set="id_value" t-value="id_value + 1"/>
+                    <cbc__LineID><t t-esc="id_value"/></cbc__LineID>
+                    <cbc__DocumentTypeCode><t t-esc="r.l10n_pe_document_type"/></cbc__DocumentTypeCode>
+                    <sac__DocumentSerialID><t t-esc="r.l10n_pe_edi_serie"/></sac__DocumentSerialID>
+                    <sac__DocumentNumberID><t t-esc="r.l10n_pe_edi_correlative"/></sac__DocumentNumberID>
+                    <sac__VoidReasonDescription><t t-esc="r.l10n_pe_cancel_reason"/></sac__VoidReasonDescription>
+                </sac__VoidedDocumentsLine>
+            </t>
+        </VoidedDocuments>
+    </template>
+</odoo>

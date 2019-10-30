@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="layout_unite">
+        <div class="page">
+            <table id="header">
+                <div id="header_company" style="text-align:center; font-size:small" class="soticket-header">
+                    <div class="company-data">
+                        <t t-if='o.company_id'>
+                            <tr t-if="o.company_id.logo">
+                                <div id="footer" class="text-center">
+                                    <br/>
+                                        <img t-att-src="'data:image/png;base64,%s' % o.company_id.logo" width="234" height="60"/>
+                                    <br/>
+                                </div>
+                            </tr>
+                            <div class="text-center">
+                                <t t-esc="o.company_id.website"/> <br/>
+                                <b><t t-esc='o.company_id.name'/></b><br/>
+                                <t t-if='o.company_id.partner_id.l10n_pe_vat_number'>
+                                    RUC: <t t-esc='o.company_id.partner_id.l10n_pe_vat_number'/><br/>
+                                </t>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+                <div id="header_address" style="text-align:center; font-size:small" class="soticket-header">
+                    <div style="text-transform: uppertext;" class="company-data">
+                        <t t-if='o.company_id'>
+                            <t t-if='o.company_id.street'>
+                                <t t-esc='o.company_id.street'/>
+                            </t>
+                            <t t-if='o.company_id.street2'>
+                                <span> - </span><t t-esc='o.company_id.street2'/>
+                            </t>
+                            <t t-if='o.company_id.state_id'>
+                                <span> - </span><t t-esc='o.company_id.state_id.name'/>
+                            </t>
+                            <t t-if='o.company_id.l10n_pe_province_id'>
+                                <span> - </span><t t-esc='o.company_id.l10n_pe_province_id.name'/>
+                            </t>
+                            <t t-if='o.company_id.l10n_pe_district_id'>
+                                <span> - </span><t t-esc='o.company_id.l10n_pe_district_id.name'/>
+                            </t>
+                        </t>
+                    </div>
+                </div>
+            </table>
+            <table id="title">
+                <div style="text-align:center; font-size:small" class="soticket-header">
+                    <t t-if='o.company_id.phone'>
+                        <div><span>Tel:</span><t t-esc='o.company_id.phone'/></div>
+                        <br/>
+                    </t>
+                    <div id="doc_title">
+                        <t t-esc="doc_title"/>
+                    </div>
+                    <div id="jrn_id">
+                        <t t-esc='o.move_id.name'/>
+                    </div>
+                    <div class="uppercase" t-if="free_transaction and xml_signed">
+                          <t t-esc="free_transaction[0]"/>
+                    </div>
+                </div>
+            </table>
+            <br/>
+            <table id="invoice_data" style="font-size:small" class="uppercase">
+                <tr>
+                    <th class="set-value-left" t-if="creation_date and xml_signed">
+                        CREATION DATE: <t t-esc="creation_date[0]"/>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        REGISTER: <t t-esc='o.user_id.name'/>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        CUSTOMER: <t t-esc="o.partner_id.name"/>
+                    </th>
+                </tr>
+                <tr t-if="o.partner_id.l10n_pe_vat_number">
+                    <th class="set-value-left" t-if="o.l10n_pe_document_type == '01'">
+                        RUC:<t t-esc="o.partner_id.l10n_pe_vat_number"/>
+                    </th>
+                    <th class="set-value-left" t-if="o.l10n_pe_document_type == '03'">
+                        DNI:<t t-esc="o.partner_id.l10n_pe_vat_number"/>
+                    </th>
+                </tr>
+            </table>
+            <br/>
+            <table id="products_header" style="width:100%; font-size:small" class="soticket-table">
+                <colgroup>
+                    <col width='20%'/>
+                    <col width='60%'/>
+                    <col width='20%'/>
+                </colgroup>
+                <thead>
+                    <tr style="border-top:1px dashed black; border-bottom:1px dashed black;font-size: 78%;" class="top-dashed bottom-dashed">
+                        <th class="align-top">QTY</th>
+                        <th class="set-value-center">DESCRIPTION</th>
+                        <th class="align-top">P.U.</th>
+                        <th class="align-top pull-right">TOTAL</th>
+                    </tr>
+                </thead>
+            </table>
+            <table id="products_list" style="width:100%; font-size:small" class="soticket-table">
+                <colgroup>
+                    <col width='10%'/>
+                    <col width='50%'/>
+                    <col width='20%'/>
+                    <col width='20%'/>
+                </colgroup>
+                <t t-foreach="o.invoice_line_ids" t-as="line">
+                    <tr>
+                        <th class="set-value-left">
+                            <t t-esc="line.quantity"/>
+                        </th>
+                        <th class="set-value-right">
+                            <t t-esc="line.name"/><br/>
+                        </th>
+                        <th class="set-value-right">
+                            <t t-esc="line.price_unit" t-esc-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                        </th>
+                        <th class="set-value-right">
+                            <t t-esc="line.l10n_pe_edi_amount_taxed if o.l10n_pe_document_type == '03' else line.price_subtotal" t-esc-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                        </th>
+                    </tr>
+                </t>
+            </table>
+            <br/>
+            <table id="totals" style="width:100%; font-size:small" class="soticket-table">
+                <colgroup>
+                    <col width='70%' />
+                    <col width='30%' />
+                </colgroup>
+                <t t-set="amount_taxable" t-value="o.l10n_pe_edi_amount_taxable"/>
+                <t t-set="amount_unaffected" t-value="o.l10n_pe_edi_amount_unaffected"/>
+                <t t-set="amount_exonerated" t-value="o.l10n_pe_edi_amount_exonerated"/>
+                <t t-set="amount_free" t-value="o.l10n_pe_edi_amount_free"/>
+                <t t-set="amount_discount" t-value="o.l10n_pe_edi_total_discounts"/>
+
+                <t t-set="taxes" t-value="o._l10n_pe_edi_create_ublpe_values()['taxes']"/>
+                <t t-set="sum_igv" t-value="taxes[0]['amount']"/>
+                <t t-set="sum_isc" t-value="taxes[1]['amount']"/>
+                <t t-set="sum_oth" t-value="taxes[2]['amount']"/>
+                <br/>
+                <tr style="border-top: 1px dashed black" class="top-dashed">
+                    <td class="set-value-left">SUB-TOTAL</td>
+                    <td class="set-value-right"><t t-esc="o.amount_untaxed" t-esc-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                </tr>
+                <tr t-if="amount_discount" class="top-dashed">
+                    <td class="set-value-left">TOTAL DISCOUNTS</td>
+                    <td class="set-value-right"> <t t-esc="amount_discount" t-esc-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                </tr>
+                <tr t-if="amount_taxable!=sum_igv" class="top-dashed">
+                    <td class="set-value-left">TAXABLE AMOUNT</td>
+                    <td class="set-value-right"> <t t-esc="amount_taxable" t-esc-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                </tr>
+                <tr style="border-top: 1px dashed black" class="top-dashed">
+                    <td class="set-value-left">TOTAL IGV</td>
+                    <td class="set-value-right"> <t t-esc="sum_igv" t-esc-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                </tr>
+                <tr t-if="sum_isc" class="top-dashed">
+                    <td class="set-value-left">ISC</td>
+                    <td class="set-value-right"> <t  t-esc="sum_isc" t-esc-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                </tr>
+                <tr t-if="amount_unaffected" class="top-dashed">
+                    <td class="set-value-left">TOTAL UNAFFECT</td>
+                    <td class="set-value-right"> <t  t-esc="amount_unaffected" t-esc-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                </tr>
+                <tr t-if="amount_exonerated" class="top-dashed">
+                    <td class="set-value-left">TOTAL EXONERATED</td>
+                    <td class="set-value-right"> <t t-esc="amount_exonerated" t-esc-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                </tr>
+                <tr t-if="amount_free" class="top-dashed">
+                    <td class="set-value-left">TOTAL FREE</td>
+                    <td class="set-value-right"> <t t-esc="amount_free" t-esc-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                </tr>
+                <tr t-if="sum_oth" class="top-dashed">
+                    <td class="set-value-left">OTHERS TAXES</td>
+                    <td class="set-value-right"> <t  t-esc="sum_oth" t-esc-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                </tr>
+                <tr style="border-top: 1px dashed black" class="top-dashed, bottom-dashed">
+                    <td class="set-value-left">TOTAL TO PAY</td>
+                    <td class="set-value-right"><t t-esc="o.amount_total" t-esc-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                </tr>
+            </table>
+            <br/>
+            <table id="footer">
+                <div class="set-value-center">
+                    <div class="set-value-left, uppercase" style="font-size:75%">CURRENCY TYPE: <t t-esc="o.with_context({'lang': 'es_PE'}).currency_id.print_on_check"/></div>
+                </div>
+                <div class="text-center" style="text-align: center; font-size: small">
+                    <tr t-if="o.l10n_pe_document_type == '07' or o.l10n_pe_document_type=='08'">
+                        <br/>
+                            REASON O SUSTENTION : <t t-esc="o.name"/>
+                        <br/>
+                        <t t-esc="o.journal_id.name"/> : <t t-esc="o.origin"/>
+                        <br/>
+                    </tr>
+                        <t t-set="barcode" t-value="o.l10n_pe_edi_get_barcode() if xml_signed else ''"/>
+                        <tr t-if="barcode">
+                            <div id="footer" class="text-center">
+                                <br/>
+                                <img t-att-src="'data:image/png;base64,%s' % barcode" height="120" width="360"/>
+                                <br/>
+                            </div>
+                        </tr>
+                        <br/>
+                </div>
+                <div t-att-id="caption" class="text-center">
+                    <t t-esc="caption"/>
+                </div>
+                <div id="footer" class="text-center" style="font-size: small">
+                    Authorized through resolution No.<t t-esc="o.company_id.l10n_pe_edi_sunat_auth_no"/> <b>/SUNAT</b>
+                </div>
+                <div id="summary" t-if="summary_code and xml_signed" class="text-center" style="font-size: x-small">
+                    SUMMARY <t t-esc="summary_code[0]"/>
+                </div>
+                <div t-if="o.env['ir.config_parameter'].get_param('web.base.url')">
+                    REVISA TU DOCUMENTO EN <b><t t-esc="o.env['ir.config_parameter'].get_param('web.base.url')"/></b> <br/>
+                 </div>
+            </table>
+        </div>
+    </template>
+</odoo>

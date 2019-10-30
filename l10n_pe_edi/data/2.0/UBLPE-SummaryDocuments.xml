@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="UBLPE-SummaryDocuments-20">
+        <SummaryDocuments xmlns__cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns__cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns__ds="http://www.w3.org/2000/09/xmldsig#" xmlns__ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns__sac="urn:sunat:names:specification:ubl:peru:schema:xsd:SunatAggregateComponents-1" xmlns__xsi="http://www.w3.org/2001/XMLSchema-instance" xsi__schemaLocation="urn:sunat:names:specification:ubl:peru:schema:xsd:InvoiceSummary-1">
+            <ext__UBLExtensions>
+                <ext__UBLExtension>
+                    <ext__ExtensionContent>
+                        <ds__Signature Id="placeholder"></ds__Signature>
+                    </ext__ExtensionContent>
+                </ext__UBLExtension>
+            </ext__UBLExtensions>
+            <cbc__UBLVersionID>2.0</cbc__UBLVersionID>
+            <cbc__CustomizationID>1.1</cbc__CustomizationID>
+            <cbc__ID><t t-esc="number"/></cbc__ID>
+            <cbc__ReferenceDate><t t-esc="reference_date"/></cbc__ReferenceDate>
+            <cbc__IssueDate><t t-esc="issue_date"/></cbc__IssueDate>
+            <cac__Signature>
+                <cbc__ID>IDSignKG</cbc__ID>
+                <cac__SignatoryParty>
+                    <cac__PartyIdentification>
+                        <cbc__ID><t t-esc="company.partner_id.l10n_pe_vat_number"/></cbc__ID>
+                    </cac__PartyIdentification>
+                    <cac__PartyName>
+                        <cbc__Name><t t-esc="company.name.upper()"/></cbc__Name>
+                    </cac__PartyName>
+                </cac__SignatoryParty>
+                <cac__DigitalSignatureAttachment>
+                <cac__ExternalReference>
+                    <cbc__URI>#SignatureKG</cbc__URI>
+                </cac__ExternalReference>
+                </cac__DigitalSignatureAttachment>
+            </cac__Signature>
+            <cac__AccountingSupplierParty t-if="company.partner_id.l10n_pe_vat_number">
+                <cbc__CustomerAssignedAccountID><t t-esc="company.partner_id.l10n_pe_vat_number"/></cbc__CustomerAssignedAccountID>
+                <cbc__AdditionalAccountID><t t-esc="company.partner_id.l10n_pe_edi_vat_code"/></cbc__AdditionalAccountID>
+                <cac__Party>
+                    <cac__PartyLegalEntity>
+                        <cbc__RegistrationName><t t-esc="company.name.upper()"/></cbc__RegistrationName>
+                    </cac__PartyLegalEntity>
+                </cac__Party>
+            </cac__AccountingSupplierParty>
+            <t t-set="id_value" t-value="0"/>
+            <t t-foreach="records" t-as="r">
+                <sac__SummaryDocumentsLine>
+                    <t t-set="id_value" t-value="id_value + 1"/>
+                    <cbc__LineID><t t-esc="id_value"/></cbc__LineID>
+                    <cbc__DocumentTypeCode><t t-esc="r['doc_type']"/></cbc__DocumentTypeCode>
+                    <cbc__ID><t t-esc="r['number']"/></cbc__ID>
+                    <cac__AccountingCustomerParty>
+                        <cbc__CustomerAssignedAccountID><t t-esc="r['vat_code']"/></cbc__CustomerAssignedAccountID>
+                        <cbc__AdditionalAccountID><t t-esc="r['vat_additional']"/></cbc__AdditionalAccountID>
+                    </cac__AccountingCustomerParty>
+                    <cac__BillingReference t-if="r['doc_type'] in ['07', '08']">
+                        <cac__InvoiceDocumentReference>
+                            <cbc__ID><t t-esc="r['reference']"/></cbc__ID>
+                            <cbc__DocumentTypeCode><t t-esc="r['typeCode']"/></cbc__DocumentTypeCode>
+                        </cac__InvoiceDocumentReference>
+                    </cac__BillingReference>
+                    <cac__Status>
+                        <cbc__ConditionCode><t t-esc="r['status']"/></cbc__ConditionCode>
+                    </cac__Status>
+                    <sac__TotalAmount t-att-currencyID="r['currency']"><t t-esc="r['amount_total']"/></sac__TotalAmount>
+                    <sac__BillingPayment t-if="r['total_taxable']">
+                        <cbc__PaidAmount t-att-currencyID="r['currency']"><t t-esc="r['total_taxable']"/></cbc__PaidAmount>
+                        <cbc__InstructionID>01</cbc__InstructionID>
+                    </sac__BillingPayment>
+                    <sac__BillingPayment t-if="r['total_exonerated']">
+                        <cbc__PaidAmount t-att-currencyID="r['currency']"><t t-esc="r['total_exonerated']"/></cbc__PaidAmount>
+                        <cbc__InstructionID>02</cbc__InstructionID>
+                    </sac__BillingPayment>
+                    <sac__BillingPayment t-if="r['total_unaffected']">
+                        <cbc__PaidAmount t-att-currencyID="r['currency']"><t t-esc="r['total_unaffected']"/></cbc__PaidAmount>
+                        <cbc__InstructionID>03</cbc__InstructionID>
+                    </sac__BillingPayment>
+                    <t t-foreach="r['taxes']" t-as="tax">
+                        <cac__TaxTotal>
+                            <cbc__TaxAmount t-att-currencyID="r['currency']"><t t-esc="tax['amount_tax']"/></cbc__TaxAmount>
+                            <cac__TaxSubtotal>
+                                <cbc__TaxAmount t-att-currencyID="r['currency']"><t t-esc="tax['amount_tax']"/></cbc__TaxAmount>
+                                <cac__TaxCategory>
+                                    <cac__TaxScheme>
+                                        <cbc__ID><t t-esc="tax['edi_id']"/></cbc__ID>
+                                        <cbc__Name><t t-esc="tax['name']"/></cbc__Name>
+                                        <cbc__TaxTypeCode><t t-esc="tax['code']"/></cbc__TaxTypeCode>
+                                    </cac__TaxScheme>
+                                </cac__TaxCategory>
+                            </cac__TaxSubtotal>
+                        </cac__TaxTotal>
+                    </t>
+                </sac__SummaryDocumentsLine>
+            </t>
+        </SummaryDocuments>
+    </template>
+</odoo>
