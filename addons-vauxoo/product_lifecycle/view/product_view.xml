@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Product Product Form -->
+
+        <record id="product_replacement_product_form_view" model="ir.ui.view">
+            <field name="name">product.replacement.product.form.view</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[2]" position="inside">
+                    <group string="Replacements Info">
+                        <field name="replaced_by_product_id"/>
+                        <field name="replace_to_product_id" widget="many2many_tags" readonly="1"/>
+                    </group>
+                </xpath>
+                <xpath expr="//header" position="inside">
+                    <field name="state2" widget="statusbar" clickable="True"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Product Product Search -->
+
+        <record id="product_replacement_product_search_view" model="ir.ui.view">
+            <field name="name">product.replacement.product.search.view</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_search_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='pricelist_id']" position="after">
+                    <group string="Lifecycle" name="states">
+                        <field name="state2"/>
+                        <filter string="In Development" name="status_draft" domain="[('state2','=','draft')]"/>
+                        <filter string="Normal" name="status_sellable" domain="[('state2','=','sellable')]"/>
+                        <filter string="End of Lifecycle" name="status_end" domain="[('state2','=','end')]"/>
+                        <filter string="Obsolete" name="status_obsolete" domain="[('state2','=','obsolete')]"/>
+                        <separator/>
+                        <filter string="Active Status" name="filter_active_state2" domain="[('state2','not in',['obsolete'])]"/>
+                        <filter name="Lifecycle Status" context="{'group_by': 'state2'}"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product.product_normal_action_sell" model="ir.actions.act_window">
+            <field name="context">{
+                'search_default_filter_to_sell':1,
+                'search_default_filter_active_state2': 1,
+            }</field>
+        </record>
+
+        <record id="product.product_variant_action" model="ir.actions.act_window">
+            <field name="context">{
+                'search_default_product_tmpl_id': [active_id],
+                'default_product_tmpl_id': active_id,
+                'search_default_filter_active_state2': 1,
+                }</field>
+        </record>
+
+    </data>
+</openerp>
