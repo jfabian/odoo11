@@ -16,7 +16,7 @@
         #  https://github.com/odoo/odoo/pull/13458
         'delivery',
         'sales_team',
-        'base_action_rule',
+        'base_automation',
         'purchase_requisition',
     ],
     'test': [
