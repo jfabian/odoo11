@@ -11,7 +11,6 @@
         'account_cancel',
         'base_vat',
         'company_country',
-        'report',
         'l10n_pe_toponyms',
         'document',
         'base',
