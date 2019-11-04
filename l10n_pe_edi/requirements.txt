@@ -1,0 +1,5 @@
+signxml
+num2words
+requests_mock
+pysimplesoap
+httplib2
